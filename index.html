@@ -8,438 +8,315 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
 
     <style>
-        /* --- VARIABLES --- */
         :root {
-            --navy-brand: #131644; 
-            --blue-primary: #3b82f6; 
-            --blue-glow: rgba(59, 130, 246, 0.5); 
-            --bg-dark: #050508;
+            --bg-body: #000000;
+            --card-bg: #0a0a0a;
+            --accent: #3b82f6; /* Ton bleu */
+            --text-main: #ffffff;
+            --text-muted: #888888;
         }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: #ffffff; overflow-x: hidden; }
 
-        /* --- STACKING EFFECT (PODSPACE STYLE) --- */
-        .sticky-card {
-            position: sticky;
+        body { 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+        }
+
+        /* --- EFFET PODSPACE (STACKING CARDS) --- */
+        .stack-section {
+            position: sticky; 
             top: 0;
-            min-height: 100vh;
+            height: 100vh; /* Force chaque section à faire tout l'écran */
             width: 100%;
             overflow: hidden;
-            box-shadow: 0 -20px 60px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 -20px 50px rgba(0,0,0,0.8); /* Ombre pour l'effet de superposition */
+            background: var(--card-bg); /* Couleur de fond de la carte */
+            border-top: 1px solid #222; /* Légère bordure en haut */
         }
 
-        /* --- BOUTONS --- */
-        .btn-swap {
-            position: relative; display: inline-flex; align-items: center; justify-content: center;
-            font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem;
-            overflow: hidden; transition: all 0.3s ease;
-            width: fit-content; min-width: 140px; padding: 12px 24px;
-            border-radius: 9999px; white-space: nowrap; line-height: 1; cursor: pointer;
+        /* --- HERO SPECIFIC --- */
+        .hero-section {
+            background: black;
+            border: none;
         }
-        .btn-hero { font-size: 0.9rem; padding: 16px 40px; min-width: 200px; }
-        .btn-text-front { position: relative; display: block; transform: translateY(0); opacity: 1; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease; }
-        .btn-text-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translateY(100%); opacity: 0; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease; }
-        .btn-swap:hover .btn-text-front { transform: translateY(-150%); opacity: 0; }
-        .btn-swap:hover .btn-text-back { transform: translateY(0); opacity: 1; }
-        .btn-swap:hover { box-shadow: 0 0 25px var(--blue-glow); transform: scale(1.05); }
-        
-        .btn-primary-white { background: white; color: var(--navy-brand); border: 1px solid white; }
-        .btn-primary-white:hover { background: var(--blue-primary); color: white; border-color: var(--blue-primary); }
-        .btn-outline-blue { border: 1px solid rgba(59, 130, 246, 0.5); background: rgba(19, 22, 68, 0.4); color: white; }
-        .btn-outline-blue:hover { background: var(--blue-primary); border-color: var(--blue-primary); }
-
-        /* --- NAVBAR COMPACTE --- */
-        .saas-nav { 
-            position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999; 
-            background: rgba(19, 22, 68, 0.85); backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            padding: 0.3rem 0.8rem; height: 50px;
-            border-radius: 9999px; display: flex; align-items: center; justify-content: space-between; 
-            width: auto; min-width: 320px; max-width: 700px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4); opacity: 0; gap: 2rem;
+        .hero-video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0.6;
         }
-        .nav-link { font-size: 0.75rem; font-weight: 700; color: #ccc; transition: 0.2s; margin: 0 5px; text-transform: uppercase; letter-spacing: 0.05em;}
-        .nav-link:hover { color: white; }
 
-        /* --- TYPO --- */
-        .text-accent { background: linear-gradient(to right, #60a5fa, var(--blue-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px var(--blue-glow); }
-        .border-accent { border: 1px solid rgba(59, 130, 246, 0.2); }
-        .hover-glow { transition: all 0.4s ease; }
-        .hover-glow:hover { transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-color: var(--blue-primary); z-index: 10; }
-
-        /* --- SECTIONS --- */
-        .hero-section { display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; padding: 0; background: var(--bg-dark); }
-        .hero-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.6; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(5,5,8,0.3), var(--bg-dark)); z-index: 1; }
-        .hero-content { position: relative; z-index: 10; width: 100%; max-width: 1400px; margin: 0 auto; padding-left: 5vw; display: flex; flex-direction: column; justify-content: center; height: 100%; }
-
-        .marquee-hero { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, var(--bg-dark) 10%, transparent); padding: 25px 0; z-index: 20; }
-        .marquee-wrapper { display: flex; width: max-content; animation: scroll 40s linear infinite; }
-        .marquee-content { display: flex; gap: 6rem; padding-right: 6rem; flex-shrink: 0; align-items: center; }
-        .partner-logo { font-size: 1.5rem; font-weight: 900; color: rgba(255,255,255,0.3); display: flex; align-items: center; gap: 10px; white-space: nowrap; letter-spacing: -0.02em; transition: 0.3s; }
-        .partner-logo:hover { color: #fff; text-shadow: 0 0 15px var(--blue-primary); }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-
-        /* STATS */
-        .stats-section { 
-            display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #0a0a0f 100%);
-            border-top: 1px solid rgba(59, 130, 246, 0.1);
+        /* --- TYPOGRAPHIE "BIG BOLD" (Style Podspace) --- */
+        .big-title {
+            font-size: clamp(3rem, 8vw, 7rem); /* Responsive énorme */
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
         }
-        .stats-content { width: 100%; max-width: 7xl; margin: 0 auto; text-align: center; padding: 0 20px; }
-        .big-stat-text { font-size: 4rem; line-height: 1.1; font-weight: 800; color: #888; }
-        .big-stat-text strong { background: linear-gradient(to right, #fff, #bbb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
-        .big-stat-text .highlight-blue { color: var(--blue-primary); text-shadow: 0 0 30px var(--blue-glow); -webkit-text-fill-color: var(--blue-primary); }
-        .stat-icon { display: inline-flex; width: 50px; height: 50px; background: rgba(59, 130, 246, 0.1); border: 1px solid var(--blue-primary); border-radius: 50%; vertical-align: middle; margin: 0 15px; align-items: center; justify-content: center; box-shadow: 0 0 20px var(--blue-glow); transform: translateY(-8px); }
-        @media (max-width: 768px) { .big-stat-text { font-size: 2.5rem; } .stat-icon { width: 36px; height: 36px; } }
+        .medium-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
 
-        /* STUDIO */
-        .studio-section { background: #08080a; display: flex; flex-direction: column; justify-content: center; }
-        .img-placeholder { background-color: #0f0f12; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; border: 1px solid #222; transition: 0.4s; }
-        .hover-glow:hover .img-placeholder { border-color: var(--blue-primary); }
+        /* --- UI ELEMENTS --- */
+        .btn-podspace {
+            background: white; color: black;
+            padding: 16px 32px; border-radius: 999px;
+            font-weight: 700; font-size: 1rem;
+            transition: transform 0.2s;
+            display: inline-block;
+            margin-top: 2rem;
+        }
+        .btn-podspace:hover { transform: scale(1.05); }
 
-        /* PROCESS */
-        .process-section { background: var(--bg-dark); display: flex; flex-direction: column; justify-content: center; }
-        .glass-card { background: linear-gradient(180deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%); border: 1px solid rgba(59, 130, 246, 0.15); backdrop-filter: blur(15px); }
-        
-        /* TARIFS - NOUVEAU DESIGN (Grid + Tabs) */
-        .pricing-section { background: #050508; padding: 100px 0; min-height: auto !important; } /* Reset height pour s'adapter au contenu */
-        
-        /* Switcher */
-        .pricing-tabs { display: flex; justify-content: center; margin-bottom: 3rem; gap: 10px; background: #0e0e12; padding: 5px; border-radius: 999px; width: fit-content; margin-left: auto; margin-right: auto; border: 1px solid #222; }
-        .pricing-tab { padding: 10px 30px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease; color: #888; }
-        .pricing-tab.active { background: var(--navy-brand); color: white; box-shadow: 0 0 20px var(--blue-glow); }
-        
-        /* Grid Layout (Plus de scroll horizontal) */
-        .pricing-grid { display: none; grid-template-columns: repeat(1, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .pricing-grid.active { display: grid; }
-        @media (min-width: 768px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
-        
-        .pricing-card { background: #0e0e12; border: 1px solid #222; border-radius: 20px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; min-height: 500px; }
-        .pricing-card.white-card { background: #fff !important; color: #000 !important; border: none; transform: scale(1.05); z-index: 10; box-shadow: 0 0 50px rgba(59, 130, 246, 0.25); }
-        .pricing-card.white-card * { color: #000 !important; border-color: rgba(0,0,0,0.1) !important; }
-        .pricing-card.white-card .btn-swap { background: var(--navy-brand) !important; color: #fff !important; }
-        .price-list li { display: flex; gap: 10px; margin-bottom: 12px; font-size: 0.9rem; color: #888; font-weight: 500; }
-        .card-price { font-size: 3.5rem; font-weight: 900; line-height: 1; margin: 1.5rem 0; }
+        .btn-nav {
+            padding: 8px 20px; border-radius: 999px;
+            font-size: 0.85rem; font-weight: 600;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: 0.2s;
+        }
+        .btn-nav:hover { background: white; color: black; }
 
-        /* FOOTER */
-        .footer-section { background: var(--bg-dark); position: relative; z-index: 20; }
-        .footer-small { background: #010103; padding: 50px 0; }
-        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-        @media (min-width: 1024px) { .footer-grid { grid-template-columns: 1.5fr 1fr; align-items: center; } }
-        .footer-map { width: 100%; height: 150px; border-radius: 16px; overflow: hidden; border: 1px solid #333; filter: grayscale(100%) sepia(20%) hue-rotate(190deg) saturate(300%) contrast(1.2); }
+        .navbar-fixed {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 9999; width: 90%; max-width: 900px;
+            display: flex; justify-content: space-between; align-items: center;
+            mix-blend-mode: difference; /* Astuce pour être visible sur blanc et noir */
+            color: white;
+        }
+
+        /* --- GRID LAYOUTS --- */
+        .bento-grid {
+            display: grid; grid-template-columns: 1fr; gap: 20px;
+            width: 90%; max-width: 1400px; margin: 0 auto;
+        }
+        @media (min-width: 1024px) { .bento-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        .studio-card {
+            height: 500px; border-radius: 20px; overflow: hidden; position: relative;
+            border: 1px solid #333; transition: 0.4s;
+        }
+        .studio-card:hover { transform: scale(0.98); border-color: var(--accent); }
+        .studio-bg { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .studio-card:hover .studio-bg { transform: scale(1.1); }
+
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px; width: 90%; max-width: 1200px; margin: 0 auto;
+        }
+        .pricing-item {
+            background: #111; padding: 2rem; border-radius: 20px; border: 1px solid #222;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .pricing-item.highlight { background: #fff; color: #000; }
+        .pricing-item.highlight * { color: #000; border-color: #ddd; }
+        .pricing-item.highlight .btn-podspace { background: #000; color: #fff; }
+
+        /* --- ANIMATIONS --- */
+        .reveal-text { opacity: 0; transform: translateY(30px); }
     </style>
 </head>
-<body class="antialiased text-white">
+<body>
 
-    <div id="intro-overlay">
-        <img src="votre-logo.webp" alt="Podblend Logo" class="h-16 w-auto opacity-0 intro-logo-anim">
+    <div class="navbar-fixed">
+        <a href="#" class="font-black text-xl tracking-tighter">PODBLEND.</a>
+        <div class="hidden md:flex gap-6 text-sm font-medium">
+            <a href="#studios">Studios</a>
+            <a href="#tarifs">Tarifs</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <a href="#booking" class="btn-nav">Réserver</a>
     </div>
 
-    <nav class="saas-nav" id="navbar">
-        <a href="#" class="hover:opacity-80 transition shrink-0 flex items-center">
-            <img src="votre-logo.webp" alt="Podblend Logo" class="h-5 w-auto object-contain">
-        </a>
-        <div class="hidden md:flex items-center gap-4">
-            <a href="#studio" class="nav-link">Studio</a>
-            <a href="#tarifs" class="nav-link">Tarifs</a>
-        </div>
-        <div class="flex items-center gap-2">
-            <a href="https://podblend.fr/connexion" class="hidden md:flex border border-white/20 bg-transparent hover:bg-white/10 btn-swap text-[10px] px-3" style="min-width: 100px;">
-                <span class="btn-text-front">Client</span>
-                <span class="btn-text-back">Connexion</span>
-            </a>
-            <a href="#booking" class="bg-white text-[#131644] btn-swap btn-primary-white text-[10px] px-3" style="min-width: 110px;">
-                <span class="btn-text-front">Réserver</span>
-                <span class="btn-text-back">Let's Go</span>
-            </a>
-        </div>
-    </nav>
-
-    <section class="sticky-card hero-section">
-        <video autoplay loop muted playsinline class="hero-video-bg">
+    <section class="stack-section hero-section">
+        <video autoplay loop muted playsinline class="hero-video">
             <source src="hero-video.mp4" type="video/mp4">
         </video>
-        <div class="hero-overlay"></div>
-
-        <div class="hero-content"> 
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter mb-6 leading-none">
-                <span class="block text-white gsap-hero">CRÉER & INSPIRER.</span>
-                <span class="block text-accent gsap-hero">DIFFUSER.</span>
+        <div class="relative z-10 px-6 max-w-7xl mx-auto w-full">
+            <h1 class="big-title reveal-text">
+                CRÉER.<br>
+                INSPIRER.<br>
+                <span class="text-blue-500">DIFFUSER.</span>
             </h1>
+            <p class="mt-6 text-xl text-gray-300 max-w-xl reveal-text">
+                Le studio d'enregistrement professionnel nouvelle génération à Gennevilliers.
+            </p>
+            <div class="reveal-text">
+                <a href="#booking" class="btn-podspace">Réserver une session</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stack-section bg-[#050508] flex items-center justify-center">
+        <div class="w-full max-w-6xl px-6 text-center">
+            <p class="text-sm uppercase tracking-[0.3em] text-blue-500 mb-8 font-bold">Sur tous les contenus publiés</p>
             
-            <div class="flex flex-col md:flex-row gap-4 justify-start gsap-hero">
-                <a href="#booking" class="bg-white text-[#131644] shadow-xl shadow-blue-500/20 btn-swap btn-primary-white btn-hero">
-                    <span class="btn-text-front">Réserver ma session</span>
-                    <span class="btn-text-back">Réserver ma session</span>
-                </a>
-                <a href="#studio" class="border-2 border-blue-500/40 bg-[#131644]/40 backdrop-blur-md text-white btn-swap btn-outline-blue btn-hero">
-                    <span class="btn-text-front">Découvrir le lieu</span>
-                    <span class="btn-text-back">Découvrir le lieu</span>
-                </a>
-            </div>
-        </div>
+            <h2 class="medium-title mb-16 reveal-text">
+                On cumule plus d'un <br>
+                <span class="text-white">milliard</span> 
+                <span class="text-blue-600 inline-block transform -rotate-6">↗</span> 
+                <span class="text-white">de vues.</span>
+            </h2>
 
-        <div class="marquee-hero">
-            <div class="marquee-wrapper">
-                <div class="marquee-content">
-                    <div class="partner-logo">SPOTIFY</div>
-                    <div class="partner-logo">SHURE</div>
-                    <div class="partner-logo">GOOGLE</div>
-                    <div class="partner-logo">VSM</div>
-                    <div class="partner-logo">AGENCY</div>
-                    <div class="partner-logo">EARS360</div>
+            <div class="h-px w-full bg-gray-800 my-12"></div>
+
+            <p class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-8 font-bold">Entreprises & Créateurs</p>
+            
+            <h2 class="medium-title reveal-text text-gray-400">
+                Pour + <span class="text-white">3 000 clients</span> <br>
+                à travers <span class="text-white">le monde.</span>
+            </h2>
+        </div>
+    </section>
+
+    <section id="studios" class="stack-section bg-black">
+        <div class="w-full px-6 mb-10 max-w-7xl mx-auto flex justify-between items-end">
+            <h2 class="medium-title text-white">NOS DÉCORS.</h2>
+            <p class="text-gray-400 hidden md:block">Choisissez l'ambiance qui matche votre identité.</p>
+        </div>
+        
+        <div class="bento-grid">
+            <div class="studio-card md:col-span-2 group">
+                <img src="library-_1_.webp" class="studio-bg" alt="Library">
+                <div class="absolute bottom-0 left-0 p-8 bg-gradient-to-t from-black via-black/50 to-transparent w-full">
+                    <h3 class="text-3xl font-bold text-white mb-2">Talk-Show</h3>
+                    <p class="text-gray-300">Jusqu'à 4 personnes. Ambiance feutrée & bibliothèque.</p>
                 </div>
-                <div class="marquee-content" aria-hidden="true">
-                    <div class="partner-logo">SPOTIFY</div>
-                    <div class="partner-logo">SHURE</div>
-                    <div class="partner-logo">GOOGLE</div>
-                    <div class="partner-logo">VSM</div>
-                    <div class="partner-logo">AGENCY</div>
-                    <div class="partner-logo">EARS360</div>
+            </div>
+            
+            <div class="studio-card">
+                <img src="gotham-_1_.webp" class="studio-bg" alt="Gotham">
+                <div class="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black to-transparent w-full">
+                    <h3 class="text-2xl font-bold text-white">Neon</h3>
+                    <p class="text-gray-300 text-sm">Style urbain & moderne.</p>
+                </div>
+            </div>
+
+            <div class="studio-card">
+                <img src="santorini-_1_.webp" class="studio-bg" alt="Santorini">
+                <div class="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black to-transparent w-full">
+                    <h3 class="text-2xl font-bold text-white">Duo</h3>
+                    <p class="text-gray-300 text-sm">Intimiste & Face à face.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="sticky-card stats-section">
-        <div class="stats-content">
-             <div class="big-stat-text gsap-reveal">
-                On cumule plus de <br>
-                <strong class="highlight-blue">3000 Clients</strong>
-                <span class="stat-icon text-white text-xl">★</span>
-                satisfaits.
-             </div>
-             <div class="w-2/3 mx-auto h-[1px] bg-gradient-to-r from-transparent via-blue-900 to-transparent my-12 opacity-50"></div>
-             <div class="big-stat-text gsap-reveal">
-                Et des millions de vues <br>
-                à travers <span class="stat-icon text-white text-xs">▲</span> <strong class="highlight-blue">le monde.</strong>
-             </div>
+    <section id="tarifs" class="stack-section bg-[#08080a]">
+        <div class="text-center mb-16 px-6">
+            <h2 class="medium-title">TARIFS SIMPLES.</h2>
+            <p class="text-gray-400 mt-4">Tout est inclus. Pas de mauvaise surprise.</p>
         </div>
-    </section>
 
-    <section id="studio" class="sticky-card studio-section">
-        <div class="max-w-7xl mx-auto px-6 text-center w-full">
-            <div class="mb-10">
-                <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">UN LIEU. <span class="text-accent">PLUSIEURS AMBIANCES.</span></h2>
-                <p class="text-blue-200 text-lg max-w-2xl mx-auto">Choisissez le set qui correspond à votre identité.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[500px]">
-                <div class="md:col-span-2 md:row-span-2 h-[250px] md:h-auto img-placeholder rounded-[30px] relative overflow-hidden group border-accent hover-glow" style="background-image: url('library-_1_.webp');">
-                    <div class="absolute bottom-0 left-0 w-full p-8 text-left z-20">
-                        <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">Le Set "Talk-Show"</h3>
-                        <p class="text-sm text-blue-100">Table ronde, 4 fauteuils confortables, ambiance feutrée.</p>
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#020204] via-transparent to-transparent opacity-90"></div>
-                </div>
-                <div class="h-[200px] md:h-auto img-placeholder rounded-[30px] group border-accent hover-glow relative overflow-hidden" style="background-image: url('gotham-_1_.webp');">
-                    <span class="text-lg font-bold tracking-widest z-10 relative">AMBIANCE NEON</span>
-                    <div class="absolute inset-0 bg-black/40"></div>
-                </div>
-                <div class="h-[200px] md:h-auto img-placeholder rounded-[30px] group border-accent hover-glow relative overflow-hidden" style="background-image: url('santorini-_1_.webp');">
-                    <span class="text-lg font-bold tracking-widest z-10 relative">FORMAT DUO</span>
-                    <div class="absolute inset-0 bg-black/40"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="process" class="sticky-card process-section">
-        <div class="max-w-5xl mx-auto px-6 w-full">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">LA MÉTHODE POUR <span class="text-accent">EXPLOSER.</span></h2>
-            </div>
-            <div class="timeline-container">
-                <div class="timeline-line"></div><div class="timeline-progress"></div>
-                <div class="timeline-item"><div class="timeline-number">1</div><div class="timeline-content glass-card p-8 rounded-2xl border-accent hover-glow"><h3 class="text-xl font-bold text-white mb-2">Ma réservation</h3><p class="text-sm text-blue-200">Choisissez votre formule et vos options directement en ligne.</p></div></div>
-                <div class="timeline-item"><div class="timeline-number">2</div><div class="timeline-content glass-card p-8 rounded-2xl border-accent hover-glow"><h3 class="text-xl font-bold text-white mb-2">Création</h3><p class="text-sm text-blue-200">On vous accueille, tout est prêt. Vous n'avez plus qu'à parler.</p></div></div>
-                <div class="timeline-item"><div class="timeline-number">3</div><div class="timeline-content glass-card p-8 rounded-2xl border-accent hover-glow"><h3 class="text-xl font-bold text-white mb-2">Livraison</h3><p class="text-sm text-blue-200">Recevez vos fichiers (Audio & Vidéo 4K) sous 48h.</p></div></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="tarifs" class="sticky-card pricing-section">
-        <div class="w-full">
-            <div class="text-center mb-8 px-4">
-                <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">NOS OFFRES<span class="text-accent">.</span></h2>
-                
-                <div class="pricing-tabs">
-                    <div class="pricing-tab active" onclick="switchPricing('video')">Studio Vidéo</div>
-                    <div class="pricing-tab" onclick="switchPricing('audio')">Studio Audio</div>
-                </div>
-            </div>
-
-            <div id="grid-video" class="pricing-grid active">
-                <div class="pricing-card white-card relative overflow-hidden hover-glow">
-                    <div class="mb-4"><span class="inline-block bg-[#131644] text-white text-[10px] font-black px-3 py-1 rounded-full tracking-widest">BEST SELLER</span></div>
-                    <div>
-                        <h3 class="text-2xl font-black mt-2 text-black">Initiale</h3>
-                        <div class="card-price text-black">100€</div>
-                        <ul class="price-list"><li class="text-gray-600">✓ 3 Caméras Sony 4K</li><li class="text-gray-600">✓ 4 Micros Shure</li><li class="text-gray-600">✓ Choix du décor</li><li class="text-gray-600">✓ Fichiers bruts 48h</li></ul>
-                    </div>
-                    <a href="#booking" class="btn-swap w-full shadow-lg btn-standard" style="background: var(--navy-brand); color: white;"><span class="btn-text-front">Réserver Initiale</span><span class="btn-text-back">Réserver Initiale</span></a>
-                </div>
-                
-                <div class="pricing-card hover-glow">
-                    <div>
-                        <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Montage</span>
-                        <h3 class="text-xl font-black mt-4 text-white">Édition</h3>
-                        <div class="card-price">130€</div>
-                        <ul class="price-list"><li>✓ Formule Initial incluse</li><li>✓ Pré-montage multicam</li><li>✓ Sync Audio/Vidéo</li><li>✓ Sauvegarde Cloud</li></ul>
-                    </div>
-                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-                </div>
-                
-                <div class="pricing-card hover-glow">
-                    <div>
-                        <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">All-In</span>
-                        <h3 class="text-xl font-black mt-4 text-white">Complète</h3>
-                        <div class="card-price">320€</div>
-                        <ul class="price-list"><li>✓ Dérush & 2 révisions</li><li>✓ Intro dynamique</li><li>✓ Shorts / Reels inclus</li><li>✓ Livraison 8 jours</li></ul>
-                    </div>
-                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-                </div>
-            </div>
-
-            <div id="grid-audio" class="pricing-grid">
-                <div class="pricing-card hover-glow" style="border-color: rgba(255,255,255,0.1); max-width: 400px; margin: 0 auto;">
-                    <div>
-                        <span class="text-xs font-bold text-gray-400 uppercase border border-gray-600 px-3 py-1 rounded-full tracking-widest">Podcast Audio</span>
-                        <h3 class="text-xl font-black mt-4 text-white">Audio Only</h3>
-                        <div class="card-price">50€</div>
-                        <ul class="price-list"><li>✓ Opérateur sur place</li><li>✓ 4 micros Shure MV7+</li><li>✓ Fichiers jour même</li><li>✓ Table de mixage Rode</li></ul>
-                    </div>
-                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-                </div>
-                
-                <div class="pricing-card hover-glow" style="border-color: rgba(255,255,255,0.1); max-width: 400px; margin: 0 auto;">
-                    <div>
-                        <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Post-Prod</span>
-                        <h3 class="text-xl font-black mt-4 text-white">Audio +</h3>
-                        <div class="card-price">100€</div>
-                        <ul class="price-list"><li>✓ Formule Audio incluse</li><li>✓ Nettoyage & Mixage</li><li>✓ Mastering Pro</li><li>✓ Livraison 48h</li></ul>
-                    </div>
-                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <div class="footer-section">
-        <section class="bg-[#020204] standard-section">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="grid md:grid-cols-12 gap-16 items-start">
-                    <div class="md:col-span-4 mb-8 md:mb-0 sticky top-40">
-                        <h2 class="text-3xl md:text-5xl font-black mb-6 leading-none tracking-tight">QUESTIONS <br><span class="text-accent">FRÉQUENTES.</span></h2>
-                        <a href="mailto:contact@podblend.fr" class="text-base font-bold border-b-2 border-blue-500 pb-1 hover:text-blue-300 transition">Une question spécifique ?</a>
-                    </div>
-                    <div class="md:col-span-8 flex flex-col gap-6">
-                        <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Où se trouve le studio ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">À <strong class="text-white">Gennevilliers</strong> (92). RER C.</p></div></div></div>
-                        <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Format des fichiers ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">Vidéo <strong class="text-white">.MP4</strong> et Audio <strong class="text-white">.WAV</strong>.</p></div></div></div>
-                        <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Besoin d'une carte SD ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200"><strong class="text-white">Non</strong>. Tout est fourni via cloud.</p></div></div></div>
-                        <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Annulation ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">Possible sans frais jusqu'à <strong class="text-white">48h</strong> avant.</p></div></div></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="lets-record-section">
-            <p class="text-accent text-xs font-black tracking-[0.5em] uppercase mb-6 animate-pulse">READY TO CREATE ?</p>
-            <h2 class="big-text font-extrabold tracking-tighter text-white">LET'S RECORD.</h2>
-            <a href="#booking" class="inline-block bg-white text-[#131644] shadow-[0_0_60px_rgba(59,130,246,0.5)] mt-8 btn-swap btn-primary-white btn-hero">
-                <span class="btn-text-front">Réserver maintenant</span>
-                <span class="btn-text-back">Réserver maintenant</span>
-            </a>
-        </section>
-
-        <div class="footer-separator-halo"></div>
-
-        <footer class="footer-small">
-            <div class="footer-grid">
+        <div class="pricing-grid">
+            <div class="pricing-item">
                 <div>
-                    <img src="votre-logo.webp" alt="Podblend Logo" class="h-12 md:h-16 w-auto mb-6 opacity-90">
-                    <p class="text-gray-300 mb-2 text-sm font-medium">12 Place Indira Gandhi, 92230 Gennevilliers</p>
-                    <div class="grid grid-cols-2 gap-8 mt-8">
-                        <div>
-                            <h4 class="text-white font-black uppercase tracking-widest mb-3 text-xs">Navigation</h4>
-                            <ul class="space-y-2 text-sm text-gray-400 font-medium">
-                                <li><a href="#studio" class="hover:text-blue-400 transition">Le Studio</a></li>
-                                <li><a href="#tarifs" class="hover:text-blue-400 transition">Tarifs</a></li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h4 class="text-white font-black uppercase tracking-widest mb-3 text-xs">Légal & Social</h4>
-                            <div class="flex gap-4 mb-4">
-                                <a href="https://www.instagram.com/podblend.fr/" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                            <a href="https://www.linkedin.com/company/podblend/posts/?feedView=all" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                            <a href="https://www.tiktok.com/@podblend.fr" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.35-1.17.82-1.51 1.45-.7.99-.7 2.41-.08 3.65.69 1.2 1.95 2.2 3.32 2.4 1.1.16 2.25-.02 3.2-.67 1.09-.76 1.78-2.01 1.79-3.34.02-2.93.01-5.86.01-8.8 2 .9 4.19 1.25 6.4 1.03V.02c-1.92.01-3.83.01-5.75.01z"/></svg></a>
-                        </div>
-                        <ul class="space-y-2 text-sm text-gray-400 font-medium">
-                            <li><a href="#" class="hover:text-blue-400 transition">Mentions Légales</a></li>
-                        </ul>
-                    </div>
+                    <span class="text-xs font-bold border border-gray-700 text-gray-400 px-2 py-1 rounded">AUDIO</span>
+                    <h3 class="text-2xl font-bold mt-4">Podcast Simple</h3>
+                    <div class="text-4xl font-black mt-2">50€<span class="text-sm font-normal text-gray-500">/h</span></div>
+                    <ul class="mt-6 space-y-3 text-sm text-gray-400">
+                        <li>✓ 4 Micros Shure MV7</li>
+                        <li>✓ Enregistreur Rode</li>
+                        <li>✓ Fichiers bruts immédiats</li>
+                    </ul>
+                </div>
+                <a href="#booking" class="btn-podspace w-full text-center mt-8 bg-transparent border border-white text-white hover:bg-white hover:text-black">Réserver</a>
+            </div>
+
+            <div class="pricing-item highlight">
+                <div>
+                    <span class="text-xs font-bold bg-blue-600 text-white px-2 py-1 rounded">POPULAIRE</span>
+                    <h3 class="text-2xl font-bold mt-4">Vidéo Initiale</h3>
+                    <div class="text-4xl font-black mt-2">100€<span class="text-sm font-normal text-gray-400">/h</span></div>
+                    <ul class="mt-6 space-y-3 text-gray-600 font-medium text-sm">
+                        <li>✓ 3 Caméras Sony 4K</li>
+                        <li>✓ 4 Micros Shure</li>
+                        <li>✓ Opérateur inclus</li>
+                        <li>✓ Fichiers bruts (48h)</li>
+                    </ul>
+                </div>
+                <a href="#booking" class="btn-podspace w-full text-center mt-8">Choisir</a>
+            </div>
+
+            <div class="pricing-item">
+                <div>
+                    <span class="text-xs font-bold border border-blue-900 text-blue-400 px-2 py-1 rounded">ALL-IN</span>
+                    <h3 class="text-2xl font-bold mt-4">La Totale</h3>
+                    <div class="text-4xl font-black mt-2">320€<span class="text-sm font-normal text-gray-500">/h</span></div>
+                    <ul class="mt-6 space-y-3 text-sm text-gray-400">
+                        <li>✓ Formule Initiale incluse</li>
+                        <li>✓ Montage complet (Dérush)</li>
+                        <li>✓ Intro dynamique & Mixage</li>
+                        <li>✓ 2 Révisions incluses</li>
+                    </ul>
+                </div>
+                <a href="#booking" class="btn-podspace w-full text-center mt-8 bg-transparent border border-white text-white hover:bg-white hover:text-black">Réserver</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-20 px-6 border-t border-gray-900 relative z-20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10">
+            <div>
+                <img src="votre-logo.webp" alt="Podblend" class="h-8 mb-6">
+                <p class="text-gray-500 max-w-xs">12 Place Indira Gandhi<br>92230 Gennevilliers</p>
+                <div class="flex gap-4 mt-6">
+                    <a href="#" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition">IG</a>
+                    <a href="#" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition">TK</a>
+                    <a href="#" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center hover:bg-white hover:text-black transition">LN</a>
                 </div>
             </div>
-            <div class="footer-map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2621.8569941328!2d2.295287076412613!3d48.91811907134076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66f6cb8d48897%3A0x463273427977053e!2s12%20Pl.%20Indira%20Gandhi%2C%2092230%20Gennevilliers!5e0!3m2!1sfr!2sfr!4v1705000000000!5m2!1sfr!2sfr" width="100%" height="100%" style="border:0; filter: grayscale(100%) sepia(20%) hue-rotate(190deg) saturate(300%) contrast(1.2);" allowfullscreen="" loading="lazy"></iframe>
+            <div class="grid grid-cols-2 gap-12 text-sm">
+                <div>
+                    <h4 class="font-bold mb-4 text-white">STUDIO</h4>
+                    <ul class="space-y-2 text-gray-500">
+                        <li><a href="#" class="hover:text-white">Réserver</a></li>
+                        <li><a href="#" class="hover:text-white">Nos équipements</a></li>
+                        <li><a href="#" class="hover:text-white">Tarifs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4 text-white">LÉGAL</h4>
+                    <ul class="space-y-2 text-gray-500">
+                        <li><a href="#" class="hover:text-white">CGV</a></li>
+                        <li><a href="#" class="hover:text-white">Mentions Légales</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // Fonction pour changer les onglets Audio/Vidéo
-        function switchPricing(type) {
-            // Masquer les deux
-            document.getElementById('grid-video').classList.remove('active');
-            document.getElementById('grid-audio').classList.remove('active');
-            
-            // Retirer la classe active des boutons
-            const tabs = document.querySelectorAll('.pricing-tab');
-            tabs.forEach(t => t.classList.remove('active'));
+        gsap.registerPlugin(ScrollTrigger);
 
-            // Activer le bon
-            if(type === 'video') {
-                document.getElementById('grid-video').classList.add('active');
-                tabs[0].classList.add('active');
-            } else {
-                document.getElementById('grid-audio').classList.add('active');
-                tabs[1].classList.add('active');
-            }
-        }
-
-        window.addEventListener('load', () => {
-            gsap.registerPlugin(ScrollTrigger);
-            const tl = gsap.timeline();
-            tl.to(".intro-logo-anim", { opacity: 1, scale: 1.1, duration: 1.2, ease: "power2.out" })
-              .to("#intro-overlay", { opacity: 0, duration: 0.6, delay:0.2, onComplete: () => document.querySelector("#intro-overlay").style.display = "none" })
-              .to("#navbar", { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, "-=0.4");
-            
-            gsap.from(".gsap-hero", { opacity: 0, y: 50, duration: 1.2, stagger: 0.15, delay: 1.8, ease: "power3.out" });
-            
-            // Animation pour la nouvelle section "Stats"
-            gsap.utils.toArray('.gsap-reveal').forEach(text => {
-                gsap.from(text, {
-                    opacity: 0,
-                    y: 50,
-                    duration: 1,
+        // Animation d'apparition des textes
+        gsap.utils.toArray('.reveal-text').forEach(elem => {
+            gsap.fromTo(elem, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0, opacity: 1, duration: 1, ease: "power3.out",
                     scrollTrigger: {
-                        trigger: text,
-                        start: "top 80%",
-                        toggleActions: "play none none reverse"
+                        trigger: elem,
+                        start: "top 85%", 
                     }
-                });
-            });
-
-            if(window.innerWidth > 768) {
-                gsap.to(".timeline-progress", {
-                    height: "100%", ease: "none",
-                    scrollTrigger: { trigger: ".timeline-container", start: "top center", end: "bottom center", scrub: 0.5 }
-                });
-            }
+                }
+            );
         });
+
+        // Animation Logo Intro
+        const tl = gsap.timeline();
+        tl.to(".intro-logo-anim", { opacity: 1, scale: 1.1, duration: 1 })
+          .to("#intro-overlay", { opacity: 0, duration: 0.5, onComplete: () => document.querySelector("#intro-overlay").style.display = "none" });
+
     </script>
 </body>
 </html>
