@@ -8,12 +8,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-        /* --- VARIABLES BLEU NUIT --- */
+        /* --- VARIABLES --- */
         :root {
-            --blue-primary: #3b82f6; --blue-deep: #1d4ed8; --blue-glow: rgba(59, 130, 246, 0.6); --bg-dark: #050508;
+            /* Nouvelle couleur client */
+            --navy-brand: #131644; 
+            --blue-primary: #3b82f6; 
+            --blue-glow: rgba(59, 130, 246, 0.4); 
+            --bg-dark: #050508;
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: #ffffff; overflow-x: hidden; }
 
@@ -22,55 +26,71 @@
             position: relative; display: inline-flex; align-items: center; justify-content: center;
             font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem;
             overflow: hidden; transition: all 0.3s ease;
-            width: fit-content; min-width: 140px; padding: 12px 30px;
+            width: fit-content; min-width: 140px; padding: 12px 24px; /* Padding réduit un peu */
             border-radius: 9999px; white-space: nowrap; line-height: 1; cursor: pointer;
         }
-        .btn-hero { font-size: 0.9rem; padding: 16px 40px; min-width: 220px; }
+        .btn-hero { font-size: 0.9rem; padding: 16px 40px; min-width: 200px; }
         .btn-text-front { position: relative; display: block; transform: translateY(0); opacity: 1; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease; }
         .btn-text-back { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translateY(100%); opacity: 0; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease; }
         .btn-swap:hover .btn-text-front { transform: translateY(-150%); opacity: 0; }
         .btn-swap:hover .btn-text-back { transform: translateY(0); opacity: 1; }
-        .btn-swap:hover { box-shadow: 0 0 30px var(--blue-glow); transform: scale(1.05); }
-        .btn-primary-white { background: white; color: black; border: 1px solid white; }
+        .btn-swap:hover { box-shadow: 0 0 25px var(--blue-glow); transform: scale(1.05); }
+        
+        .btn-primary-white { background: white; color: var(--navy-brand); border: 1px solid white; }
         .btn-primary-white:hover { background: var(--blue-primary); color: white; border-color: var(--blue-primary); }
-        .btn-outline-blue { border: 1px solid rgba(59, 130, 246, 0.5); background: rgba(59, 130, 246, 0.1); color: white; }
+        
+        .btn-outline-blue { border: 1px solid rgba(59, 130, 246, 0.5); background: rgba(19, 22, 68, 0.4); color: white; }
         .btn-outline-blue:hover { background: var(--blue-primary); border-color: var(--blue-primary); }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR (Réduite selon demande) --- */
         .saas-nav { 
             position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999; 
-            background: rgba(8, 8, 12, 0.95); backdrop-filter: blur(20px); 
-            border: 1px solid rgba(59, 130, 246, 0.15); 
-            padding: 0.4rem 1.2rem; height: 54px; 
+            /* Utilisation du bleu nuit client avec transparence */
+            background: rgba(19, 22, 68, 0.85); backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            padding: 0.3rem 0.8rem; height: 50px; /* Plus compacte */
             border-radius: 9999px; display: flex; align-items: center; justify-content: space-between; 
-            width: 90%; max-width: 900px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); opacity: 0; 
+            width: auto; min-width: 300px; max-width: 650px; /* Largeur réduite pour éviter l'effet "vide" */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4); opacity: 0; 
+            gap: 2rem;
         }
-        .nav-link { font-size: 0.8rem; font-weight: 600; color: #aaa; transition: 0.2s; margin: 0 10px; }
-        .nav-link:hover { color: var(--blue-primary); }
+        .nav-link { font-size: 0.75rem; font-weight: 700; color: #ccc; transition: 0.2s; margin: 0 5px; text-transform: uppercase; letter-spacing: 0.05em;}
+        .nav-link:hover { color: white; }
 
         /* --- TYPO & EFFETS --- */
         .text-accent { background: linear-gradient(to right, #60a5fa, var(--blue-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px var(--blue-glow); }
-        .border-accent { border: 1px solid rgba(59, 130, 246, 0.3); }
+        .border-accent { border: 1px solid rgba(59, 130, 246, 0.2); }
         .hover-glow { transition: all 0.4s ease; }
-        .hover-glow:hover { transform: translateY(-5px); box-shadow: 0 0 40px var(--blue-glow), inset 0 0 20px rgba(59, 130, 246, 0.2); border-color: var(--blue-primary); z-index: 10; }
+        .hover-glow:hover { transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-color: var(--blue-primary); z-index: 10; }
 
         /* --- SECTIONS --- */
-        section { position: relative; width: 100%; padding: 60px 0; }
+        section { position: relative; width: 100%; padding: 80px 0; }
         
         /* HERO */
         .hero-section { height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; padding: 0; }
-        .hero-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 2, 5, 0.7); z-index: 1; }
+        .hero-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.6; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(5,5,8,0.3), var(--bg-dark)); z-index: 1; }
         .hero-content { position: relative; z-index: 10; width: 100%; max-width: 1400px; margin: 0 auto; padding-left: 5vw; display: flex; flex-direction: column; justify-content: center; height: 80%; }
 
         /* MARQUEE */
-        .marquee-hero { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, #000 20%, transparent); padding: 25px 0; z-index: 20; }
-        .marquee-wrapper { display: flex; width: max-content; animation: scroll 30s linear infinite; }
+        .marquee-hero { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, var(--bg-dark) 10%, transparent); padding: 25px 0; z-index: 20; }
+        .marquee-wrapper { display: flex; width: max-content; animation: scroll 40s linear infinite; }
         .marquee-content { display: flex; gap: 6rem; padding-right: 6rem; flex-shrink: 0; align-items: center; }
-        /* Style des logos amélioré */
-        .partner-logo { font-size: 1.5rem; font-weight: 900; color: #555; display: flex; align-items: center; gap: 10px; white-space: nowrap; letter-spacing: -0.02em; transition: 0.3s; }
+        .partner-logo { font-size: 1.5rem; font-weight: 900; color: rgba(255,255,255,0.3); display: flex; align-items: center; gap: 10px; white-space: nowrap; letter-spacing: -0.02em; transition: 0.3s; }
         .partner-logo:hover { color: #fff; text-shadow: 0 0 15px var(--blue-primary); }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* --- STATS SECTION (STYLE PODSPACE) --- */
+        .stats-section { padding: 100px 0; overflow: hidden; }
+        .big-stat-text { font-size: 4rem; line-height: 1.1; font-weight: 800; color: #444; transition: color 0.5s; }
+        .big-stat-text strong { color: white; font-weight: 900; }
+        .big-stat-text:hover { color: #666; }
+        .stat-icon { display: inline-block; width: 60px; height: 60px; background: var(--navy-brand); border-radius: 50%; vertical-align: middle; margin: 0 15px; border: 2px solid var(--blue-primary); transform: translateY(-10px); }
+        
+        @media (max-width: 768px) {
+            .big-stat-text { font-size: 2.5rem; }
+            .stat-icon { width: 40px; height: 40px; }
+        }
 
         /* --- TIMELINE --- */
         .timeline-container { position: relative; max-width: 900px; margin: 0 auto; padding: 20px 0; }
@@ -90,26 +110,36 @@
         }
 
         /* --- TARIFS --- */
+        .pricing-section { padding-bottom: 100px; }
         .pricing-scroll-container { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 5vw 40px 5vw; -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-behavior: smooth; }
         .pricing-scroll-container::-webkit-scrollbar { display: none; }
-        .pricing-card { flex: 0 0 320px; scroll-snap-align: center; background: #0a0a0a; border: 1px solid #222; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 480px; }
-        .pricing-card.white-card { background: #fff !important; color: #000 !important; border: none; transform: scale(1.05); z-index: 10; box-shadow: 0 0 50px rgba(59, 130, 246, 0.3); }
+        
+        .pricing-group-label {
+            writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+            font-weight: 900; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--blue-primary);
+            padding: 0 10px; border-left: 1px solid rgba(59,130,246,0.3); opacity: 0.7;
+        }
+
+        .pricing-card { flex: 0 0 320px; scroll-snap-align: center; background: #0e0e12; border: 1px solid #222; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 480px; transition: 0.3s; }
+        .pricing-card.white-card { background: #fff !important; color: #000 !important; border: none; transform: scale(1.05); z-index: 10; box-shadow: 0 0 50px rgba(59, 130, 246, 0.2); }
         .pricing-card.white-card * { color: #000 !important; border-color: rgba(0,0,0,0.1) !important; }
-        .pricing-card.white-card .btn-swap { background: var(--blue-primary) !important; color: #fff !important; }
+        .pricing-card.white-card .btn-swap { background: var(--navy-brand) !important; color: #fff !important; }
+        
         .price-list li { display: flex; gap: 8px; margin-bottom: 8px; font-size: 0.85rem; color: #888; font-weight: 500; }
         .card-price { font-size: 3rem; font-weight: 900; line-height: 1; margin: 0.8rem 0; }
+        
         .pricing-controls { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
         .control-btn { width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.1); color: var(--blue-primary); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
         .control-btn:hover { background: var(--blue-primary); color: #fff; box-shadow: 0 0 30px var(--blue-glow); transform: scale(1.1); border-color: var(--blue-primary); }
 
         /* --- FAQ --- */
-        .flip-container { perspective: 1000px; height: 100px; width: 100%; cursor: pointer; margin-bottom: 0.8rem; }
+        .flip-container { perspective: 1000px; height: 80px; width: 100%; cursor: pointer; margin-bottom: 0.8rem; }
         .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; border-radius: 1rem; }
         .flip-container:hover .flip-inner, .flip-container.active .flip-inner { transform: rotateX(180deg); }
         .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 1rem; padding: 0 2rem; display: flex; align-items: center; border: 1px solid #1a1a1a; }
-        .flip-front { background: #0a0a0a; justify-content: flex-start; text-align: left; }
-        .flip-front:hover { border-color: var(--blue-primary); background: #0f0f12; }
-        .flip-back { background: #0a0a10; transform: rotateX(180deg); border-color: var(--blue-primary); justify-content: center; text-align: center; }
+        .flip-front { background: #0e0e12; justify-content: flex-start; text-align: left; }
+        .flip-front:hover { border-color: var(--blue-primary); }
+        .flip-back { background: var(--navy-brand); transform: rotateX(180deg); border-color: var(--blue-primary); justify-content: center; text-align: center; }
 
         /* --- ELEMENTS --- */
         .glass-card { background: linear-gradient(180deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%); border: 1px solid rgba(59, 130, 246, 0.15); backdrop-filter: blur(15px); }
@@ -119,7 +149,7 @@
         
         /* --- LET'S RECORD (AGRANDIE) --- */
         .lets-record-section { 
-            padding: 160px 0; /* Agrandissement V25 */
+            padding: 160px 0; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
             background: var(--bg-dark); position: relative; z-index: 10; 
         }
@@ -143,19 +173,19 @@
     </div>
 
     <nav class="saas-nav" id="navbar">
-        <a href="#" class="hover:opacity-80 transition shrink-0 pr-4 flex items-center">
-            <img src="votre-logo.webp" alt="Podblend Logo" class="h-6 w-auto object-contain">
+        <a href="#" class="hover:opacity-80 transition shrink-0 flex items-center">
+            <img src="votre-logo.webp" alt="Podblend Logo" class="h-5 w-auto object-contain">
         </a>
-        <div class="hidden md:flex items-center">
-            <a href="#studio" class="nav-link text-xs uppercase tracking-wider">Le Studio</a>
-            <a href="#tarifs" class="nav-link text-xs uppercase tracking-wider">Tarifs</a>
+        <div class="hidden md:flex items-center gap-4">
+            <a href="#studio" class="nav-link">Studio</a>
+            <a href="#tarifs" class="nav-link">Tarifs</a>
         </div>
-        <div class="flex items-center gap-3">
-            <a href="https://podblend.fr/connexion" class="hidden md:flex border border-blue-500/40 bg-blue-900/20 btn-swap text-[10px] px-3">
-                <span class="btn-text-front">Espace Client</span>
+        <div class="flex items-center gap-2">
+            <a href="https://podblend.fr/connexion" class="hidden md:flex border border-white/20 bg-transparent hover:bg-white/10 btn-swap text-[10px] px-3" style="min-width: 100px;">
+                <span class="btn-text-front">Client</span>
                 <span class="btn-text-back">Connexion</span>
             </a>
-            <a href="#booking" class="bg-white text-black btn-swap btn-primary-white text-[10px] px-4">
+            <a href="#booking" class="bg-white text-[#131644] btn-swap btn-primary-white text-[10px] px-3" style="min-width: 110px;">
                 <span class="btn-text-front">Réserver</span>
                 <span class="btn-text-back">Let's Go</span>
             </a>
@@ -175,11 +205,11 @@
             </h1>
             
             <div class="flex flex-col md:flex-row gap-4 justify-start gsap-hero">
-                <a href="#booking" class="bg-white text-black shadow-xl shadow-blue-500/40 btn-swap btn-primary-white btn-hero">
+                <a href="#booking" class="bg-white text-[#131644] shadow-xl shadow-blue-500/20 btn-swap btn-primary-white btn-hero">
                     <span class="btn-text-front">Réserver ma session</span>
                     <span class="btn-text-back">Réserver ma session</span>
                 </a>
-                <a href="#studio" class="border-2 border-blue-500/40 bg-blue-900/20 backdrop-blur-md text-white btn-swap btn-outline-blue btn-hero">
+                <a href="#studio" class="border-2 border-blue-500/40 bg-[#131644]/40 backdrop-blur-md text-white btn-swap btn-outline-blue btn-hero">
                     <span class="btn-text-front">Découvrir le lieu</span>
                     <span class="btn-text-back">Découvrir le lieu</span>
                 </a>
@@ -205,6 +235,22 @@
                     <div class="partner-logo">EARS360</div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="stats-section bg-white text-black">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+             <div class="big-stat-text gsap-reveal">
+                On cumule plus de <br>
+                <strong>3000 Clients</strong>
+                <span class="stat-icon flex items-center justify-center text-white text-xs">★</span>
+                satisfaits.
+             </div>
+             <div class="w-full h-[1px] bg-gray-200 my-12"></div>
+             <div class="big-stat-text gsap-reveal">
+                Et des millions de vues <br>
+                à travers <span class="stat-icon flex items-center justify-center text-white text-xs">Start</span> <strong>le monde.</strong>
+             </div>
         </div>
     </section>
 
@@ -251,7 +297,7 @@
         </div>
     </section>
 
-    <section id="tarifs" class="standard-section">
+    <section id="tarifs" class="standard-section pricing-section">
         <div class="text-center mb-8 px-4">
             <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">NOS OFFRES<span class="text-accent">.</span></h2>
             <div class="pricing-controls">
@@ -260,24 +306,31 @@
             </div>
         </div>
         <div class="pricing-scroll-container" id="pricingContainer">
-            <div class="pricing-card hover-glow">
+            
+            <div class="pricing-group-label">AUDIO</div>
+            <div class="pricing-card hover-glow" style="border-color: rgba(255,255,255,0.1);">
                 <div>
-                    <span class="text-xs font-bold text-blue-400 uppercase border-2 border-blue-500/30 px-3 py-1 rounded-full tracking-widest">Audio</span>
-                    <h3 class="text-xl font-black mt-4 text-white">Audio Simple</h3>
+                    <span class="text-xs font-bold text-gray-400 uppercase border border-gray-600 px-3 py-1 rounded-full tracking-widest">Podcast Audio</span>
+                    <h3 class="text-xl font-black mt-4 text-white">Audio Only</h3>
                     <div class="card-price">50€</div>
                     <ul class="price-list"><li>✓ Opérateur sur place</li><li>✓ 4 micros Shure MV7+</li><li>✓ Fichiers jour même</li></ul>
                 </div>
                 <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
             </div>
+
+            <div style="width: 1px; background: rgba(255,255,255,0.1); margin: 0 10px;"></div>
+
+            <div class="pricing-group-label">STUDIO VIDEO</div>
             <div class="pricing-card white-card relative overflow-hidden hover-glow">
-                <div class="mb-4"><span class="inline-block bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full tracking-widest">POPULAIRE</span></div>
+                <div class="mb-4"><span class="inline-block bg-[#131644] text-white text-[10px] font-black px-3 py-1 rounded-full tracking-widest">BEST SELLER</span></div>
                 <div>
                     <h3 class="text-2xl font-black mt-2 text-black">Initiale</h3>
                     <div class="card-price text-black">100€</div>
                     <ul class="price-list"><li class="text-gray-600">✓ 3 Caméras Sony 4K</li><li class="text-gray-600">✓ 4 Micros Shure</li><li class="text-gray-600">✓ Choix du décor</li><li class="text-gray-600">✓ Fichiers bruts 48h</li></ul>
                 </div>
-                <a href="#booking" class="btn-swap w-full shadow-lg btn-standard" style="background: var(--blue-primary); color: white;"><span class="btn-text-front">Réserver Initiale</span><span class="btn-text-back">Réserver Initiale</span></a>
+                <a href="#booking" class="btn-swap w-full shadow-lg btn-standard" style="background: var(--navy-brand); color: white;"><span class="btn-text-front">Réserver Initiale</span><span class="btn-text-back">Réserver Initiale</span></a>
             </div>
+            
             <div class="pricing-card hover-glow">
                 <div>
                     <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Post-Prod</span>
@@ -287,6 +340,7 @@
                 </div>
                 <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
             </div>
+            
             <div class="pricing-card hover-glow">
                 <div>
                     <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Montage</span>
@@ -296,6 +350,7 @@
                 </div>
                 <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
             </div>
+            
             <div class="pricing-card hover-glow">
                 <div>
                     <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">All-In</span>
@@ -305,10 +360,7 @@
                 </div>
                 <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
             </div>
-            <div class="pricing-card hover-glow">
-                <div>
-                     </div>
-            </div>
+            
             <div style="flex: 0 0 20px;"></div>
         </div>
     </section>
@@ -333,7 +385,7 @@
     <section class="lets-record-section">
         <p class="text-accent text-xs font-black tracking-[0.5em] uppercase mb-6 animate-pulse">READY TO CREATE ?</p>
         <h2 class="big-text font-extrabold tracking-tighter text-white">LET'S RECORD.</h2>
-        <a href="#booking" class="inline-block bg-white text-black shadow-[0_0_60px_rgba(59,130,246,0.5)] mt-8 btn-swap btn-primary-white btn-hero">
+        <a href="#booking" class="inline-block bg-white text-[#131644] shadow-[0_0_60px_rgba(59,130,246,0.5)] mt-8 btn-swap btn-primary-white btn-hero">
             <span class="btn-text-front">Réserver maintenant</span>
             <span class="btn-text-back">Réserver maintenant</span>
         </a>
@@ -368,7 +420,7 @@
                 </div>
             </div>
             <div class="footer-map">
-                <iframe title="Carte localisation studio" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2621.8569941328!2d2.295287076412613!3d48.91811907134076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66f6cb8d48897%3A0x463273427977053e!2s12%20Pl.%20Indira%20Gandhi%2C%2092230%20Gennevilliers!5e0!3m2!1sfr!2sfr!4v1705000000000!5m2!1sfr!2sfr" width="100%" height="100%" style="border:0; filter: grayscale(100%) sepia(20%) hue-rotate(190deg) saturate(300%) contrast(1.2);" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2621.8569941328!2d2.295287076412613!3d48.91811907134076!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66f6cb8d48897%3A0x463273427977053e!2s12%20Pl.%20Indira%20Gandhi%2C%2092230%20Gennevilliers!5e0!3m2!1sfr!2sfr!4v1705000000000!5m2!1sfr!2sfr" width="100%" height="100%" style="border:0; filter: grayscale(100%) sepia(20%) hue-rotate(190deg) saturate(300%) contrast(1.2);" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </footer>
@@ -383,6 +435,20 @@
             
             gsap.from(".gsap-hero", { opacity: 0, y: 50, duration: 1.2, stagger: 0.15, delay: 1.8, ease: "power3.out" });
             
+            // Animation pour la nouvelle section "Stats"
+            gsap.utils.toArray('.gsap-reveal').forEach(text => {
+                gsap.from(text, {
+                    opacity: 0,
+                    y: 50,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: text,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+
             if(window.innerWidth > 768) {
                 gsap.to(".timeline-progress", {
                     height: "100%", ease: "none",
