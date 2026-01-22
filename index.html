@@ -13,20 +13,30 @@
     <style>
         /* --- VARIABLES --- */
         :root {
-            /* Nouvelle couleur client */
             --navy-brand: #131644; 
             --blue-primary: #3b82f6; 
-            --blue-glow: rgba(59, 130, 246, 0.4); 
+            --blue-glow: rgba(59, 130, 246, 0.5); 
             --bg-dark: #050508;
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: #ffffff; overflow-x: hidden; }
+
+        /* --- EFFET STACKING CARDS (PODSPACE STYLE) --- */
+        /* Chaque section majeure devient une "carte" qui colle en haut */
+        .sticky-card {
+            position: sticky;
+            top: 0;
+            min-height: 100vh; /* Prend toute la hauteur */
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 -10px 50px rgba(0,0,0,0.5); /* Ombre pour détacher les cartes */
+        }
 
         /* --- CORRECTION BOUTONS --- */
         .btn-swap {
             position: relative; display: inline-flex; align-items: center; justify-content: center;
             font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem;
             overflow: hidden; transition: all 0.3s ease;
-            width: fit-content; min-width: 140px; padding: 12px 24px; /* Padding réduit un peu */
+            width: fit-content; min-width: 140px; padding: 12px 24px;
             border-radius: 9999px; white-space: nowrap; line-height: 1; cursor: pointer;
         }
         .btn-hero { font-size: 0.9rem; padding: 16px 40px; min-width: 200px; }
@@ -42,15 +52,14 @@
         .btn-outline-blue { border: 1px solid rgba(59, 130, 246, 0.5); background: rgba(19, 22, 68, 0.4); color: white; }
         .btn-outline-blue:hover { background: var(--blue-primary); border-color: var(--blue-primary); }
 
-        /* --- NAVBAR (Réduite selon demande) --- */
+        /* --- NAVBAR --- */
         .saas-nav { 
             position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999; 
-            /* Utilisation du bleu nuit client avec transparence */
             background: rgba(19, 22, 68, 0.85); backdrop-filter: blur(15px); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
-            padding: 0.3rem 0.8rem; height: 50px; /* Plus compacte */
+            padding: 0.3rem 0.8rem; height: 50px;
             border-radius: 9999px; display: flex; align-items: center; justify-content: space-between; 
-            width: auto; min-width: 300px; max-width: 650px; /* Largeur réduite pour éviter l'effet "vide" */
+            width: auto; min-width: 300px; max-width: 650px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.4); opacity: 0; 
             gap: 2rem;
         }
@@ -63,14 +72,13 @@
         .hover-glow { transition: all 0.4s ease; }
         .hover-glow:hover { transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-color: var(--blue-primary); z-index: 10; }
 
-        /* --- SECTIONS --- */
-        section { position: relative; width: 100%; padding: 80px 0; }
+        /* --- SECTIONS CONTENT --- */
         
         /* HERO */
-        .hero-section { height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; padding: 0; }
+        .hero-section { display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; padding: 0; background: var(--bg-dark); }
         .hero-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.6; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(5,5,8,0.3), var(--bg-dark)); z-index: 1; }
-        .hero-content { position: relative; z-index: 10; width: 100%; max-width: 1400px; margin: 0 auto; padding-left: 5vw; display: flex; flex-direction: column; justify-content: center; height: 80%; }
+        .hero-content { position: relative; z-index: 10; width: 100%; max-width: 1400px; margin: 0 auto; padding-left: 5vw; display: flex; flex-direction: column; justify-content: center; height: 100%; }
 
         /* MARQUEE */
         .marquee-hero { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, var(--bg-dark) 10%, transparent); padding: 25px 0; z-index: 20; }
@@ -80,20 +88,48 @@
         .partner-logo:hover { color: #fff; text-shadow: 0 0 15px var(--blue-primary); }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- STATS SECTION (STYLE PODSPACE) --- */
-        .stats-section { padding: 100px 0; overflow: hidden; }
-        .big-stat-text { font-size: 4rem; line-height: 1.1; font-weight: 800; color: #444; transition: color 0.5s; }
-        .big-stat-text strong { color: white; font-weight: 900; }
-        .big-stat-text:hover { color: #666; }
-        .stat-icon { display: inline-block; width: 60px; height: 60px; background: var(--navy-brand); border-radius: 50%; vertical-align: middle; margin: 0 15px; border: 2px solid var(--blue-primary); transform: translateY(-10px); }
+        /* --- STATS SECTION (DA PODBLEND) --- */
+        .stats-section { 
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0a0a0f 100%); /* Fond sombre dégradé */
+            border-top: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        .stats-content { width: 100%; max-width: 7xl; margin: 0 auto; text-align: center; padding: 0 20px; }
+        
+        .big-stat-text { 
+            font-size: 4rem; line-height: 1.1; font-weight: 800; color: #888; transition: color 0.5s; 
+        }
+        /* Adaptation DA : Texte blanc et accent bleu au lieu de noir/gris */
+        .big-stat-text strong { 
+            background: linear-gradient(to right, #fff, #bbb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 900; 
+        }
+        .big-stat-text .highlight-blue {
+            color: var(--blue-primary);
+            text-shadow: 0 0 30px var(--blue-glow);
+            -webkit-text-fill-color: var(--blue-primary);
+        }
+        
+        .stat-icon { 
+            display: inline-flex; width: 50px; height: 50px; 
+            background: rgba(59, 130, 246, 0.1); border: 1px solid var(--blue-primary); 
+            border-radius: 50%; vertical-align: middle; margin: 0 15px; 
+            align-items: center; justify-content: center;
+            box-shadow: 0 0 20px var(--blue-glow);
+            transform: translateY(-8px);
+        }
         
         @media (max-width: 768px) {
             .big-stat-text { font-size: 2.5rem; }
-            .stat-icon { width: 40px; height: 40px; }
+            .stat-icon { width: 36px; height: 36px; font-size: 0.8rem; }
         }
 
-        /* --- TIMELINE --- */
-        .timeline-container { position: relative; max-width: 900px; margin: 0 auto; padding: 20px 0; }
+        /* --- STUDIO --- */
+        .studio-section { background: #08080a; display: flex; flex-direction: column; justify-content: center; }
+
+        /* --- PROCESS --- */
+        .process-section { background: var(--bg-dark); display: flex; flex-direction: column; justify-content: center; }
+        .timeline-container { position: relative; max-width: 900px; margin: 0 auto; width: 100%; }
         .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 1px; background: rgba(59, 130, 246, 0.2); }
         .timeline-progress { position: absolute; left: 20px; top: 0; width: 3px; height: 0%; background: var(--blue-primary); transition: height 0.1s linear; box-shadow: 0 0 15px var(--blue-glow); }
         .timeline-item { position: relative; margin-bottom: 50px; width: 100%; display: flex; flex-direction: column; padding-left: 70px; }
@@ -110,7 +146,7 @@
         }
 
         /* --- TARIFS --- */
-        .pricing-section { padding-bottom: 100px; }
+        .pricing-section { background: #050508; display: flex; flex-direction: column; justify-content: center; }
         .pricing-scroll-container { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 5vw 40px 5vw; -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-behavior: smooth; }
         .pricing-scroll-container::-webkit-scrollbar { display: none; }
         
@@ -132,7 +168,10 @@
         .control-btn { width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.1); color: var(--blue-primary); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
         .control-btn:hover { background: var(--blue-primary); color: #fff; box-shadow: 0 0 30px var(--blue-glow); transform: scale(1.1); border-color: var(--blue-primary); }
 
-        /* --- FAQ --- */
+        /* --- FAQ & FOOTER (Dernière carte qui ne stick pas forcément ou si) */
+        .footer-section { background: var(--bg-dark); position: relative; z-index: 20; }
+        
+        /* FAQ */
         .flip-container { perspective: 1000px; height: 80px; width: 100%; cursor: pointer; margin-bottom: 0.8rem; }
         .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; border-radius: 1rem; }
         .flip-container:hover .flip-inner, .flip-container.active .flip-inner { transform: rotateX(180deg); }
@@ -147,7 +186,6 @@
         .hover-glow:hover .img-placeholder { border-color: var(--blue-primary); }
         #intro-overlay { position: fixed; inset: 0; background: #000; z-index: 99999; display: flex; align-items: center; justify-content: center; }
         
-        /* --- LET'S RECORD (AGRANDIE) --- */
         .lets-record-section { 
             padding: 160px 0; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
@@ -192,7 +230,7 @@
         </div>
     </nav>
 
-    <section class="hero-section relative">
+    <section class="sticky-card hero-section">
         <video autoplay loop muted playsinline class="hero-video-bg">
             <source src="hero-video.mp4" type="video/mp4">
         </video>
@@ -238,24 +276,24 @@
         </div>
     </section>
 
-    <section class="stats-section bg-white text-black">
-        <div class="max-w-7xl mx-auto px-6 text-center">
+    <section class="sticky-card stats-section">
+        <div class="stats-content">
              <div class="big-stat-text gsap-reveal">
                 On cumule plus de <br>
-                <strong>3000 Clients</strong>
-                <span class="stat-icon flex items-center justify-center text-white text-xs">★</span>
+                <strong class="highlight-blue">3000 Clients</strong>
+                <span class="stat-icon text-white text-xl">★</span>
                 satisfaits.
              </div>
-             <div class="w-full h-[1px] bg-gray-200 my-12"></div>
+             <div class="w-2/3 mx-auto h-[1px] bg-gradient-to-r from-transparent via-blue-900 to-transparent my-12 opacity-50"></div>
              <div class="big-stat-text gsap-reveal">
                 Et des millions de vues <br>
-                à travers <span class="stat-icon flex items-center justify-center text-white text-xs">Start</span> <strong>le monde.</strong>
+                à travers <span class="stat-icon text-white text-xs">▲</span> <strong class="highlight-blue">le monde.</strong>
              </div>
         </div>
     </section>
 
-    <section id="studio" class="standard-section">
-        <div class="max-w-7xl mx-auto px-6 text-center">
+    <section id="studio" class="sticky-card studio-section">
+        <div class="max-w-7xl mx-auto px-6 text-center w-full">
             <div class="mb-10">
                 <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">UN LIEU. <span class="text-accent">PLUSIEURS AMBIANCES.</span></h2>
                 <p class="text-blue-200 text-lg max-w-2xl mx-auto">Choisissez le set qui correspond à votre identité.</p>
@@ -283,8 +321,8 @@
         </div>
     </section>
 
-    <section id="process" class="bg-[#020204] standard-section">
-        <div class="max-w-5xl mx-auto px-6">
+    <section id="process" class="sticky-card process-section">
+        <div class="max-w-5xl mx-auto px-6 w-full">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">LA MÉTHODE POUR <span class="text-accent">EXPLOSER.</span></h2>
             </div>
@@ -297,119 +335,122 @@
         </div>
     </section>
 
-    <section id="tarifs" class="standard-section pricing-section">
-        <div class="text-center mb-8 px-4">
-            <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">NOS OFFRES<span class="text-accent">.</span></h2>
-            <div class="pricing-controls">
-                <button class="control-btn" id="scrollLeft">←</button>
-                <button class="control-btn" id="scrollRight">→</button>
-            </div>
-        </div>
-        <div class="pricing-scroll-container" id="pricingContainer">
-            
-            <div class="pricing-group-label">AUDIO</div>
-            <div class="pricing-card hover-glow" style="border-color: rgba(255,255,255,0.1);">
-                <div>
-                    <span class="text-xs font-bold text-gray-400 uppercase border border-gray-600 px-3 py-1 rounded-full tracking-widest">Podcast Audio</span>
-                    <h3 class="text-xl font-black mt-4 text-white">Audio Only</h3>
-                    <div class="card-price">50€</div>
-                    <ul class="price-list"><li>✓ Opérateur sur place</li><li>✓ 4 micros Shure MV7+</li><li>✓ Fichiers jour même</li></ul>
-                </div>
-                <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-            </div>
-
-            <div style="width: 1px; background: rgba(255,255,255,0.1); margin: 0 10px;"></div>
-
-            <div class="pricing-group-label">STUDIO VIDEO</div>
-            <div class="pricing-card white-card relative overflow-hidden hover-glow">
-                <div class="mb-4"><span class="inline-block bg-[#131644] text-white text-[10px] font-black px-3 py-1 rounded-full tracking-widest">BEST SELLER</span></div>
-                <div>
-                    <h3 class="text-2xl font-black mt-2 text-black">Initiale</h3>
-                    <div class="card-price text-black">100€</div>
-                    <ul class="price-list"><li class="text-gray-600">✓ 3 Caméras Sony 4K</li><li class="text-gray-600">✓ 4 Micros Shure</li><li class="text-gray-600">✓ Choix du décor</li><li class="text-gray-600">✓ Fichiers bruts 48h</li></ul>
-                </div>
-                <a href="#booking" class="btn-swap w-full shadow-lg btn-standard" style="background: var(--navy-brand); color: white;"><span class="btn-text-front">Réserver Initiale</span><span class="btn-text-back">Réserver Initiale</span></a>
-            </div>
-            
-            <div class="pricing-card hover-glow">
-                <div>
-                    <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Post-Prod</span>
-                    <h3 class="text-xl font-black mt-4 text-white">Audio +</h3>
-                    <div class="card-price">100€</div>
-                    <ul class="price-list"><li>✓ Formule Audio incluse</li><li>✓ Nettoyage & Mixage</li><li>✓ Livraison 48h</li></ul>
-                </div>
-                <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-            </div>
-            
-            <div class="pricing-card hover-glow">
-                <div>
-                    <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Montage</span>
-                    <h3 class="text-xl font-black mt-4 text-white">Édition</h3>
-                    <div class="card-price">130€</div>
-                    <ul class="price-list"><li>✓ Formule Initial incluse</li><li>✓ Pré-montage multicam</li><li>✓ Sync Audio/Vidéo</li></ul>
-                </div>
-                <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-            </div>
-            
-            <div class="pricing-card hover-glow">
-                <div>
-                    <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">All-In</span>
-                    <h3 class="text-xl font-black mt-4 text-white">Complète</h3>
-                    <div class="card-price">320€</div>
-                    <ul class="price-list"><li>✓ Dérush & 2 révisions</li><li>✓ Intro dynamique</li><li>✓ Livraison 8 jours</li></ul>
-                </div>
-                <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-            </div>
-            
-            <div style="flex: 0 0 20px;"></div>
-        </div>
-    </section>
-
-    <section class="bg-[#020204] standard-section">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-12 gap-16 items-start">
-                <div class="md:col-span-4 mb-8 md:mb-0 sticky top-40">
-                    <h2 class="text-3xl md:text-5xl font-black mb-6 leading-none tracking-tight">QUESTIONS <br><span class="text-accent">FRÉQUENTES.</span></h2>
-                    <a href="mailto:contact@podblend.fr" class="text-base font-bold border-b-2 border-blue-500 pb-1 hover:text-blue-300 transition">Une question spécifique ?</a>
-                </div>
-                <div class="md:col-span-8 flex flex-col gap-6">
-                    <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Où se trouve le studio ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">À <strong class="text-white">Gennevilliers</strong> (92). RER C.</p></div></div></div>
-                    <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Format des fichiers ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">Vidéo <strong class="text-white">.MP4</strong> et Audio <strong class="text-white">.WAV</strong>.</p></div></div></div>
-                    <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Besoin d'une carte SD ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200"><strong class="text-white">Non</strong>. Tout est fourni via cloud.</p></div></div></div>
-                    <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Annulation ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">Possible sans frais jusqu'à <strong class="text-white">48h</strong> avant.</p></div></div></div>
+    <section id="tarifs" class="sticky-card pricing-section">
+        <div class="w-full">
+            <div class="text-center mb-8 px-4">
+                <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">NOS OFFRES<span class="text-accent">.</span></h2>
+                <div class="pricing-controls">
+                    <button class="control-btn" id="scrollLeft">←</button>
+                    <button class="control-btn" id="scrollRight">→</button>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section class="lets-record-section">
-        <p class="text-accent text-xs font-black tracking-[0.5em] uppercase mb-6 animate-pulse">READY TO CREATE ?</p>
-        <h2 class="big-text font-extrabold tracking-tighter text-white">LET'S RECORD.</h2>
-        <a href="#booking" class="inline-block bg-white text-[#131644] shadow-[0_0_60px_rgba(59,130,246,0.5)] mt-8 btn-swap btn-primary-white btn-hero">
-            <span class="btn-text-front">Réserver maintenant</span>
-            <span class="btn-text-back">Réserver maintenant</span>
-        </a>
-    </section>
-
-    <div class="footer-separator-halo"></div>
-
-    <footer class="footer-small">
-        <div class="footer-grid">
-            <div>
-                <img src="votre-logo.webp" alt="Podblend Logo" class="h-12 md:h-16 w-auto mb-6 opacity-90">
-                <p class="text-gray-300 mb-2 text-sm font-medium">12 Place Indira Gandhi, 92230 Gennevilliers</p>
-                <div class="grid grid-cols-2 gap-8 mt-8">
+            <div class="pricing-scroll-container" id="pricingContainer">
+                
+                <div class="pricing-group-label">AUDIO</div>
+                <div class="pricing-card hover-glow" style="border-color: rgba(255,255,255,0.1);">
                     <div>
-                        <h4 class="text-white font-black uppercase tracking-widest mb-3 text-xs">Navigation</h4>
-                        <ul class="space-y-2 text-sm text-gray-400 font-medium">
-                            <li><a href="#studio" class="hover:text-blue-400 transition">Le Studio</a></li>
-                            <li><a href="#tarifs" class="hover:text-blue-400 transition">Tarifs</a></li>
-                        </ul>
+                        <span class="text-xs font-bold text-gray-400 uppercase border border-gray-600 px-3 py-1 rounded-full tracking-widest">Podcast Audio</span>
+                        <h3 class="text-xl font-black mt-4 text-white">Audio Only</h3>
+                        <div class="card-price">50€</div>
+                        <ul class="price-list"><li>✓ Opérateur sur place</li><li>✓ 4 micros Shure MV7+</li><li>✓ Fichiers jour même</li></ul>
                     </div>
+                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
+                </div>
+
+                <div style="width: 1px; background: rgba(255,255,255,0.1); margin: 0 10px;"></div>
+
+                <div class="pricing-group-label">STUDIO VIDEO</div>
+                <div class="pricing-card white-card relative overflow-hidden hover-glow">
+                    <div class="mb-4"><span class="inline-block bg-[#131644] text-white text-[10px] font-black px-3 py-1 rounded-full tracking-widest">BEST SELLER</span></div>
                     <div>
-                        <h4 class="text-white font-black uppercase tracking-widest mb-3 text-xs">Légal & Social</h4>
-                        <div class="flex gap-4 mb-4">
-                            <a href="https://www.instagram.com/podblend.fr/" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                        <h3 class="text-2xl font-black mt-2 text-black">Initiale</h3>
+                        <div class="card-price text-black">100€</div>
+                        <ul class="price-list"><li class="text-gray-600">✓ 3 Caméras Sony 4K</li><li class="text-gray-600">✓ 4 Micros Shure</li><li class="text-gray-600">✓ Choix du décor</li><li class="text-gray-600">✓ Fichiers bruts 48h</li></ul>
+                    </div>
+                    <a href="#booking" class="btn-swap w-full shadow-lg btn-standard" style="background: var(--navy-brand); color: white;"><span class="btn-text-front">Réserver Initiale</span><span class="btn-text-back">Réserver Initiale</span></a>
+                </div>
+                
+                <div class="pricing-card hover-glow">
+                    <div>
+                        <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Post-Prod</span>
+                        <h3 class="text-xl font-black mt-4 text-white">Audio +</h3>
+                        <div class="card-price">100€</div>
+                        <ul class="price-list"><li>✓ Formule Audio incluse</li><li>✓ Nettoyage & Mixage</li><li>✓ Livraison 48h</li></ul>
+                    </div>
+                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
+                </div>
+                
+                <div class="pricing-card hover-glow">
+                    <div>
+                        <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Montage</span>
+                        <h3 class="text-xl font-black mt-4 text-white">Édition</h3>
+                        <div class="card-price">130€</div>
+                        <ul class="price-list"><li>✓ Formule Initial incluse</li><li>✓ Pré-montage multicam</li><li>✓ Sync Audio/Vidéo</li></ul>
+                    </div>
+                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
+                </div>
+                
+                <div class="pricing-card hover-glow">
+                    <div>
+                        <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">All-In</span>
+                        <h3 class="text-xl font-black mt-4 text-white">Complète</h3>
+                        <div class="card-price">320€</div>
+                        <ul class="price-list"><li>✓ Dérush & 2 révisions</li><li>✓ Intro dynamique</li><li>✓ Livraison 8 jours</li></ul>
+                    </div>
+                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
+                </div>
+                
+                <div style="flex: 0 0 20px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer-section">
+        <section class="bg-[#020204] standard-section">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid md:grid-cols-12 gap-16 items-start">
+                    <div class="md:col-span-4 mb-8 md:mb-0 sticky top-40">
+                        <h2 class="text-3xl md:text-5xl font-black mb-6 leading-none tracking-tight">QUESTIONS <br><span class="text-accent">FRÉQUENTES.</span></h2>
+                        <a href="mailto:contact@podblend.fr" class="text-base font-bold border-b-2 border-blue-500 pb-1 hover:text-blue-300 transition">Une question spécifique ?</a>
+                    </div>
+                    <div class="md:col-span-8 flex flex-col gap-6">
+                        <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Où se trouve le studio ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">À <strong class="text-white">Gennevilliers</strong> (92). RER C.</p></div></div></div>
+                        <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Format des fichiers ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">Vidéo <strong class="text-white">.MP4</strong> et Audio <strong class="text-white">.WAV</strong>.</p></div></div></div>
+                        <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Besoin d'une carte SD ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200"><strong class="text-white">Non</strong>. Tout est fourni via cloud.</p></div></div></div>
+                        <div class="flip-container" onclick="this.classList.toggle('active')"><div class="flip-inner"><div class="flip-front"><h3 class="text-xl font-bold pl-4">Annulation ?</h3></div><div class="flip-back"><p class="text-sm text-blue-200">Possible sans frais jusqu'à <strong class="text-white">48h</strong> avant.</p></div></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="lets-record-section">
+            <p class="text-accent text-xs font-black tracking-[0.5em] uppercase mb-6 animate-pulse">READY TO CREATE ?</p>
+            <h2 class="big-text font-extrabold tracking-tighter text-white">LET'S RECORD.</h2>
+            <a href="#booking" class="inline-block bg-white text-[#131644] shadow-[0_0_60px_rgba(59,130,246,0.5)] mt-8 btn-swap btn-primary-white btn-hero">
+                <span class="btn-text-front">Réserver maintenant</span>
+                <span class="btn-text-back">Réserver maintenant</span>
+            </a>
+        </section>
+
+        <div class="footer-separator-halo"></div>
+
+        <footer class="footer-small">
+            <div class="footer-grid">
+                <div>
+                    <img src="votre-logo.webp" alt="Podblend Logo" class="h-12 md:h-16 w-auto mb-6 opacity-90">
+                    <p class="text-gray-300 mb-2 text-sm font-medium">12 Place Indira Gandhi, 92230 Gennevilliers</p>
+                    <div class="grid grid-cols-2 gap-8 mt-8">
+                        <div>
+                            <h4 class="text-white font-black uppercase tracking-widest mb-3 text-xs">Navigation</h4>
+                            <ul class="space-y-2 text-sm text-gray-400 font-medium">
+                                <li><a href="#studio" class="hover:text-blue-400 transition">Le Studio</a></li>
+                                <li><a href="#tarifs" class="hover:text-blue-400 transition">Tarifs</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-black uppercase tracking-widest mb-3 text-xs">Légal & Social</h4>
+                            <div class="flex gap-4 mb-4">
+                                <a href="https://www.instagram.com/podblend.fr/" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
                             <a href="https://www.linkedin.com/company/podblend/posts/?feedView=all" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
                             <a href="https://www.tiktok.com/@podblend.fr" target="_blank" class="social-link"><svg class="social-icon" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.35-1.17.82-1.51 1.45-.7.99-.7 2.41-.08 3.65.69 1.2 1.95 2.2 3.32 2.4 1.1.16 2.25-.02 3.2-.67 1.09-.76 1.78-2.01 1.79-3.34.02-2.93.01-5.86.01-8.8 2 .9 4.19 1.25 6.4 1.03V.02c-1.92.01-3.83.01-5.75.01z"/></svg></a>
                         </div>
@@ -435,7 +476,7 @@
             
             gsap.from(".gsap-hero", { opacity: 0, y: 50, duration: 1.2, stagger: 0.15, delay: 1.8, ease: "power3.out" });
             
-            // Animation pour la nouvelle section "Stats"
+            // Animation d'apparition pour la nouvelle section "Stats"
             gsap.utils.toArray('.gsap-reveal').forEach(text => {
                 gsap.from(text, {
                     opacity: 0,
