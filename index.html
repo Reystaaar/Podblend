@@ -20,18 +20,17 @@
         }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: #ffffff; overflow-x: hidden; }
 
-        /* --- EFFET STACKING CARDS (PODSPACE STYLE) --- */
-        /* Chaque section majeure devient une "carte" qui colle en haut */
+        /* --- STACKING EFFECT (PODSPACE STYLE) --- */
         .sticky-card {
             position: sticky;
             top: 0;
-            min-height: 100vh; /* Prend toute la hauteur */
+            min-height: 100vh;
             width: 100%;
             overflow: hidden;
-            box-shadow: 0 -10px 50px rgba(0,0,0,0.5); /* Ombre pour détacher les cartes */
+            box-shadow: 0 -20px 60px rgba(0,0,0,0.7);
         }
 
-        /* --- CORRECTION BOUTONS --- */
+        /* --- BOUTONS --- */
         .btn-swap {
             position: relative; display: inline-flex; align-items: center; justify-content: center;
             font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem;
@@ -48,39 +47,34 @@
         
         .btn-primary-white { background: white; color: var(--navy-brand); border: 1px solid white; }
         .btn-primary-white:hover { background: var(--blue-primary); color: white; border-color: var(--blue-primary); }
-        
         .btn-outline-blue { border: 1px solid rgba(59, 130, 246, 0.5); background: rgba(19, 22, 68, 0.4); color: white; }
         .btn-outline-blue:hover { background: var(--blue-primary); border-color: var(--blue-primary); }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR COMPACTE --- */
         .saas-nav { 
             position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 9999; 
             background: rgba(19, 22, 68, 0.85); backdrop-filter: blur(15px); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
             padding: 0.3rem 0.8rem; height: 50px;
             border-radius: 9999px; display: flex; align-items: center; justify-content: space-between; 
-            width: auto; min-width: 300px; max-width: 650px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4); opacity: 0; 
-            gap: 2rem;
+            width: auto; min-width: 320px; max-width: 700px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4); opacity: 0; gap: 2rem;
         }
         .nav-link { font-size: 0.75rem; font-weight: 700; color: #ccc; transition: 0.2s; margin: 0 5px; text-transform: uppercase; letter-spacing: 0.05em;}
         .nav-link:hover { color: white; }
 
-        /* --- TYPO & EFFETS --- */
+        /* --- TYPO --- */
         .text-accent { background: linear-gradient(to right, #60a5fa, var(--blue-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 40px var(--blue-glow); }
         .border-accent { border: 1px solid rgba(59, 130, 246, 0.2); }
         .hover-glow { transition: all 0.4s ease; }
         .hover-glow:hover { transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,0,0,0.5); border-color: var(--blue-primary); z-index: 10; }
 
-        /* --- SECTIONS CONTENT --- */
-        
-        /* HERO */
+        /* --- SECTIONS --- */
         .hero-section { display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; padding: 0; background: var(--bg-dark); }
         .hero-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.6; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(5,5,8,0.3), var(--bg-dark)); z-index: 1; }
         .hero-content { position: relative; z-index: 10; width: 100%; max-width: 1400px; margin: 0 auto; padding-left: 5vw; display: flex; flex-direction: column; justify-content: center; height: 100%; }
 
-        /* MARQUEE */
         .marquee-hero { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(to top, var(--bg-dark) 10%, transparent); padding: 25px 0; z-index: 20; }
         .marquee-wrapper { display: flex; width: max-content; animation: scroll 40s linear infinite; }
         .marquee-content { display: flex; gap: 6rem; padding-right: 6rem; flex-shrink: 0; align-items: center; }
@@ -88,120 +82,54 @@
         .partner-logo:hover { color: #fff; text-shadow: 0 0 15px var(--blue-primary); }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- STATS SECTION (DA PODBLEND) --- */
+        /* STATS */
         .stats-section { 
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #0a0a0f 100%); /* Fond sombre dégradé */
+            background: linear-gradient(180deg, var(--bg-dark) 0%, #0a0a0f 100%);
             border-top: 1px solid rgba(59, 130, 246, 0.1);
         }
         .stats-content { width: 100%; max-width: 7xl; margin: 0 auto; text-align: center; padding: 0 20px; }
-        
-        .big-stat-text { 
-            font-size: 4rem; line-height: 1.1; font-weight: 800; color: #888; transition: color 0.5s; 
-        }
-        /* Adaptation DA : Texte blanc et accent bleu au lieu de noir/gris */
-        .big-stat-text strong { 
-            background: linear-gradient(to right, #fff, #bbb); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-weight: 900; 
-        }
-        .big-stat-text .highlight-blue {
-            color: var(--blue-primary);
-            text-shadow: 0 0 30px var(--blue-glow);
-            -webkit-text-fill-color: var(--blue-primary);
-        }
-        
-        .stat-icon { 
-            display: inline-flex; width: 50px; height: 50px; 
-            background: rgba(59, 130, 246, 0.1); border: 1px solid var(--blue-primary); 
-            border-radius: 50%; vertical-align: middle; margin: 0 15px; 
-            align-items: center; justify-content: center;
-            box-shadow: 0 0 20px var(--blue-glow);
-            transform: translateY(-8px);
-        }
-        
-        @media (max-width: 768px) {
-            .big-stat-text { font-size: 2.5rem; }
-            .stat-icon { width: 36px; height: 36px; font-size: 0.8rem; }
-        }
+        .big-stat-text { font-size: 4rem; line-height: 1.1; font-weight: 800; color: #888; }
+        .big-stat-text strong { background: linear-gradient(to right, #fff, #bbb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; }
+        .big-stat-text .highlight-blue { color: var(--blue-primary); text-shadow: 0 0 30px var(--blue-glow); -webkit-text-fill-color: var(--blue-primary); }
+        .stat-icon { display: inline-flex; width: 50px; height: 50px; background: rgba(59, 130, 246, 0.1); border: 1px solid var(--blue-primary); border-radius: 50%; vertical-align: middle; margin: 0 15px; align-items: center; justify-content: center; box-shadow: 0 0 20px var(--blue-glow); transform: translateY(-8px); }
+        @media (max-width: 768px) { .big-stat-text { font-size: 2.5rem; } .stat-icon { width: 36px; height: 36px; } }
 
-        /* --- STUDIO --- */
+        /* STUDIO */
         .studio-section { background: #08080a; display: flex; flex-direction: column; justify-content: center; }
-
-        /* --- PROCESS --- */
-        .process-section { background: var(--bg-dark); display: flex; flex-direction: column; justify-content: center; }
-        .timeline-container { position: relative; max-width: 900px; margin: 0 auto; width: 100%; }
-        .timeline-line { position: absolute; left: 20px; top: 0; bottom: 0; width: 1px; background: rgba(59, 130, 246, 0.2); }
-        .timeline-progress { position: absolute; left: 20px; top: 0; width: 3px; height: 0%; background: var(--blue-primary); transition: height 0.1s linear; box-shadow: 0 0 15px var(--blue-glow); }
-        .timeline-item { position: relative; margin-bottom: 50px; width: 100%; display: flex; flex-direction: column; padding-left: 70px; }
-        .timeline-number { position: absolute; left: 0; top: 0; width: 40px; height: 40px; background: var(--bg-dark); border: 2px solid var(--blue-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; z-index: 10; color: var(--blue-primary); box-shadow: 0 0 20px var(--blue-glow); font-size: 1rem; }
-        @media (min-width: 768px) {
-            .timeline-line, .timeline-progress { left: 50%; transform: translateX(-50%); }
-            .timeline-item { flex-direction: row; align-items: center; padding-left: 0; width: 100%; }
-            .timeline-item:nth-child(odd) { justify-content: flex-start; }
-            .timeline-item:nth-child(odd) .timeline-content { margin-right: 50%; padding-right: 50px; text-align: right; }
-            .timeline-item:nth-child(even) { justify-content: flex-end; }
-            .timeline-item:nth-child(even) .timeline-content { margin-left: 50%; padding-left: 50px; text-align: left; }
-            .timeline-number { left: 50%; transform: translateX(-50%); }
-            .timeline-content { width: 45%; }
-        }
-
-        /* --- TARIFS --- */
-        .pricing-section { background: #050508; display: flex; flex-direction: column; justify-content: center; }
-        .pricing-scroll-container { display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 20px 5vw 40px 5vw; -webkit-overflow-scrolling: touch; scrollbar-width: none; scroll-behavior: smooth; }
-        .pricing-scroll-container::-webkit-scrollbar { display: none; }
-        
-        .pricing-group-label {
-            writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
-            font-weight: 900; font-size: 0.8rem; letter-spacing: 0.2em; color: var(--blue-primary);
-            padding: 0 10px; border-left: 1px solid rgba(59,130,246,0.3); opacity: 0.7;
-        }
-
-        .pricing-card { flex: 0 0 320px; scroll-snap-align: center; background: #0e0e12; border: 1px solid #222; border-radius: 20px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 480px; transition: 0.3s; }
-        .pricing-card.white-card { background: #fff !important; color: #000 !important; border: none; transform: scale(1.05); z-index: 10; box-shadow: 0 0 50px rgba(59, 130, 246, 0.2); }
-        .pricing-card.white-card * { color: #000 !important; border-color: rgba(0,0,0,0.1) !important; }
-        .pricing-card.white-card .btn-swap { background: var(--navy-brand) !important; color: #fff !important; }
-        
-        .price-list li { display: flex; gap: 8px; margin-bottom: 8px; font-size: 0.85rem; color: #888; font-weight: 500; }
-        .card-price { font-size: 3rem; font-weight: 900; line-height: 1; margin: 0.8rem 0; }
-        
-        .pricing-controls { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1rem; }
-        .control-btn { width: 50px; height: 50px; border-radius: 50%; border: 1px solid rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.1); color: var(--blue-primary); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
-        .control-btn:hover { background: var(--blue-primary); color: #fff; box-shadow: 0 0 30px var(--blue-glow); transform: scale(1.1); border-color: var(--blue-primary); }
-
-        /* --- FAQ & FOOTER (Dernière carte qui ne stick pas forcément ou si) */
-        .footer-section { background: var(--bg-dark); position: relative; z-index: 20; }
-        
-        /* FAQ */
-        .flip-container { perspective: 1000px; height: 80px; width: 100%; cursor: pointer; margin-bottom: 0.8rem; }
-        .flip-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; border-radius: 1rem; }
-        .flip-container:hover .flip-inner, .flip-container.active .flip-inner { transform: rotateX(180deg); }
-        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 1rem; padding: 0 2rem; display: flex; align-items: center; border: 1px solid #1a1a1a; }
-        .flip-front { background: #0e0e12; justify-content: flex-start; text-align: left; }
-        .flip-front:hover { border-color: var(--blue-primary); }
-        .flip-back { background: var(--navy-brand); transform: rotateX(180deg); border-color: var(--blue-primary); justify-content: center; text-align: center; }
-
-        /* --- ELEMENTS --- */
-        .glass-card { background: linear-gradient(180deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%); border: 1px solid rgba(59, 130, 246, 0.15); backdrop-filter: blur(15px); }
         .img-placeholder { background-color: #0f0f12; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; border: 1px solid #222; transition: 0.4s; }
         .hover-glow:hover .img-placeholder { border-color: var(--blue-primary); }
-        #intro-overlay { position: fixed; inset: 0; background: #000; z-index: 99999; display: flex; align-items: center; justify-content: center; }
+
+        /* PROCESS */
+        .process-section { background: var(--bg-dark); display: flex; flex-direction: column; justify-content: center; }
+        .glass-card { background: linear-gradient(180deg, rgba(59, 130, 246, 0.08) 0%, rgba(59, 130, 246, 0.02) 100%); border: 1px solid rgba(59, 130, 246, 0.15); backdrop-filter: blur(15px); }
         
-        .lets-record-section { 
-            padding: 160px 0; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            background: var(--bg-dark); position: relative; z-index: 10; 
-        }
-        .big-text { font-size: 10vw; md:font-size: 7rem; line-height: 1; font-weight: 900; letter-spacing: -0.05em; text-align: center; margin-bottom: 3rem; text-shadow: 0 0 50px var(--blue-glow); }
-        .footer-separator-halo { height: 4px; width: 100%; background: var(--blue-primary); box-shadow: 0 -30px 80px 30px var(--blue-glow); position: relative; z-index: 20; }
+        /* TARIFS - NOUVEAU DESIGN (Grid + Tabs) */
+        .pricing-section { background: #050508; padding: 100px 0; min-height: auto !important; } /* Reset height pour s'adapter au contenu */
         
-        .footer-small { background: #010103; padding: 50px 0; position: relative; z-index: 5; }
+        /* Switcher */
+        .pricing-tabs { display: flex; justify-content: center; margin-bottom: 3rem; gap: 10px; background: #0e0e12; padding: 5px; border-radius: 999px; width: fit-content; margin-left: auto; margin-right: auto; border: 1px solid #222; }
+        .pricing-tab { padding: 10px 30px; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: all 0.3s ease; color: #888; }
+        .pricing-tab.active { background: var(--navy-brand); color: white; box-shadow: 0 0 20px var(--blue-glow); }
+        
+        /* Grid Layout (Plus de scroll horizontal) */
+        .pricing-grid { display: none; grid-template-columns: repeat(1, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .pricing-grid.active { display: grid; }
+        @media (min-width: 768px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); } }
+        
+        .pricing-card { background: #0e0e12; border: 1px solid #222; border-radius: 20px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; min-height: 500px; }
+        .pricing-card.white-card { background: #fff !important; color: #000 !important; border: none; transform: scale(1.05); z-index: 10; box-shadow: 0 0 50px rgba(59, 130, 246, 0.25); }
+        .pricing-card.white-card * { color: #000 !important; border-color: rgba(0,0,0,0.1) !important; }
+        .pricing-card.white-card .btn-swap { background: var(--navy-brand) !important; color: #fff !important; }
+        .price-list li { display: flex; gap: 10px; margin-bottom: 12px; font-size: 0.9rem; color: #888; font-weight: 500; }
+        .card-price { font-size: 3.5rem; font-weight: 900; line-height: 1; margin: 1.5rem 0; }
+
+        /* FOOTER */
+        .footer-section { background: var(--bg-dark); position: relative; z-index: 20; }
+        .footer-small { background: #010103; padding: 50px 0; }
         .footer-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; max-width: 1100px; margin: 0 auto; padding: 0 24px; }
         @media (min-width: 1024px) { .footer-grid { grid-template-columns: 1.5fr 1fr; align-items: center; } }
         .footer-map { width: 100%; height: 150px; border-radius: 16px; overflow: hidden; border: 1px solid #333; filter: grayscale(100%) sepia(20%) hue-rotate(190deg) saturate(300%) contrast(1.2); }
-        
-        /* Social Icons */
-        .social-icon { width: 24px; height: 24px; fill: #aaa; transition: 0.3s; }
-        .social-link:hover .social-icon { fill: var(--blue-primary); transform: scale(1.1); }
     </style>
 </head>
 <body class="antialiased text-white">
@@ -299,7 +227,6 @@
                 <p class="text-blue-200 text-lg max-w-2xl mx-auto">Choisissez le set qui correspond à votre identité.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-auto md:h-[500px]">
-                
                 <div class="md:col-span-2 md:row-span-2 h-[250px] md:h-auto img-placeholder rounded-[30px] relative overflow-hidden group border-accent hover-glow" style="background-image: url('library-_1_.webp');">
                     <div class="absolute bottom-0 left-0 w-full p-8 text-left z-20">
                         <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">Le Set "Talk-Show"</h3>
@@ -307,12 +234,10 @@
                     </div>
                     <div class="absolute inset-0 bg-gradient-to-t from-[#020204] via-transparent to-transparent opacity-90"></div>
                 </div>
-
                 <div class="h-[200px] md:h-auto img-placeholder rounded-[30px] group border-accent hover-glow relative overflow-hidden" style="background-image: url('gotham-_1_.webp');">
                     <span class="text-lg font-bold tracking-widest z-10 relative">AMBIANCE NEON</span>
                     <div class="absolute inset-0 bg-black/40"></div>
                 </div>
-
                 <div class="h-[200px] md:h-auto img-placeholder rounded-[30px] group border-accent hover-glow relative overflow-hidden" style="background-image: url('santorini-_1_.webp');">
                     <span class="text-lg font-bold tracking-widest z-10 relative">FORMAT DUO</span>
                     <div class="absolute inset-0 bg-black/40"></div>
@@ -339,27 +264,14 @@
         <div class="w-full">
             <div class="text-center mb-8 px-4">
                 <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tight">NOS OFFRES<span class="text-accent">.</span></h2>
-                <div class="pricing-controls">
-                    <button class="control-btn" id="scrollLeft">←</button>
-                    <button class="control-btn" id="scrollRight">→</button>
+                
+                <div class="pricing-tabs">
+                    <div class="pricing-tab active" onclick="switchPricing('video')">Studio Vidéo</div>
+                    <div class="pricing-tab" onclick="switchPricing('audio')">Studio Audio</div>
                 </div>
             </div>
-            <div class="pricing-scroll-container" id="pricingContainer">
-                
-                <div class="pricing-group-label">AUDIO</div>
-                <div class="pricing-card hover-glow" style="border-color: rgba(255,255,255,0.1);">
-                    <div>
-                        <span class="text-xs font-bold text-gray-400 uppercase border border-gray-600 px-3 py-1 rounded-full tracking-widest">Podcast Audio</span>
-                        <h3 class="text-xl font-black mt-4 text-white">Audio Only</h3>
-                        <div class="card-price">50€</div>
-                        <ul class="price-list"><li>✓ Opérateur sur place</li><li>✓ 4 micros Shure MV7+</li><li>✓ Fichiers jour même</li></ul>
-                    </div>
-                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-                </div>
 
-                <div style="width: 1px; background: rgba(255,255,255,0.1); margin: 0 10px;"></div>
-
-                <div class="pricing-group-label">STUDIO VIDEO</div>
+            <div id="grid-video" class="pricing-grid active">
                 <div class="pricing-card white-card relative overflow-hidden hover-glow">
                     <div class="mb-4"><span class="inline-block bg-[#131644] text-white text-[10px] font-black px-3 py-1 rounded-full tracking-widest">BEST SELLER</span></div>
                     <div>
@@ -372,20 +284,10 @@
                 
                 <div class="pricing-card hover-glow">
                     <div>
-                        <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Post-Prod</span>
-                        <h3 class="text-xl font-black mt-4 text-white">Audio +</h3>
-                        <div class="card-price">100€</div>
-                        <ul class="price-list"><li>✓ Formule Audio incluse</li><li>✓ Nettoyage & Mixage</li><li>✓ Livraison 48h</li></ul>
-                    </div>
-                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
-                </div>
-                
-                <div class="pricing-card hover-glow">
-                    <div>
                         <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Montage</span>
                         <h3 class="text-xl font-black mt-4 text-white">Édition</h3>
                         <div class="card-price">130€</div>
-                        <ul class="price-list"><li>✓ Formule Initial incluse</li><li>✓ Pré-montage multicam</li><li>✓ Sync Audio/Vidéo</li></ul>
+                        <ul class="price-list"><li>✓ Formule Initial incluse</li><li>✓ Pré-montage multicam</li><li>✓ Sync Audio/Vidéo</li><li>✓ Sauvegarde Cloud</li></ul>
                     </div>
                     <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
                 </div>
@@ -395,13 +297,34 @@
                         <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">All-In</span>
                         <h3 class="text-xl font-black mt-4 text-white">Complète</h3>
                         <div class="card-price">320€</div>
-                        <ul class="price-list"><li>✓ Dérush & 2 révisions</li><li>✓ Intro dynamique</li><li>✓ Livraison 8 jours</li></ul>
+                        <ul class="price-list"><li>✓ Dérush & 2 révisions</li><li>✓ Intro dynamique</li><li>✓ Shorts / Reels inclus</li><li>✓ Livraison 8 jours</li></ul>
+                    </div>
+                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
+                </div>
+            </div>
+
+            <div id="grid-audio" class="pricing-grid">
+                <div class="pricing-card hover-glow" style="border-color: rgba(255,255,255,0.1); max-width: 400px; margin: 0 auto;">
+                    <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase border border-gray-600 px-3 py-1 rounded-full tracking-widest">Podcast Audio</span>
+                        <h3 class="text-xl font-black mt-4 text-white">Audio Only</h3>
+                        <div class="card-price">50€</div>
+                        <ul class="price-list"><li>✓ Opérateur sur place</li><li>✓ 4 micros Shure MV7+</li><li>✓ Fichiers jour même</li><li>✓ Table de mixage Rode</li></ul>
                     </div>
                     <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
                 </div>
                 
-                <div style="flex: 0 0 20px;"></div>
+                <div class="pricing-card hover-glow" style="border-color: rgba(255,255,255,0.1); max-width: 400px; margin: 0 auto;">
+                    <div>
+                        <span class="text-xs font-bold text-blue-400 uppercase border border-blue-500/30 px-3 py-1 rounded-full">Post-Prod</span>
+                        <h3 class="text-xl font-black mt-4 text-white">Audio +</h3>
+                        <div class="card-price">100€</div>
+                        <ul class="price-list"><li>✓ Formule Audio incluse</li><li>✓ Nettoyage & Mixage</li><li>✓ Mastering Pro</li><li>✓ Livraison 48h</li></ul>
+                    </div>
+                    <a href="#booking" class="btn-swap btn-outline-blue w-full btn-standard"><span class="btn-text-front">Réserver</span><span class="btn-text-back">Réserver</span></a>
+                </div>
             </div>
+
         </div>
     </section>
 
@@ -467,6 +390,26 @@
     </footer>
 
     <script>
+        // Fonction pour changer les onglets Audio/Vidéo
+        function switchPricing(type) {
+            // Masquer les deux
+            document.getElementById('grid-video').classList.remove('active');
+            document.getElementById('grid-audio').classList.remove('active');
+            
+            // Retirer la classe active des boutons
+            const tabs = document.querySelectorAll('.pricing-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+
+            // Activer le bon
+            if(type === 'video') {
+                document.getElementById('grid-video').classList.add('active');
+                tabs[0].classList.add('active');
+            } else {
+                document.getElementById('grid-audio').classList.add('active');
+                tabs[1].classList.add('active');
+            }
+        }
+
         window.addEventListener('load', () => {
             gsap.registerPlugin(ScrollTrigger);
             const tl = gsap.timeline();
@@ -476,7 +419,7 @@
             
             gsap.from(".gsap-hero", { opacity: 0, y: 50, duration: 1.2, stagger: 0.15, delay: 1.8, ease: "power3.out" });
             
-            // Animation d'apparition pour la nouvelle section "Stats"
+            // Animation pour la nouvelle section "Stats"
             gsap.utils.toArray('.gsap-reveal').forEach(text => {
                 gsap.from(text, {
                     opacity: 0,
@@ -496,9 +439,6 @@
                     scrollTrigger: { trigger: ".timeline-container", start: "top center", end: "bottom center", scrub: 0.5 }
                 });
             }
-            const pricingContainer = document.getElementById('pricingContainer'); const scrollAmount = 350; 
-            document.getElementById('scrollLeft').addEventListener('click', () => { pricingContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' }); });
-            document.getElementById('scrollRight').addEventListener('click', () => { pricingContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' }); });
         });
     </script>
 </body>
