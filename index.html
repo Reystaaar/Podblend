@@ -6,7 +6,7 @@
     <title>Studio - Création de Contenu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -14,6 +14,7 @@
                 extend: {
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
                     },
                     colors: {
                         brand: {
@@ -21,11 +22,13 @@
                             card: '#121212',
                             deep: '#131644',
                             accent: '#3b82f6',
-                            electric: '#4F46E5'
+                            electric: '#4F46E5',
+                            acid: '#D1FA31'
                         }
                     },
                     animation: {
                         'scroll': 'scroll 30s linear infinite',
+                        'spin-slow': 'spin 10s linear infinite',
                     },
                     keyframes: {
                         scroll: {
@@ -46,14 +49,7 @@
 
         /* --- GLOBAL NOISE --- */
         .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 40; /* Lower than Nav */
-            opacity: 0.05;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; opacity: 0.05;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
@@ -77,25 +73,33 @@
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
         .hover-glow:hover {
-            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-            color: #3b82f6;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
         }
         
-        /* BENTO STYLES */
+        /* --- BENTO STYLES --- */
         .bento-card {
             position: relative;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            border: 1px solid rgba(0,0,0,0.05);
         }
         .bento-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px -15px rgba(19, 22, 68, 0.25);
+            border-color: #131644;
+            z-index: 10;
         }
-        .bento-card img { transition: transform 0.6s ease; }
-        .bento-card:hover img { transform: scale(1.05); }
+        .bento-tag {
+            font-family: 'Space Grotesk', monospace;
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            padding: 4px 8px;
+            border: 1px solid currentColor;
+            border-radius: 4px;
+        }
 
-        /* SCROLL REVEAL */
+        /* --- SCROLL REVEAL --- */
         .reveal-item {
             cursor: pointer;
             transition: all 0.3s ease;
@@ -112,15 +116,13 @@
         }
         .reveal-text { transition: color 0.3s ease; }
         
-        /* FAQ FIXED & ROBUST */
+        /* --- FAQ CLEAN & ROBUST --- */
         .faq-item {
             border-bottom: 1px solid #e5e7eb; 
             transition: background-color 0.3s ease;
             overflow: hidden;
         }
-        .faq-item:hover {
-            background-color: #f9fafb;
-        }
+        .faq-item:hover { background-color: #f9fafb; }
         .faq-trigger {
             cursor: pointer;
             padding: 1.5rem 0;
@@ -129,6 +131,9 @@
             width: 100%;
             text-align: left;
             background: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .faq-content {
             max-height: 0;
@@ -137,129 +142,87 @@
             transition: max-height 0.4s ease-out, opacity 0.4s ease-out, padding 0.4s ease;
         }
         .faq-item.active .faq-content {
-            max-height: 500px; /* Sufficient height */
+            max-height: 500px;
             opacity: 1;
             padding-bottom: 1.5rem;
         }
-        .faq-item.active .faq-trigger {
-            color: #131644;
-        }
-        .faq-icon-wrapper {
-            position: relative;
-            width: 24px;
-            height: 24px;
-            flex-shrink: 0;
-        }
-        .faq-line {
-            position: absolute;
-            background-color: currentColor;
+        .faq-item.active .faq-trigger { color: #131644; }
+        
+        /* Icon Rotation */
+        .faq-icon {
             transition: transform 0.3s ease;
         }
-        .faq-line-h { width: 100%; height: 2px; top: 50%; left: 0; transform: translateY(-50%); }
-        .faq-line-v { width: 2px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
-        .faq-item.active .faq-line-v { transform: translateX(-50%) rotate(90deg); }
-        .faq-item.active .faq-line-h { opacity: 0; }
-
-        /* CARD STACK */
-        .card-stack {
-            position: relative;
-            width: 100%;
-            max-width: 320px;
-            aspect-ratio: 1/1;
-            cursor: default;
-            margin: 0 auto;
-        }
-        .stat-card {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        .card-front {
-            z-index: 20;
-            transform: rotate(3deg) translateX(10px);
-        }
-        .card-back {
-            z-index: 10;
-            transform: rotate(-6deg) translateX(-10px) scale(0.95);
-            opacity: 1; 
-        }
-        .card-stack:hover .card-front {
-            transform: rotate(-6deg) translateX(-20px) scale(0.95);
-            z-index: 10;
-            filter: brightness(0.9);
-        }
-        .card-stack:hover .card-back {
-            transform: rotate(3deg) translateX(10px) scale(1);
-            z-index: 20;
-            filter: brightness(1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
         }
 
-        /* DECOR */
-        .decor-item {
-            flex: 1;
-            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-            filter: grayscale(100%);
-            min-height: 100px;
-        }
+        /* --- CARD STACK --- */
+        .card-stack { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1/1; cursor: default; margin: 0 auto; }
+        .stat-card { position: absolute; inset: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .card-front { z-index: 20; transform: rotate(3deg) translateX(10px); }
+        .card-back { z-index: 10; transform: rotate(-6deg) translateX(-10px) scale(0.95); opacity: 1; }
+        .card-stack:hover .card-front { transform: rotate(-6deg) translateX(-20px) scale(0.95); z-index: 10; filter: brightness(0.9); }
+        .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+
+        /* --- DECOR --- */
+        .decor-item { flex: 1; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(100%); min-height: 200px; }
         .decor-container:hover .decor-item { filter: grayscale(100%); }
-        .decor-container:hover .decor-item:hover {
-            flex: 4;
-            filter: grayscale(0%);
-        }
+        .decor-container:hover .decor-item:hover { flex: 4; filter: grayscale(0%); }
 
-        /* PRICING SUPER ZOOM */
+        /* --- PRICING SUPER ZOOM --- */
         .pricing-scroll-container {
             scroll-snap-type: x mandatory;
             overflow-x: auto;
             display: flex;
             gap: 2rem;
-            padding-bottom: 4rem; /* More space for big shadows */
-            padding-top: 2rem;
+            padding-bottom: 5rem;
+            padding-top: 3rem;
         }
         .pricing-card {
             scroll-snap-align: center;
             flex: 0 0 350px;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease;
             cursor: pointer;
+            will-change: transform;
         }
-        /* Desktop Hover: Big Zoom */
+        /* Desktop: Super Zoom */
         @media (min-width: 768px) {
             .pricing-card:hover {
-                transform: scale(1.1); /* SUPER ZOOM */
-                z-index: 20;
-                box-shadow: 0 30px 60px -10px rgba(0,0,0,0.7);
+                transform: scale(1.15) translateY(-15px) !important;
+                z-index: 50;
+                box-shadow: 0 50px 100px -20px rgba(0,0,0,0.9);
                 border-color: #131644;
             }
         }
-        /* Mobile: Subtle Zoom to avoid breaking layout */
+        /* Mobile: Responsive sizing */
         @media (max-width: 768px) {
-            .pricing-card {
-                flex: 0 0 85vw;
-            }
-            .pricing-card:hover {
-                transform: scale(1.02);
-            }
+            .pricing-card { flex: 0 0 85vw; }
+            .pricing-card:hover { transform: scale(1.02); }
+            
+            h1 { font-size: 3rem !important; }
+            h2 { font-size: 2.5rem !important; }
+            .reveal-item span { font-size: 1.5rem !important; }
+            .decor-item { min-height: 150px; }
         }
     </style>
 </head>
 <body class="antialiased selection:bg-[#131644] selection:text-white">
 
-    <!-- GLOBAL NOISE OVERLAY -->
     <div class="noise-overlay"></div>
 
     <!-- NAV -->
     <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
-            <div class="text-xl md:text-2xl font-bold tracking-tighter hover:text-brand-accent transition cursor-pointer">STUDIO<span class="text-[#131644]">.</span></div>
+            <!-- LOGO IMAGE (Remplace studio par logo.png) -->
+            <a href="#" class="block w-32 md:w-40 hover:opacity-80 transition cursor-pointer">
+                <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
+            </a>
+            
             <div class="hidden md:flex gap-8 font-medium text-sm">
-                <a href="#hero" class="hover:text-brand-accent hover-glow transition duration-300">Accueil</a>
-                <a href="#bento" class="hover:text-brand-accent hover-glow transition duration-300">Offres</a>
-                <a href="#tarifs" class="hover:text-brand-accent hover-glow transition duration-300">Tarifs</a>
-                <a href="#faq" class="hover:text-brand-accent hover-glow transition duration-300">FAQ</a>
+                <a href="#hero" class="hover:text-brand-accent transition duration-300">Accueil</a>
+                <a href="#bento" class="hover:text-brand-accent transition duration-300">Offres</a>
+                <a href="#tarifs" class="hover:text-brand-accent transition duration-300">Tarifs</a>
+                <a href="#faq" class="hover:text-brand-accent transition duration-300">FAQ</a>
             </div>
             <a href="#bento" class="bg-white text-black px-5 py-2 md:px-6 md:py-2 text-sm md:text-base rounded-full font-bold hover:bg-[#131644] hover:text-white transition duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)]">Réserver</a>
         </div>
@@ -268,14 +231,15 @@
     <!-- 1. HERO SECTION -->
     <section id="hero" class="relative h-screen w-full overflow-hidden flex flex-col justify-center bg-[#050505] text-white bg-grid-dark">
         <div class="absolute inset-0 z-0">
+            <!-- BACKGROUND VIDEO (Local file) -->
             <video autoplay muted loop playsinline class="object-cover w-full h-full opacity-60">
-                <source src="https://assets.mixkit.co/videos/preview/mixkit-man-working-on-his-laptop-308-large.mp4" type="video/mp4">
+                <source src="vidéo-héros.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_100%)]"></div>
         </div>
 
-        <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full pt-16 md:pt-0">
+        <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full pt-20 md:pt-0">
             <div class="max-w-4xl">
                 <div class="inline-flex items-center gap-2 mb-6 px-3 py-1 rounded-full border border-white/20 bg-black/50 backdrop-blur-md">
                     <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
@@ -306,7 +270,7 @@
                         <span>BRUT.</span>
                         <span>TEDx</span>
                     </div>
-                    <!-- Duplicate for infinite scroll -->
+                    <!-- Duplicate -->
                     <div class="flex space-x-12 md:space-x-20 mx-6 md:mx-10 items-center opacity-40 font-bold text-sm md:text-lg tracking-widest text-white">
                         <span>SPOTIFY STUDIOS</span>
                         <span>CANAL+</span>
@@ -323,14 +287,14 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 2. SOCIAL PROOF -->
+    <!-- 2. SOCIAL PROOF (STACK) -->
     <div class="relative">
         <section id="social-proof" class="sticky top-0 h-screen flex items-center bg-white text-black overflow-hidden z-0 bg-dots-light">
             <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-32 pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between relative z-10">
                 <div class="md:w-5/12 mb-10 md:mb-0 pt-20 md:pt-0">
-                    <span class="inline-block px-3 py-1 bg-gray-100 text-[#131644] rounded-full text-xs font-bold uppercase tracking-wide mb-6">Confiance & Expertise</span>
+                    <span class="inline-block px-3 py-1 bg-gray-100 text-[#131644] rounded-full text-xs font-bold uppercase tracking-wide mb-6 font-mono">01 — Confiance</span>
                     <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">La référence des<br><span class="text-[#131644]">créateurs parisiens.</span></h2>
                     <p class="text-gray-600 text-lg mb-8 leading-relaxed">
                         Une infrastructure technique conçue pour la viralité. Rejoignez une communauté de créateurs exigeants qui ne laissent rien au hasard.
@@ -352,21 +316,21 @@
                         <div class="stat-card card-back bg-[#131644] text-white border border-white/10 p-6 md:p-8 rounded-[2rem] flex flex-col justify-between shadow-2xl">
                             <div class="flex justify-between items-start">
                                 <i class="fa-solid fa-microphone-lines text-3xl opacity-80"></i>
-                                <span class="text-xs bg-white/20 text-white px-2 py-1 rounded">Vérifié</span>
+                                <span class="text-xs bg-white/20 text-white px-2 py-1 rounded font-mono">Vérifié</span>
                             </div>
                             <div>
                                 <div class="text-5xl md:text-6xl font-bold mb-2">850+</div>
-                                <div class="text-gray-300 font-medium text-base md:text-lg">Podcasts Hébergés</div>
+                                <div class="text-gray-300 font-medium text-base md:text-lg font-mono">Podcasts Hébergés</div>
                             </div>
                         </div>
                         <div class="stat-card card-front bg-gray-50 text-black p-6 md:p-8 rounded-[2rem] flex flex-col justify-between shadow-xl border border-gray-200">
                             <div class="flex justify-between items-start">
                                 <i class="fa-solid fa-eye text-3xl text-black"></i>
-                                <span class="text-xs bg-black/10 px-2 py-1 rounded text-black/60">Analytics</span>
+                                <span class="text-xs bg-black/10 px-2 py-1 rounded text-black/60 font-mono">Analytics</span>
                             </div>
                             <div>
                                 <div class="text-5xl md:text-6xl font-bold mb-2">2.5M</div>
-                                <div class="text-gray-800 font-medium text-base md:text-lg">Vues Mensuelles</div>
+                                <div class="text-gray-800 font-medium text-base md:text-lg font-mono">Vues Mensuelles</div>
                             </div>
                             <div class="absolute bottom-4 right-4 text-xs text-gray-400 flex items-center gap-1">
                                 <i class="fa-solid fa-mouse-pointer"></i> Survoler
@@ -377,30 +341,50 @@
             </div>
         </section>
 
-        <!-- 2.bis SOCIAL PROOF 2 -->
+        <!-- 2.bis PRODUCTION MAISON (EXPANDED LIST - LOCAL IMAGES) -->
         <section class="relative z-10 py-20 md:py-32 bg-white text-black border-t border-gray-100 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-light">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[5rem] md:text-[15rem] font-bold text-gray-50 opacity-50 select-none pointer-events-none z-0 tracking-tighter leading-none">
                     ON AIR
                 </div>
                 <div class="relative z-10">
-                    <span class="text-[#131644] font-bold tracking-widest uppercase text-xs mb-10 block">Production Maison</span>
+                    <span class="text-[#131644] font-bold tracking-widest uppercase text-xs mb-10 block font-mono">Production Maison</span>
+                    
                     <div class="flex flex-col items-center justify-center space-y-1" id="scroll-reveal-container">
-                        <div class="reveal-item flex items-center justify-center text-3xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
+                        
+                        <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
                             <span class="reveal-text group-hover:text-[#131644]">TECH</span>
-                            <div class="reveal-img-container h-10 md:h-16 rounded-full bg-gray-100">
-                                <img src="https://images.unsplash.com/photo-1559523161-0fc0d8b38a7a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover scale-125" alt="Tech">
+                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
+                                <!-- REMPLACE AVEC NOM DE FICHIER LOCAL -->
+                                <img src="cover_tech.jpg" class="w-full h-full object-cover scale-125" alt="Tech">
                             </div>
                             <span class="reveal-text group-hover:text-[#131644]">& CULTURE</span>
                         </div>
-                        <!-- ... other items ... -->
-                        <div class="reveal-item flex items-center justify-center text-3xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
+
+                        <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
                             <span class="reveal-text group-hover:text-[#131644]">BUSINESS</span>
-                            <div class="reveal-img-container h-10 md:h-16 rounded-full bg-gray-100">
-                                <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover scale-125" alt="Business">
+                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
+                                <img src="cover_business.jpg" class="w-full h-full object-cover scale-125" alt="Business">
                             </div>
                             <span class="reveal-text group-hover:text-[#131644]">MAKERS</span>
                         </div>
+
+                        <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
+                            <span class="reveal-text group-hover:text-[#131644]">LA</span>
+                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
+                                <img src="cover_matinale.jpg" class="w-full h-full object-cover scale-125" alt="Morning">
+                            </div>
+                            <span class="reveal-text group-hover:text-[#131644]">MATINALE</span>
+                        </div>
+
+                        <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
+                            <span class="reveal-text group-hover:text-[#131644]">LEVEL</span>
+                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
+                                <img src="cover_gaming.jpg" class="w-full h-full object-cover scale-125" alt="Gaming">
+                            </div>
+                            <span class="reveal-text group-hover:text-[#131644]">UP</span>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -414,28 +398,46 @@
     <section class="relative z-10 py-24 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="px-6 mb-12 max-w-7xl mx-auto">
             <h2 class="text-4xl font-bold">Nos Atmosphères <span class="text-gray-600">/ Sets</span></h2>
-            <p class="text-gray-400 mt-2">Passez votre souris pour explorer les configurations.</p>
+            <p class="text-gray-400 mt-2 font-mono">[ CHOOSE YOUR VIBE ]</p>
         </div>
         <div class="decor-container flex flex-col md:flex-row w-full h-[600px] gap-4 px-2">
+            
+            <!-- STUDIO 1 -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <img src="https://images.unsplash.com/photo-1598550476439-6847785fcea6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover" alt="Dark Room">
+                <!-- IMAGE LOCALE -->
+                <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Dark Room">
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">Dark Room</h3>
+                    <div class="opacity-0 group-hover:opacity-100 transition duration-500 delay-200 mt-2">
+                        <span class="text-xs font-mono border border-white px-2 py-1">RGB LIGHTS</span>
+                    </div>
                 </div>
             </div>
+
+            <!-- STUDIO 2 -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover" alt="Talk Show">
+                <!-- IMAGE LOCALE -->
+                <img src="bibliothèque-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Talk Show">
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">Talk Show</h3>
+                    <div class="opacity-0 group-hover:opacity-100 transition duration-500 delay-200 mt-2">
+                        <span class="text-xs font-mono border border-white px-2 py-1">MULTI-CAM</span>
+                    </div>
                 </div>
             </div>
+
+            <!-- STUDIO 3 -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <img src="https://images.unsplash.com/photo-1478737270239-2f02b77ac6d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover" alt="Lounge">
+                <!-- IMAGE LOCALE -->
+                <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Lounge">
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">The Lounge</h3>
+                    <div class="opacity-0 group-hover:opacity-100 transition duration-500 delay-200 mt-2">
+                        <span class="text-xs font-mono border border-white px-2 py-1">CHILL ZONE</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -444,32 +446,88 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 4. BENTO GRID -->
+    <!-- 4. BENTO GRID (DA: BRUTALIST LAB - LOCAL IMAGES) -->
     <section id="bento" class="relative z-10 py-24 bg-white text-black bg-dots-light">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row items-end justify-between mb-12">
                 <div>
                     <h2 class="text-4xl md:text-5xl font-bold mb-4">Nos Services</h2>
-                    <p class="text-gray-500">Tout ce dont vous avez besoin pour produire.</p>
+                    <p class="text-gray-500 font-mono text-sm uppercase tracking-widest">/// Equipement haute performance</p>
+                </div>
+                <div class="mt-6 md:mt-0 text-right">
+                    <span class="block text-sm text-gray-500 uppercase tracking-widest mb-1 font-mono">Sessions à partir de</span>
+                    <span class="text-5xl md:text-6xl font-bold text-[#131644]">50€<span class="text-xl md:text-2xl text-gray-400">/h</span></span>
                 </div>
             </div>
+
             <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-4 gap-4 h-auto md:h-[800px]">
-                <div class="md:col-span-2 md:row-span-2 bg-[#131644] rounded-3xl p-8 border border-gray-200 relative overflow-hidden group hover:scale-[1.02] hover:shadow-2xl transition duration-500 cursor-pointer z-0 hover:z-10 bento-card">
+                
+                <!-- 1. Audio -->
+                <div class="md:col-span-2 md:row-span-2 bg-[#050505] rounded-3xl p-8 border border-gray-200 relative overflow-hidden group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card text-white">
+                    <div class="flex justify-between items-start z-10 relative">
+                        <span class="bento-tag text-white/70">AUDIO_SYS</span>
+                        <i class="fa-solid fa-waveform-lines text-2xl text-[#3b82f6]"></i>
+                    </div>
                     <div class="relative z-10 h-full flex flex-col justify-end">
-                        <div class="bg-white text-[#131644] text-xs font-bold px-3 py-1 inline-block w-max mb-4 uppercase tracking-wider rounded-full">Must Have</div>
-                        <h3 class="text-3xl md:text-4xl font-bold mb-2 text-white">Pack Audio Only</h3>
-                        <p class="text-gray-300 border-l-2 border-white/50 pl-3">Micros Shure SM7B x4 + Rodecaster Pro.</p>
+                        <h3 class="text-3xl md:text-5xl font-black mb-2 leading-none uppercase">Pure<br>Sound</h3>
+                        <p class="text-gray-400 font-mono text-xs border-l-2 border-[#131644] pl-3 mt-4">SHURE SM7B X4 <br>+ RODECASTER PRO II</p>
+                    </div>
+                    <!-- LOCAL IMAGE -->
+                    <img src="bento_audio.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen group-hover:opacity-40 transition duration-700">
+                </div>
+
+                <!-- 2. Video -->
+                <div class="md:col-span-1 md:row-span-2 bg-gray-100 rounded-3xl p-6 border border-gray-200 flex flex-col items-center justify-between text-center group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card">
+                    <div class="w-full aspect-square rounded-2xl overflow-hidden mb-4 relative bg-black">
+                        <!-- LOCAL IMAGE -->
+                        <img src="bento_video.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-2xl mb-1 text-black uppercase">Cinema 4K</h4>
+                        <p class="text-xs text-gray-500 font-mono uppercase">Sony A7S III + G-Master</p>
+                    </div>
+                    <div class="w-full h-1 bg-gray-300 mt-4 rounded overflow-hidden">
+                        <div class="h-full bg-[#131644] w-0 group-hover:w-full transition-all duration-700"></div>
                     </div>
                 </div>
-                <!-- ... other bento items ... -->
-                <div class="md:col-span-1 md:row-span-2 bg-gradient-to-b from-gray-50 to-white rounded-3xl p-6 border border-gray-200 flex flex-col items-center justify-between text-center group hover:scale-[1.02] hover:shadow-2xl transition duration-500 cursor-pointer z-0 hover:z-10 bento-card">
-                    <div class="w-14 h-14 rounded-full bg-[#131644] flex items-center justify-center text-2xl mb-4 text-white group-hover:scale-110 transition shadow-lg"><i class="fa-solid fa-video"></i></div>
-                    <div><h4 class="font-bold text-2xl mb-2 text-black">Vidéo 4K</h4><p class="text-sm text-gray-500">Sony A7S III</p></div>
+
+                <!-- 3. Access -->
+                <div class="md:col-span-1 md:row-span-1 bg-[#131644] rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-black transition cursor-pointer border border-transparent hover:scale-[1.01] z-0 hover:z-10 bento-card group">
+                    <h4 class="text-5xl font-black text-white tracking-tighter group-hover:text-brand-acid transition">24<span class="text-white/50">/</span>7</h4>
+                    <span class="bento-tag text-white/50 mt-2 border-white/20">ACCESS</span>
                 </div>
-                <div class="md:col-span-1 md:row-span-1 glass-dark rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-white hover:border-[#131644] border border-gray-200 hover:scale-[1.02] hover:shadow-xl transition z-0 hover:z-10 bento-card"><h4 class="text-4xl font-bold text-[#131644]">24/7</h4></div>
-                <div class="md:col-span-1 md:row-span-1 glass-dark rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-white hover:border-[#131644] border border-gray-200 hover:scale-[1.02] hover:shadow-xl transition z-0 hover:z-10 bento-card"><i class="fa-brands fa-tiktok text-3xl mb-2 text-black"></i><p class="text-xs text-gray-500 uppercase">Vertical</p></div>
-                <div class="md:col-span-2 md:row-span-1 bg-black text-white rounded-3xl p-8 border border-gray-800 flex items-center justify-between relative overflow-hidden group hover:scale-[1.02] hover:shadow-2xl transition z-0 hover:z-10 bento-card"><h3 class="text-xl font-bold text-green-400">Livestream Ready</h3><i class="fa-solid fa-signal text-3xl text-green-500"></i></div>
-                <div class="md:col-span-2 md:row-span-2 bg-white text-black rounded-3xl p-8 flex flex-col justify-between group hover:border-[#131644] border border-gray-200 hover:scale-[1.02] hover:shadow-2xl transition z-0 hover:z-10 bento-card"><h3 class="text-3xl font-bold mt-4">Full Production</h3><span class="font-bold text-2xl text-[#131644]">450€<span class="text-sm font-normal text-gray-500">/ep</span></span></div>
+
+                <!-- 4. Vertical -->
+                <div class="md:col-span-1 md:row-span-1 bg-white rounded-3xl p-6 flex flex-col justify-center items-center hover:border-[#131644] border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card group">
+                    <i class="fa-brands fa-tiktok text-4xl mb-2 text-black group-hover:rotate-12 transition"></i>
+                    <p class="text-xs text-gray-500 uppercase font-bold">9:16 Native</p>
+                </div>
+
+                <!-- 5. Livestream -->
+                <div class="md:col-span-2 md:row-span-1 bg-black text-white rounded-3xl p-8 border border-gray-800 flex items-center justify-between relative overflow-hidden group hover:scale-[1.01] transition z-0 hover:z-10 bento-card">
+                    <div class="z-10">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            <span class="text-xs font-mono text-green-500 uppercase">Live Signal</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1">BROADCAST</h3>
+                        <p class="text-xs font-mono text-gray-500">FIBRE 1GB/S DÉDIÉE</p>
+                    </div>
+                    <i class="fa-brands fa-twitch text-5xl text-gray-800 group-hover:text-white transition duration-500 z-10"></i>
+                    <div class="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-green-900/20 to-transparent"></div>
+                </div>
+
+                <!-- 6. Full Prod CTA -->
+                <div class="md:col-span-2 md:row-span-2 bg-gradient-to-br from-white to-gray-100 text-black rounded-3xl p-8 flex flex-col justify-between group border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card">
+                    <div class="flex justify-between items-start">
+                        <span class="bg-[#131644] text-white text-xs px-3 py-1 rounded-full uppercase tracking-wider font-bold">Premium</span>
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition duration-300 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-4xl font-black mt-4 uppercase leading-none">Full<br>Prod.</h3>
+                        <p class="font-mono text-xs text-gray-500 mt-4 max-w-xs">ENREGISTREMENT • MONTAGE • MIXAGE • MINIATURES • PUBLICATION</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -477,13 +535,13 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
 
-    <!-- 5. TARIFS (SUPER ZOOM) -->
+    <!-- 5. TARIFS (SUPER ZOOM 1.15) -->
     <section id="tarifs" class="relative z-10 py-24 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16">
                 <div>
                     <h2 class="text-4xl md:text-5xl font-bold">Nos Tarifs</h2>
-                    <p class="text-gray-400 mt-2">5 Formules pour tous les budgets.</p>
+                    <p class="text-gray-400 mt-2 font-mono text-sm">/// 7 Formules pour tous les budgets</p>
                 </div>
                 <div class="flex gap-4 mt-6 md:mt-0">
                     <button onclick="scrollPrices('left')" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-left"></i></button>
@@ -491,39 +549,128 @@
                 </div>
             </div>
             
-            <div class="pricing-scroll-container hide-scroll" id="pricing-slider">
+            <div class="pricing-scroll-container hide-scroll py-20" id="pricing-slider">
+                
+                <!-- Card Student -->
+                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[500px]">
+                    <div>
+                        <span class="text-gray-500 font-mono text-xs uppercase border border-gray-600 px-2 py-1 rounded">Student</span>
+                        <h3 class="text-3xl font-black mt-4 mb-4">Young Creator</h3>
+                        <div class="text-5xl font-black text-white mb-2">35€</div>
+                        <span class="text-xs text-gray-500 font-mono">PAR HEURE</span>
+                        <div class="w-full h-px bg-white/10 my-6"></div>
+                        <ul class="space-y-3 text-sm font-medium text-gray-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-gray-500"></i> Sur présentation carte</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-gray-500"></i> Audio Only</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-gray-500"></i> Heures creuses</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
+                </div>
+
                 <!-- Card 1 -->
-                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl transition duration-300 flex flex-col hover:bg-[#1a1a1a]">
-                    <h3 class="text-2xl font-bold mb-4">Audio Start</h3>
-                    <div class="text-5xl font-bold text-[#131644] mb-6">50€<span class="text-lg text-gray-400 font-normal">/h</span></div>
-                    <ul class="space-y-4 text-gray-400 mb-8 flex-1 text-sm">
-                        <li class="flex items-center"><i class="fa-solid fa-check text-[#131644] mr-3"></i> Studio insonorisé</li>
-                        <li class="flex items-center"><i class="fa-solid fa-check text-[#131644] mr-3"></i> 4 Micros Shure</li>
-                    </ul>
-                    <button class="w-full py-3 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold">Réserver</button>
+                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[500px]">
+                    <div>
+                        <span class="text-gray-500 font-mono text-xs uppercase">Starter</span>
+                        <h3 class="text-3xl font-black mt-4 mb-4">Audio Only</h3>
+                        <div class="text-5xl font-black text-[#131644] mb-2">50€</div>
+                        <span class="text-xs text-gray-500 font-mono">PAR HEURE</span>
+                        <div class="w-full h-px bg-white/10 my-6"></div>
+                        <ul class="space-y-3 text-sm font-medium text-gray-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-[#131644]"></i> Studio insonorisé</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-[#131644]"></i> 4 Micros Shure</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-[#131644]"></i> Ingénieur Son</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="pricing-card bg-[#1a1a1a] border border-[#131644]/50 p-8 rounded-3xl relative shadow-2xl flex flex-col">
-                    <div class="absolute top-0 right-0 bg-[#131644] text-white text-xs font-bold px-4 py-1 rounded-bl-xl rounded-tr-2xl">POPULAIRE</div>
-                    <h3 class="text-2xl font-bold mb-4">Vodcast Pack</h3>
-                    <div class="text-5xl font-bold text-white mb-6">120€<span class="text-lg text-gray-400 font-normal">/h</span></div>
-                    <ul class="space-y-4 text-gray-300 mb-8 flex-1 text-sm">
-                        <li class="flex items-center"><i class="fa-solid fa-check text-[#131644] mr-3"></i> Pack Audio</li>
-                        <li class="flex items-center"><i class="fa-solid fa-check text-[#131644] mr-3"></i> 3 Caméras 4K</li>
-                    </ul>
-                    <button class="w-full py-3 bg-[#131644] rounded-xl hover:bg-[#1c2166] transition font-bold text-white">Réserver</button>
+                <!-- Card 2 (Popular) -->
+                <div class="pricing-card bg-[#131644] border border-[#131644] p-8 rounded-3xl relative shadow-2xl flex flex-col justify-between h-[500px]">
+                    <div class="absolute top-4 right-4 bg-white text-black text-[10px] font-black px-3 py-1 rounded-full uppercase">Hot</div>
+                    <div>
+                        <span class="text-blue-200 font-mono text-xs uppercase">Creator</span>
+                        <h3 class="text-3xl font-black mt-4 mb-4">Vodcast</h3>
+                        <div class="text-5xl font-black text-white mb-2">120€</div>
+                        <span class="text-xs text-blue-200 font-mono">PAR HEURE</span>
+                        <div class="w-full h-px bg-white/20 my-6"></div>
+                        <ul class="space-y-3 text-sm font-medium text-white">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check"></i> Pack Audio Complet</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check"></i> 3 Caméras 4K</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check"></i> Régie Vidéo Direct</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-4 bg-white text-black rounded-xl hover:bg-gray-200 transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
                 </div>
 
-                <!-- Cards 3,4,5 ... -->
-                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl transition duration-300 flex flex-col hover:bg-[#1a1a1a]">
-                    <h3 class="text-2xl font-bold mb-4">Full Prod</h3>
-                    <div class="text-5xl font-bold text-purple-500 mb-6">450€<span class="text-lg text-gray-400 font-normal">/ep</span></div>
-                    <ul class="space-y-4 text-gray-400 mb-8 flex-1 text-sm">
-                        <li class="flex items-center"><i class="fa-solid fa-check text-purple-500 mr-3"></i> Tournage + Montage</li>
-                    </ul>
-                    <button class="w-full py-3 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold">Choisir</button>
+                <!-- Card 3 -->
+                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[500px]">
+                    <div>
+                        <span class="text-purple-400 font-mono text-xs uppercase">All Inclusive</span>
+                        <h3 class="text-3xl font-black mt-4 mb-4">Full Prod</h3>
+                        <div class="text-5xl font-black text-purple-500 mb-2">450€</div>
+                        <span class="text-xs text-gray-500 font-mono">PAR ÉPISODE</span>
+                        <div class="w-full h-px bg-white/10 my-6"></div>
+                        <ul class="space-y-3 text-sm font-medium text-gray-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> Tournage (2h)</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> Montage & Mixage</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-purple-500"></i> 3 Shorts / Reels</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Choisir</button>
                 </div>
+
+                <!-- Card 4 -->
+                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[500px]">
+                    <div>
+                        <span class="text-green-400 font-mono text-xs uppercase">Broadcaster</span>
+                        <h3 class="text-3xl font-black mt-4 mb-4">Livestream</h3>
+                        <div class="text-5xl font-black text-green-500 mb-2">250€</div>
+                        <span class="text-xs text-gray-500 font-mono">PAR HEURE</span>
+                        <div class="w-full h-px bg-white/10 my-6"></div>
+                        <ul class="space-y-3 text-sm font-medium text-gray-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Multi-Diffusion</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Gestion du Chat</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-green-500"></i> Overlay Dynamique</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Choisir</button>
+                </div>
+
+                <!-- Card Day Pass -->
+                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[500px]">
+                    <div>
+                        <span class="text-blue-400 font-mono text-xs uppercase">Intensive</span>
+                        <h3 class="text-3xl font-black mt-4 mb-4">Day Pass</h3>
+                        <div class="text-5xl font-black text-white mb-2">800€</div>
+                        <span class="text-xs text-gray-500 font-mono">10H - 18H</span>
+                        <div class="w-full h-px bg-white/10 my-6"></div>
+                        <ul class="space-y-3 text-sm font-medium text-gray-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-400"></i> Studio Privatisé</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-400"></i> Équipe Technique</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-400"></i> Lunch Inclus</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
+                </div>
+
+                 <!-- Card 5 -->
+                 <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[500px]">
+                    <div>
+                        <span class="text-yellow-500 font-mono text-xs uppercase">Event</span>
+                        <h3 class="text-3xl font-black mt-4 mb-4">Masterclass</h3>
+                        <div class="text-5xl font-black text-white mb-2">Devis</div>
+                        <span class="text-xs text-gray-500 font-mono">SUR MESURE</span>
+                        <div class="w-full h-px bg-white/10 my-6"></div>
+                        <ul class="space-y-3 text-sm font-medium text-gray-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-500"></i> Journée Complète</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-500"></i> Accueil Public (20p)</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-yellow-500"></i> Catering Inclus</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Contacter</button>
+                </div>
+
             </div>
         </div>
     </section>
@@ -531,26 +678,25 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 6. FAQ (CORRIGÉE) -->
-    <section id="faq" class="relative z-10 py-24 bg-white text-black bg-dots-light">
+    <!-- 6. FAQ (CORRIGÉE & ROBUSTE) -->
+    <section id="faq" class="relative z-10 py-24 bg-white text-black bg-grid-light">
         <div class="max-w-5xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-200 pb-8">
-                <div><h2 class="text-4xl md:text-6xl font-bold">FAQ<span class="text-[#131644]">.</span></h2></div>
+                <div><h2 class="text-4xl md:text-6xl font-black uppercase">FAQ<span class="text-[#131644]">.</span></h2></div>
             </div>
 
             <div class="flex flex-col gap-2">
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-trigger flex justify-between items-center group select-none">
+                <div class="faq-item group" onclick="toggleFaq(this)">
+                    <div class="faq-trigger">
                         <div class="flex items-baseline gap-4 md:gap-8">
                             <span class="text-sm font-mono text-gray-400 group-hover:text-black transition">01</span>
                             <h3 class="text-lg md:text-3xl font-bold text-black">Matériel Inclus ?</h3>
                         </div>
-                        <div class="faq-icon-wrapper text-black group-hover:text-[#131644] transition">
-                            <div class="faq-line faq-line-h"></div>
-                            <div class="faq-line faq-line-v"></div>
+                        <!-- FontAwesome Icon for stability -->
+                        <div class="text-2xl text-gray-400 group-hover:text-[#131644] transition-transform duration-300 faq-icon">
+                            <i class="fa-solid fa-plus"></i>
                         </div>
                     </div>
-                    <!-- Simplified Content Structure for Robustness -->
                     <div class="faq-content">
                         <p class="text-gray-700 leading-relaxed font-medium pl-8 md:pl-14 pr-4">
                             Tout est prêt à votre arrivée. Le studio comprend 4 micros Shure SM7B, la console Rodecaster Pro II, et l'éclairage cinéma. Pour l'option vidéo, 3 caméras Sony A7S III sont installées et calibrées.
@@ -558,15 +704,14 @@
                     </div>
                 </div>
                 
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-trigger flex justify-between items-center group select-none">
+                <div class="faq-item group" onclick="toggleFaq(this)">
+                    <div class="faq-trigger">
                         <div class="flex items-baseline gap-4 md:gap-8">
                             <span class="text-sm font-mono text-gray-400 group-hover:text-black transition">02</span>
                             <h3 class="text-lg md:text-3xl font-bold text-black">Livraison des Fichiers</h3>
                         </div>
-                        <div class="faq-icon-wrapper text-black group-hover:text-[#131644] transition">
-                            <div class="faq-line faq-line-h"></div>
-                            <div class="faq-line faq-line-v"></div>
+                        <div class="text-2xl text-gray-400 group-hover:text-[#131644] transition-transform duration-300 faq-icon">
+                            <i class="fa-solid fa-plus"></i>
                         </div>
                     </div>
                     <div class="faq-content">
@@ -576,15 +721,14 @@
                     </div>
                 </div>
 
-                <div class="faq-item" onclick="toggleFaq(this)">
-                    <div class="faq-trigger flex justify-between items-center group select-none">
+                <div class="faq-item group" onclick="toggleFaq(this)">
+                    <div class="faq-trigger">
                         <div class="flex items-baseline gap-4 md:gap-8">
                             <span class="text-sm font-mono text-gray-400 group-hover:text-black transition">03</span>
                             <h3 class="text-lg md:text-3xl font-bold text-black">Annulation & Retards</h3>
                         </div>
-                        <div class="faq-icon-wrapper text-black group-hover:text-[#131644] transition">
-                            <div class="faq-line faq-line-h"></div>
-                            <div class="faq-line faq-line-v"></div>
+                        <div class="text-2xl text-gray-400 group-hover:text-[#131644] transition-transform duration-300 faq-icon">
+                            <i class="fa-solid fa-plus"></i>
                         </div>
                     </div>
                     <div class="faq-content">
@@ -604,11 +748,11 @@
     <footer class="relative z-10 py-16 bg-[#020202] text-white">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             <div>
-                <div class="text-3xl font-bold tracking-tighter mb-6">STUDIO<span class="text-[#131644]">.</span></div>
+                <div class="text-3xl font-black tracking-tighter mb-6">STUDIO<span class="text-[#131644]">.</span></div>
                 <p class="text-gray-400 text-sm max-w-sm mb-4">L'espace de création premium à Paris.</p>
                 <div class="text-gray-600 text-xs">&copy; 2024 Studio Creation.</div>
             </div>
-            <div class="flex flex-col gap-2 text-sm text-gray-400 items-center md:items-start">
+            <div class="flex flex-col gap-2 text-sm text-gray-400 items-center md:items-start font-bold">
                 <a href="#" class="hover:text-white transition">Mentions Légales</a>
                 <a href="#" class="hover:text-white transition">CGV</a>
                 <a href="#" class="hover:text-white transition">Contact</a>
@@ -621,12 +765,21 @@
 
     <script>
         function toggleFaq(element) {
+            const content = element.querySelector('.faq-content');
+            const icon = element.querySelector('.fa-plus');
+            const isActive = element.classList.contains('active');
+            
             // Close others
             document.querySelectorAll('.faq-item').forEach(item => {
-                if(item !== element) item.classList.remove('active');
+                item.classList.remove('active');
+                item.querySelector('.faq-content').style.maxHeight = '0';
             });
+            
             // Toggle current
-            element.classList.toggle('active');
+            if (!isActive) {
+                element.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
         }
 
         function scrollPrices(direction) {
@@ -654,7 +807,7 @@
                         newWidth = ratio * 140; 
                     }
                     item.style.width = `${newWidth}px`;
-                    item.style.margin = newWidth > 5 ? '0 15px' : '0';
+                    item.style.margin = newWidth > 5 ? '0 1.5rem' : '0';
                     item.style.opacity = newWidth > 5 ? '1' : '0';
                 });
             });
