@@ -72,10 +72,6 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .hover-glow:hover {
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
-        }
-        
         /* --- BENTO STYLES --- */
         .bento-card {
             position: relative;
@@ -213,9 +209,9 @@
     <!-- NAV -->
     <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
-            <!-- LOGO IMAGE (Remplace studio par logo.png) -->
-            <a href="#" class="block w-32 md:w-40 hover:opacity-80 transition cursor-pointer">
-                <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
+            <!-- LOGO TEXTE (Plus propre si pas d'image) -->
+            <a href="#" class="text-2xl font-black tracking-tighter hover:text-brand-accent transition cursor-pointer">
+                STUDIO<span class="text-[#131644]">.</span>
             </a>
             
             <div class="hidden md:flex gap-8 font-medium text-sm">
@@ -231,9 +227,9 @@
     <!-- 1. HERO SECTION -->
     <section id="hero" class="relative h-screen w-full overflow-hidden flex flex-col justify-center bg-[#050505] text-white bg-grid-dark">
         <div class="absolute inset-0 z-0">
-            <!-- BACKGROUND VIDEO (Local file) -->
+            <!-- BACKGROUND VIDEO -->
             <video autoplay muted loop playsinline class="object-cover w-full h-full opacity-60">
-                <source src="vidéo-héros.mp4" type="video/mp4">
+                <source src="hero-video.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_100%)]"></div>
@@ -287,7 +283,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 2. SOCIAL PROOF (STACK) -->
+    <!-- 2. SOCIAL PROOF (STACK & LOGOS) -->
     <div class="relative">
         <section id="social-proof" class="sticky top-0 h-screen flex items-center bg-white text-black overflow-hidden z-0 bg-dots-light">
             <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-32 pointer-events-none"></div>
@@ -300,13 +296,16 @@
                         Une infrastructure technique conçue pour la viralité. Rejoignez une communauté de créateurs exigeants qui ne laissent rien au hasard.
                     </p>
                     
-                    <div class="border-t border-gray-200 pt-8 hidden md:block">
+                    <!-- LOGOS DES MARQUES -->
+                    <div class="border-t border-gray-200 pt-8">
                         <p class="text-xs text-gray-400 uppercase tracking-widest mb-4">Ils nous font confiance</p>
-                        <div class="flex gap-6 opacity-50 grayscale">
-                            <i class="fa-brands fa-spotify text-2xl"></i>
-                            <i class="fa-brands fa-youtube text-2xl"></i>
-                            <i class="fa-brands fa-tiktok text-2xl"></i>
-                            <i class="fa-brands fa-soundcloud text-2xl"></i>
+                        <div class="flex flex-wrap gap-8 items-center">
+                            <!-- Remplacez les src par vos vrais fichiers -->
+                            <img src="assets/logos/dada.png" alt="Dada" class="h-8 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
+                            <img src="assets/logos/shure.png" alt="Shure" class="h-6 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
+                            <img src="assets/logos/vsm.png" alt="VSM" class="h-8 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
+                            <img src="assets/logos/spotify.png" alt="Spotify" class="h-8 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
+                            <img src="assets/logos/ears360.png" alt="Ears360" class="h-6 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
                         </div>
                     </div>
                 </div>
@@ -355,7 +354,6 @@
                         <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
                             <span class="reveal-text group-hover:text-[#131644]">TECH</span>
                             <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
-                                <!-- REMPLACE AVEC NOM DE FICHIER LOCAL -->
                                 <img src="cover_tech.jpg" class="w-full h-full object-cover scale-125" alt="Tech">
                             </div>
                             <span class="reveal-text group-hover:text-[#131644]">& CULTURE</span>
@@ -402,10 +400,8 @@
         </div>
         <div class="decor-container flex flex-col md:flex-row w-full h-[600px] gap-4 px-2">
             
-            <!-- STUDIO 1 -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <!-- IMAGE LOCALE -->
-                <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Dark Room">
+                <img src="studio_dark.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Dark Room">
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">Dark Room</h3>
@@ -415,10 +411,8 @@
                 </div>
             </div>
 
-            <!-- STUDIO 2 -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <!-- IMAGE LOCALE -->
-                <img src="library-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt=" Show">
+                <img src="studio_talk.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Talk Show">
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">Talk Show</h3>
@@ -428,10 +422,8 @@
                 </div>
             </div>
 
-            <!-- STUDIO 3 -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <!-- IMAGE LOCALE -->
-                <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Lounge">
+                <img src="studio_lounge.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Lounge">
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">The Lounge</h3>
@@ -446,7 +438,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 4. BENTO GRID (DA: BRUTALIST LAB - LOCAL IMAGES) -->
+    <!-- 4. BENTO GRID -->
     <section id="bento" class="relative z-10 py-24 bg-white text-black bg-dots-light">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row items-end justify-between mb-12">
@@ -462,7 +454,6 @@
 
             <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-4 gap-4 h-auto md:h-[800px]">
                 
-                <!-- 1. Audio -->
                 <div class="md:col-span-2 md:row-span-2 bg-[#050505] rounded-3xl p-8 border border-gray-200 relative overflow-hidden group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card text-white">
                     <div class="flex justify-between items-start z-10 relative">
                         <span class="bento-tag text-white/70">AUDIO_SYS</span>
@@ -472,14 +463,11 @@
                         <h3 class="text-3xl md:text-5xl font-black mb-2 leading-none uppercase">Pure<br>Sound</h3>
                         <p class="text-gray-400 font-mono text-xs border-l-2 border-[#131644] pl-3 mt-4">SHURE SM7B X4 <br>+ RODECASTER PRO II</p>
                     </div>
-                    <!-- LOCAL IMAGE -->
                     <img src="bento_audio.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen group-hover:opacity-40 transition duration-700">
                 </div>
 
-                <!-- 2. Video -->
                 <div class="md:col-span-1 md:row-span-2 bg-gray-100 rounded-3xl p-6 border border-gray-200 flex flex-col items-center justify-between text-center group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card">
                     <div class="w-full aspect-square rounded-2xl overflow-hidden mb-4 relative bg-black">
-                        <!-- LOCAL IMAGE -->
                         <img src="bento_video.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
                     </div>
                     <div>
@@ -491,19 +479,16 @@
                     </div>
                 </div>
 
-                <!-- 3. Access -->
                 <div class="md:col-span-1 md:row-span-1 bg-[#131644] rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-black transition cursor-pointer border border-transparent hover:scale-[1.01] z-0 hover:z-10 bento-card group">
                     <h4 class="text-5xl font-black text-white tracking-tighter group-hover:text-brand-acid transition">24<span class="text-white/50">/</span>7</h4>
                     <span class="bento-tag text-white/50 mt-2 border-white/20">ACCESS</span>
                 </div>
 
-                <!-- 4. Vertical -->
                 <div class="md:col-span-1 md:row-span-1 bg-white rounded-3xl p-6 flex flex-col justify-center items-center hover:border-[#131644] border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card group">
                     <i class="fa-brands fa-tiktok text-4xl mb-2 text-black group-hover:rotate-12 transition"></i>
                     <p class="text-xs text-gray-500 uppercase font-bold">9:16 Native</p>
                 </div>
 
-                <!-- 5. Livestream -->
                 <div class="md:col-span-2 md:row-span-1 bg-black text-white rounded-3xl p-8 border border-gray-800 flex items-center justify-between relative overflow-hidden group hover:scale-[1.01] transition z-0 hover:z-10 bento-card">
                     <div class="z-10">
                         <div class="flex items-center gap-2 mb-1">
@@ -517,7 +502,6 @@
                     <div class="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-green-900/20 to-transparent"></div>
                 </div>
 
-                <!-- 6. Full Prod CTA -->
                 <div class="md:col-span-2 md:row-span-2 bg-gradient-to-br from-white to-gray-100 text-black rounded-3xl p-8 flex flex-col justify-between group border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card">
                     <div class="flex justify-between items-start">
                         <span class="bg-[#131644] text-white text-xs px-3 py-1 rounded-full uppercase tracking-wider font-bold">Premium</span>
@@ -585,7 +569,7 @@
                     <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
                 </div>
 
-                <!-- Card 2 (Popular) -->
+                <!-- Card 2 -->
                 <div class="pricing-card bg-[#131644] border border-[#131644] p-8 rounded-3xl relative shadow-2xl flex flex-col justify-between h-[500px]">
                     <div class="absolute top-4 right-4 bg-white text-black text-[10px] font-black px-3 py-1 rounded-full uppercase">Hot</div>
                     <div>
@@ -678,7 +662,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 6. FAQ (CORRIGÉE & ROBUSTE) -->
+    <!-- 6. FAQ -->
     <section id="faq" class="relative z-10 py-24 bg-white text-black bg-grid-light">
         <div class="max-w-5xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-200 pb-8">
@@ -692,7 +676,6 @@
                             <span class="text-sm font-mono text-gray-400 group-hover:text-black transition">01</span>
                             <h3 class="text-lg md:text-3xl font-bold text-black">Matériel Inclus ?</h3>
                         </div>
-                        <!-- FontAwesome Icon for stability -->
                         <div class="text-2xl text-gray-400 group-hover:text-[#131644] transition-transform duration-300 faq-icon">
                             <i class="fa-solid fa-plus"></i>
                         </div>
