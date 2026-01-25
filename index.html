@@ -72,6 +72,11 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
+        .hover-glow:hover {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            color: #3b82f6;
+        }
+        
         /* --- BENTO STYLES --- */
         .bento-card {
             position: relative;
@@ -209,9 +214,9 @@
     <!-- NAV -->
     <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
-            <!-- LOGO TEXTE (Plus propre si pas d'image) -->
-            <a href="#" class="text-2xl font-black tracking-tighter hover:text-brand-accent transition cursor-pointer">
-                STUDIO<span class="text-[#131644]">.</span>
+            <!-- LOGO IMAGE -->
+            <a href="#" class="block w-24 md:w-32 hover:opacity-80 transition cursor-pointer">
+                <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
             </a>
             
             <div class="hidden md:flex gap-8 font-medium text-sm">
@@ -254,27 +259,23 @@
             </div>
         </div>
 
-        <!-- Marquee -->
+        <!-- Marquee Overlay -->
         <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/80 backdrop-blur-sm py-4 md:py-6">
-            <div class="flex overflow-hidden relative w-full">
-                <div class="flex animate-scroll whitespace-nowrap items-center">
-                    <div class="flex space-x-12 md:space-x-20 mx-6 md:mx-10 items-center opacity-40 font-bold text-sm md:text-lg tracking-widest text-white">
-                        <span>SPOTIFY STUDIOS</span>
-                        <span>CANAL+</span>
-                        <span>ARTE RADIO</span>
-                        <span>KONBINI</span>
-                        <span>BRUT.</span>
-                        <span>TEDx</span>
-                    </div>
-                    <!-- Duplicate -->
-                    <div class="flex space-x-12 md:space-x-20 mx-6 md:mx-10 items-center opacity-40 font-bold text-sm md:text-lg tracking-widest text-white">
-                        <span>SPOTIFY STUDIOS</span>
-                        <span>CANAL+</span>
-                        <span>ARTE RADIO</span>
-                        <span>KONBINI</span>
-                        <span>BRUT.</span>
-                        <span>TEDx</span>
-                    </div>
+             <div class="flex overflow-hidden relative w-full">
+                <div class="flex animate-scroll whitespace-nowrap items-center gap-12 md:gap-20 mx-6 md:mx-10">
+                     <!-- LOGOS DEFILANTS (Utilisation de placeholders texte stylisés ou image si dispo) -->
+                     <!-- Pour l'instant texte car je n'ai pas les fichiers logos exacts, mais structure prête -->
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">DADA</span>
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">SHURE</span>
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">VSM</span>
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">SPOTIFY</span>
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">EARS360</span>
+                     <!-- Duplicate -->
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">DADA</span>
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">SHURE</span>
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">VSM</span>
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">SPOTIFY</span>
+                    <span class="text-white opacity-50 font-bold text-lg hover:text-brand-accent hover:opacity-100 transition duration-300 cursor-pointer">EARS360</span>
                 </div>
             </div>
         </div>
@@ -283,7 +284,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 2. SOCIAL PROOF (STACK & LOGOS) -->
+    <!-- 2. SOCIAL PROOF (STACK) -->
     <div class="relative">
         <section id="social-proof" class="sticky top-0 h-screen flex items-center bg-white text-black overflow-hidden z-0 bg-dots-light">
             <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-32 pointer-events-none"></div>
@@ -295,19 +296,6 @@
                     <p class="text-gray-600 text-lg mb-8 leading-relaxed">
                         Une infrastructure technique conçue pour la viralité. Rejoignez une communauté de créateurs exigeants qui ne laissent rien au hasard.
                     </p>
-                    
-                    <!-- LOGOS DES MARQUES -->
-                    <div class="border-t border-gray-200 pt-8">
-                        <p class="text-xs text-gray-400 uppercase tracking-widest mb-4">Ils nous font confiance</p>
-                        <div class="flex flex-wrap gap-8 items-center">
-                            <!-- Remplacez les src par vos vrais fichiers -->
-                            <img src="assets/logos/dada.png" alt="Dada" class="h-8 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
-                            <img src="assets/logos/shure.png" alt="Shure" class="h-6 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
-                            <img src="assets/logos/vsm.png" alt="VSM" class="h-8 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
-                            <img src="assets/logos/spotify.png" alt="Spotify" class="h-8 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
-                            <img src="assets/logos/ears360.png" alt="Ears360" class="h-6 w-auto object-contain grayscale hover:grayscale-0 transition duration-300 opacity-60 hover:opacity-100 cursor-pointer">
-                        </div>
-                    </div>
                 </div>
 
                 <div class="md:w-1/2 relative h-[350px] md:h-[450px] w-full flex justify-center items-center perspective-[1000px]">
@@ -340,7 +328,7 @@
             </div>
         </section>
 
-        <!-- 2.bis PRODUCTION MAISON (EXPANDED LIST - LOCAL IMAGES) -->
+        <!-- 2.bis PRODUCTION MAISON (SCROLL REVEAL - NO LOCAL IMAGES REQUESTED HERE, KEPT AS TEXT/PLACEHOLDER LOGIC) -->
         <section class="relative z-10 py-20 md:py-32 bg-white text-black border-t border-gray-100 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-light">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[5rem] md:text-[15rem] font-bold text-gray-50 opacity-50 select-none pointer-events-none z-0 tracking-tighter leading-none">
@@ -353,34 +341,27 @@
                         
                         <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
                             <span class="reveal-text group-hover:text-[#131644]">TECH</span>
-                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
-                                <img src="cover_tech.jpg" class="w-full h-full object-cover scale-125" alt="Tech">
+                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-500 overflow-hidden">
+                                <!-- Placeholder Image -->
+                                <img src="https://placehold.co/100x100?text=Tech" class="w-full h-full object-cover">
                             </div>
                             <span class="reveal-text group-hover:text-[#131644]">& CULTURE</span>
                         </div>
 
                         <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
                             <span class="reveal-text group-hover:text-[#131644]">BUSINESS</span>
-                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
-                                <img src="cover_business.jpg" class="w-full h-full object-cover scale-125" alt="Business">
+                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-500 overflow-hidden">
+                                 <img src="https://placehold.co/100x100?text=Biz" class="w-full h-full object-cover">
                             </div>
                             <span class="reveal-text group-hover:text-[#131644]">MAKERS</span>
                         </div>
-
-                        <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
+                        
+                         <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
                             <span class="reveal-text group-hover:text-[#131644]">LA</span>
-                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
-                                <img src="cover_matinale.jpg" class="w-full h-full object-cover scale-125" alt="Morning">
+                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100 flex items-center justify-center text-xs text-gray-500 overflow-hidden">
+                                 <img src="https://placehold.co/100x100?text=Matin" class="w-full h-full object-cover">
                             </div>
                             <span class="reveal-text group-hover:text-[#131644]">MATINALE</span>
-                        </div>
-
-                        <div class="reveal-item flex items-center justify-center text-2xl md:text-5xl font-bold text-black py-4 border-b border-gray-200 w-full hover:bg-[#131644]/5 transition">
-                            <span class="reveal-text group-hover:text-[#131644]">LEVEL</span>
-                            <div class="reveal-img-container h-8 md:h-16 rounded-full bg-gray-100">
-                                <img src="cover_gaming.jpg" class="w-full h-full object-cover scale-125" alt="Gaming">
-                            </div>
-                            <span class="reveal-text group-hover:text-[#131644]">UP</span>
                         </div>
 
                     </div>
@@ -401,7 +382,7 @@
         <div class="decor-container flex flex-col md:flex-row w-full h-[600px] gap-4 px-2">
             
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <img src="studio_dark.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Dark Room">
+                <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Dark Room">
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">Dark Room</h3>
@@ -412,7 +393,9 @@
             </div>
 
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <img src="studio_talk.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Talk Show">
+                <!-- Using placeholder for Talk Show as no specific image was given for this slot, using library as placeholder if needed or keeping generic -->
+                <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Talk Show"> 
+                <!-- J'utilise santorini ici temporairement, tu pourras changer si c'est library -->
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">Talk Show</h3>
@@ -423,7 +406,7 @@
             </div>
 
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10">
-                <img src="studio_lounge.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Lounge">
+                <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Lounge">
                 <div class="absolute inset-0 bg-black/60 group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">The Lounge</h3>
@@ -463,12 +446,14 @@
                         <h3 class="text-3xl md:text-5xl font-black mb-2 leading-none uppercase">Pure<br>Sound</h3>
                         <p class="text-gray-400 font-mono text-xs border-l-2 border-[#131644] pl-3 mt-4">SHURE SM7B X4 <br>+ RODECASTER PRO II</p>
                     </div>
-                    <img src="bento_audio.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen group-hover:opacity-40 transition duration-700">
+                    <!-- Generic placeholder as no file specified for this -->
+                     <div class="absolute inset-0 bg-gradient-to-t from-black to-gray-800 opacity-50"></div>
                 </div>
 
                 <div class="md:col-span-1 md:row-span-2 bg-gray-100 rounded-3xl p-6 border border-gray-200 flex flex-col items-center justify-between text-center group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card">
                     <div class="w-full aspect-square rounded-2xl overflow-hidden mb-4 relative bg-black">
-                        <img src="bento_video.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
+                         <!-- Generic placeholder -->
+                         <div class="w-full h-full bg-gray-800"></div>
                     </div>
                     <div>
                         <h4 class="font-bold text-2xl mb-1 text-black uppercase">Cinema 4K</h4>
@@ -569,7 +554,7 @@
                     <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
                 </div>
 
-                <!-- Card 2 -->
+                <!-- Card 2 (Popular) -->
                 <div class="pricing-card bg-[#131644] border border-[#131644] p-8 rounded-3xl relative shadow-2xl flex flex-col justify-between h-[500px]">
                     <div class="absolute top-4 right-4 bg-white text-black text-[10px] font-black px-3 py-1 rounded-full uppercase">Hot</div>
                     <div>
@@ -662,7 +647,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 6. FAQ -->
+    <!-- 6. FAQ (CORRIGÉE & ROBUSTE) -->
     <section id="faq" class="relative z-10 py-24 bg-white text-black bg-grid-light">
         <div class="max-w-5xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-200 pb-8">
@@ -676,6 +661,7 @@
                             <span class="text-sm font-mono text-gray-400 group-hover:text-black transition">01</span>
                             <h3 class="text-lg md:text-3xl font-bold text-black">Matériel Inclus ?</h3>
                         </div>
+                        <!-- FontAwesome Icon for stability -->
                         <div class="text-2xl text-gray-400 group-hover:text-[#131644] transition-transform duration-300 faq-icon">
                             <i class="fa-solid fa-plus"></i>
                         </div>
@@ -731,7 +717,9 @@
     <footer class="relative z-10 py-16 bg-[#020202] text-white">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
             <div>
-                <div class="text-3xl font-black tracking-tighter mb-6">STUDIO<span class="text-[#131644]">.</span></div>
+                 <a href="#" class="block w-24 md:w-32 mb-6 hover:opacity-80 transition cursor-pointer">
+                    <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
+                </a>
                 <p class="text-gray-400 text-sm max-w-sm mb-4">L'espace de création premium à Paris.</p>
                 <div class="text-gray-600 text-xs">&copy; 2024 Studio Creation.</div>
             </div>
