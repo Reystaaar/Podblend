@@ -6,7 +6,7 @@
     <title>Podblend - Vos studios d'enregistrement</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -77,6 +77,11 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
+        .hover-glow:hover {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+            color: #3b82f6;
+        }
+        
         /* --- BENTO STYLES --- */
         .bento-card {
             position: relative;
@@ -201,7 +206,10 @@
         @media (max-width: 768px) {
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
+            
             h1 { font-size: 2.5rem !important; }
+            h2 { font-size: 2rem !important; }
+            .reveal-item span { font-size: 1.2rem !important; }
         }
         
         /* TYPEWRITER CURSOR */
@@ -239,6 +247,7 @@
     <!-- 1. HERO SECTION -->
     <section id="hero" class="relative h-[100dvh] w-full overflow-hidden bg-[#050505] text-white bg-grid-dark flex flex-col">
         <div class="absolute inset-0 z-0">
+            <!-- BACKGROUND VIDEO -->
             <video autoplay muted loop playsinline class="object-cover w-full h-full opacity-80">
                 <source src="hero-video.mp4" type="video/mp4">
             </video>
@@ -260,27 +269,29 @@
             </div>
         </div>
 
-        <!-- Marquee Overlay (Seamless Loop Corrected) -->
+        <!-- Marquee Overlay (Seamless Loop) -->
         <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/90 backdrop-blur-sm py-4 md:py-6">
              <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
                 
-                <!-- Logos Défilants (Infinite with Gap Match) -->
+                <!-- Logos Défilants -->
                 <div class="flex overflow-hidden relative w-full md:w-2/3 mask-image-gradient">
-                    <!-- Set pr-20 to match gap-20 -->
-                    <div class="flex animate-scroll whitespace-nowrap items-center gap-20 pr-20 shrink-0">
-                        <img src="assets/logos/dada.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
-                        <img src="assets/logos/shure.png" class="h-4 md:h-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
-                        <img src="assets/logos/vsm.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="VSM">
-                        <img src="assets/logos/spotify.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
-                        <img src="assets/logos/ears360.png" class="h-4 md:h-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
+                    <div class="flex animate-scroll whitespace-nowrap items-center gap-16 pr-16">
+                        <!-- Logos GitHub -->
+                        <img src="DADA_contours_blanc.webp" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
+                        <img src="LOGO GENNEVILLIERS HABITAT (1).png" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers Habitat">
+                        <img src="Logo-syla-banniere-23.webp" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
+                        <img src="Spotify_logo_with_text.svg.png" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
+                        <img src="logo-qonto-nouveau-1.png" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Qonto">
+                        <img src="Rizqi.png" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                     </div>
-                    <!-- Duplicate set -->
-                    <div class="flex animate-scroll whitespace-nowrap items-center gap-20 pr-20 shrink-0">
-                        <img src="assets/logos/dada.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
-                        <img src="assets/logos/shure.png" class="h-4 md:h-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
-                        <img src="assets/logos/vsm.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="VSM">
-                        <img src="assets/logos/spotify.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
-                        <img src="assets/logos/ears360.png" class="h-4 md:h-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
+                    <!-- Duplicate -->
+                    <div class="flex animate-scroll whitespace-nowrap items-center gap-16 pr-16">
+                        <img src="DADA_contours_blanc.webp" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
+                        <img src="LOGO GENNEVILLIERS HABITAT (1).png" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers Habitat">
+                        <img src="Logo-syla-banniere-23.webp" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
+                        <img src="Spotify_logo_with_text.svg.png" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
+                        <img src="logo-qonto-nouveau-1.png" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Qonto">
+                        <img src="Rizqi.png" class="h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                     </div>
                 </div>
 
@@ -298,7 +309,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 2. SOCIAL PROOF -->
+    <!-- 2. SOCIAL PROOF (STACK) -->
     <div class="relative">
         <section id="social-proof" class="sticky top-0 min-h-screen flex items-center bg-white text-black overflow-hidden z-0">
             <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-32 pointer-events-none"></div>
@@ -344,7 +355,7 @@
             </div>
         </section>
 
-        <!-- 2.bis PRODUCTION MAISON -->
+        <!-- 2.bis PRODUCTION MAISON (IMAGES TEST UNSPLASH) -->
         <section class="relative z-10 py-16 md:py-32 bg-white text-black border-t border-gray-100 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh]">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-50 opacity-30 select-none pointer-events-none z-0 tracking-tighter leading-none">
@@ -355,11 +366,11 @@
                     
                     <div class="flex flex-col items-center justify-center space-y-1" id="scroll-reveal-container">
                         
-                        <!-- 1 -->
+                        <!-- 1. PODCASTS -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-0">
                             <span class="reveal-text group-hover:text-[#131644]">PODCASTS</span>
                             <div class="reveal-img-container h-8 md:h-16 w-20 md:w-auto rounded-full bg-gray-100 mx-2">
-                                <img src="cover_tech.jpg" class="w-full h-full object-cover scale-125" alt="Tech">
+                                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover scale-125" alt="Tech">
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="reveal-text text-gray-400 mx-2 text-sm md:text-xl font-normal">• Talk •</span>
@@ -367,11 +378,11 @@
                             </div>
                         </div>
 
-                        <!-- 2 -->
+                        <!-- 2. ADS -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-0">
                             <span class="reveal-text group-hover:text-[#131644]">ADS</span>
                             <div class="reveal-img-container h-8 md:h-16 w-20 md:w-auto rounded-full bg-gray-100 mx-2">
-                                <img src="cover_business.jpg" class="w-full h-full object-cover scale-125" alt="Business">
+                                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover scale-125" alt="Business">
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="reveal-text text-gray-400 mx-2 text-sm md:text-xl font-normal">• Brand •</span>
@@ -379,15 +390,39 @@
                             </div>
                         </div>
 
-                        <!-- 3 -->
+                        <!-- 3. INSTITUTIONS -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-0">
                             <span class="reveal-text group-hover:text-[#131644]">INSTITUTIONS</span>
                             <div class="reveal-img-container h-8 md:h-16 w-20 md:w-auto rounded-full bg-gray-100 mx-2">
-                                <img src="cover_matinale.jpg" class="w-full h-full object-cover scale-125" alt="Morning">
+                                <img src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover scale-125" alt="Morning">
                             </div>
                             <div class="flex items-center gap-2">
                                 <span class="reveal-text text-gray-400 mx-2 text-sm md:text-xl font-normal">• Public •</span>
                                 <span class="reveal-text group-hover:text-[#131644]">MARQUES</span>
+                            </div>
+                        </div>
+
+                        <!-- 4. GAMING -->
+                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-0">
+                            <span class="reveal-text group-hover:text-[#131644]">GAMING</span>
+                            <div class="reveal-img-container h-8 md:h-16 w-20 md:w-auto rounded-full bg-gray-100 mx-2">
+                                <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover scale-125" alt="Gaming">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="reveal-text text-gray-400 mx-2 text-sm md:text-xl font-normal">• Live •</span>
+                                <span class="reveal-text group-hover:text-[#131644]">ESPORT</span>
+                            </div>
+                        </div>
+
+                         <!-- 5. SPORT -->
+                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-0">
+                            <span class="reveal-text group-hover:text-[#131644]">SPORT</span>
+                            <div class="reveal-img-container h-8 md:h-16 w-20 md:w-auto rounded-full bg-gray-100 mx-2">
+                                <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover scale-125" alt="Sport">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="reveal-text text-gray-400 mx-2 text-sm md:text-xl font-normal">• Cast •</span>
+                                <span class="reveal-text group-hover:text-[#131644]">EMISSION</span>
                             </div>
                         </div>
 
@@ -407,7 +442,8 @@
             <p class="text-gray-400 mt-2 font-mono">[ CHOOSE YOUR VIBE ]</p>
         </div>
         <div class="decor-container flex flex-col md:flex-row w-full h-auto md:h-[600px] gap-4 px-4 md:px-2">
-            <!-- Gotham -->
+            
+            <!-- Gotham / Dark Room -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10 w-full">
                 <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Gotham">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
@@ -418,7 +454,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Santorini -->
+
+            <!-- Santorini / Talk Show -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10 w-full">
                 <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Santorini">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
@@ -429,7 +466,8 @@
                     </div>
                 </div>
             </div>
-            <!-- Library -->
+
+            <!-- Library / Lounge -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10 w-full">
                 <img src="library-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="La Bibliothèque">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
@@ -459,8 +497,10 @@
                     <span class="text-4xl md:text-6xl font-bold text-[#131644]">50€<span class="text-xl md:text-2xl text-gray-400">/h</span></span>
                 </div>
             </div>
-            <!-- Bento grid remains the same content -->
+
             <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-4 gap-4 h-auto md:h-[800px]">
+                
+                 <!-- Audio (Placeholder Image) -->
                 <div class="md:col-span-2 md:row-span-2 bg-[#050505] rounded-3xl p-6 md:p-8 border border-gray-200 relative overflow-hidden group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card text-white min-h-[300px]">
                     <div class="flex justify-between items-start z-10 relative">
                         <span class="bento-tag text-white/70">AUDIO_SYS</span>
@@ -470,26 +510,33 @@
                         <h3 class="text-2xl md:text-5xl font-black mb-2 leading-none uppercase">Pure<br>Sound</h3>
                         <p class="text-gray-400 font-mono text-xs border-l-2 border-[#131644] pl-3 mt-4">SHURE SM7B X4 <br>+ RODECASTER PRO II</p>
                     </div>
-                    <img src="bento_audio.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen group-hover:opacity-40 transition duration-700">
+                    <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen group-hover:opacity-40 transition duration-700">
                 </div>
-                <!-- ... other bento items same as before ... -->
+                
+                 <!-- Video (Placeholder Image) -->
                 <div class="md:col-span-1 md:row-span-2 bg-gray-100 rounded-3xl p-6 border border-gray-200 flex flex-col items-center justify-between text-center group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card min-h-[250px]">
                     <div class="w-full aspect-square rounded-2xl overflow-hidden mb-4 relative bg-black">
-                        <img src="bento_video.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
                     </div>
                     <div>
                         <h4 class="font-bold text-xl md:text-2xl mb-1 text-black uppercase">Cinema 4K</h4>
                         <p class="text-xs text-gray-500 font-mono uppercase">Sony A7S III + G-Master</p>
                     </div>
                 </div>
+
+                <!-- Access -->
                 <div class="md:col-span-1 md:row-span-1 bg-[#131644] rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-black transition cursor-pointer border border-transparent hover:scale-[1.01] z-0 hover:z-10 bento-card group min-h-[150px]">
                     <h4 class="text-4xl md:text-5xl font-black text-white tracking-tighter group-hover:text-brand-acid transition">24<span class="text-white/50">/</span>7</h4>
                     <span class="bento-tag text-white/50 mt-2 border-white/20">ACCESS</span>
                 </div>
+
+                <!-- Vertical -->
                 <div class="md:col-span-1 md:row-span-1 bg-white rounded-3xl p-6 flex flex-col justify-center items-center hover:border-[#131644] border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card group min-h-[150px]">
                     <i class="fa-brands fa-tiktok text-3xl md:text-4xl mb-2 text-black group-hover:rotate-12 transition"></i>
                     <p class="text-xs text-gray-500 uppercase font-bold">9:16 Native</p>
                 </div>
+
+                 <!-- Livestream -->
                 <div class="md:col-span-2 md:row-span-1 bg-black text-white rounded-3xl p-8 border border-gray-800 flex items-center justify-between relative overflow-hidden group hover:scale-[1.01] transition z-0 hover:z-10 bento-card min-h-[150px]">
                     <div class="z-10">
                         <div class="flex items-center gap-2 mb-1">
@@ -502,6 +549,8 @@
                     <i class="fa-brands fa-twitch text-4xl md:text-5xl text-gray-800 group-hover:text-white transition duration-500 z-10"></i>
                     <div class="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-green-900/20 to-transparent"></div>
                 </div>
+
+                <!-- Full Prod -->
                 <div class="md:col-span-2 md:row-span-2 bg-gradient-to-br from-white to-gray-100 text-black rounded-3xl p-8 flex flex-col justify-between group border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card min-h-[300px]">
                     <div class="flex justify-between items-start">
                         <span class="bg-[#131644] text-white text-xs px-3 py-1 rounded-full uppercase tracking-wider font-bold">Premium</span>
@@ -534,7 +583,7 @@
             </div>
             
             <div class="pricing-scroll-container hide-scroll py-10 md:py-20" id="pricing-slider">
-                <!-- Cards (Vodcast, Full Prod, etc.) - same content as previous -->
+                <!-- Cards (Vodcast, Full Prod, etc.) -->
                  <div class="pricing-card bg-[#131644] border border-[#131644] p-8 rounded-3xl relative shadow-2xl flex flex-col justify-between h-[450px] md:h-[500px]">
                     <div class="absolute top-4 right-4 bg-white text-black text-[10px] font-black px-3 py-1 rounded-full uppercase">Hot</div>
                     <div>
@@ -746,6 +795,7 @@
             }
         }
         
+        // --- HERO TYPEWRITER EFFECT ---
         const heroTextElement = document.getElementById('typewriter-text');
         const phrases = [
             "Vous avez déjà vu des vidéos comme celles-ci.",
