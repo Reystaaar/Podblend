@@ -6,7 +6,7 @@
     <title>Podblend - Vos studios d'enregistrement</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -29,11 +29,16 @@
                     animation: {
                         'scroll': 'scroll 30s linear infinite',
                         'spin-slow': 'spin 10s linear infinite',
+                        'cursor': 'cursor .75s step-end infinite',
                     },
                     keyframes: {
                         scroll: {
                             '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(-100%)' },
+                        },
+                        cursor: {
+                            '0%, 100%': { borderColor: 'transparent' },
+                            '50%': { borderColor: 'white' },
                         }
                     }
                 }
@@ -72,11 +77,6 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .hover-glow:hover {
-            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-            color: #3b82f6;
-        }
-        
         /* --- BENTO STYLES --- */
         .bento-card {
             position: relative;
@@ -148,17 +148,11 @@
             padding-bottom: 1.5rem;
         }
         .faq-item.active .faq-trigger { color: #131644; }
-        
-        /* Icon Rotation */
-        .faq-icon {
-            transition: transform 0.3s ease;
-        }
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
+        .faq-icon { transition: transform 0.3s ease; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
 
         /* --- CARD STACK --- */
-        .card-stack { position: relative; width: 100%; max-width: 300px; aspect-ratio: 1/1; cursor: default; margin: 0 auto; }
+        .card-stack { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1/1; cursor: default; margin: 0 auto; }
         .stat-card { position: absolute; inset: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
         .card-front { z-index: 20; transform: rotate(3deg) translateX(10px); }
         .card-back { z-index: 10; transform: rotate(-6deg) translateX(-10px) scale(0.95); opacity: 1; }
@@ -207,10 +201,7 @@
         @media (max-width: 768px) {
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
-            
             h1 { font-size: 2.5rem !important; }
-            h2 { font-size: 2rem !important; }
-            .reveal-item span { font-size: 1.2rem !important; }
         }
         
         /* TYPEWRITER CURSOR */
@@ -231,7 +222,6 @@
     <!-- NAV -->
     <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
-            <!-- LOGO IMAGE -->
             <a href="#" class="block w-24 md:w-32 hover:opacity-80 transition cursor-pointer">
                 <img src="votre-logo.webp" alt="Podblend" class="w-full h-auto">
             </a>
@@ -246,22 +236,18 @@
         </div>
     </nav>
 
-    <!-- 1. HERO SECTION (Optimized for Mobile) -->
+    <!-- 1. HERO SECTION -->
     <section id="hero" class="relative h-[100dvh] w-full overflow-hidden bg-[#050505] text-white bg-grid-dark flex flex-col">
         <div class="absolute inset-0 z-0">
-            <!-- BACKGROUND VIDEO -->
             <video autoplay muted loop playsinline class="object-cover w-full h-full opacity-80">
                 <source src="hero-video.mp4" type="video/mp4">
             </video>
-            <!-- Overlay plus léger -->
             <div class="absolute inset-0 bg-black/40"></div>
-            <!-- Vignette -->
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_100%)]"></div>
         </div>
 
         <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full h-full flex flex-col justify-center items-center md:items-start text-center md:text-left">
             <div class="max-w-4xl pt-0 md:pt-0">
-                <!-- Typewriter Container -->
                 <h1 class="text-3xl md:text-7xl font-bold leading-tight tracking-tight mb-8 min-h-[4em] md:min-h-[2.5em]">
                     <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
                 </h1>
@@ -274,20 +260,22 @@
             </div>
         </div>
 
-        <!-- Marquee Overlay (Seamless Loop) -->
+        <!-- Marquee Overlay (Seamless Loop Corrected) -->
         <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/90 backdrop-blur-sm py-4 md:py-6">
              <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
                 
-                <!-- Logos Défilants (Double container for seamless loop) -->
-                <div class="flex overflow-hidden relative w-full md:w-2/3">
-                    <div class="flex animate-scroll whitespace-nowrap items-center gap-12 pr-12">
+                <!-- Logos Défilants (Infinite with Gap Match) -->
+                <div class="flex overflow-hidden relative w-full md:w-2/3 mask-image-gradient">
+                    <!-- Set pr-20 to match gap-20 -->
+                    <div class="flex animate-scroll whitespace-nowrap items-center gap-20 pr-20 shrink-0">
                         <img src="assets/logos/dada.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
                         <img src="assets/logos/shure.png" class="h-4 md:h-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
                         <img src="assets/logos/vsm.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="VSM">
                         <img src="assets/logos/spotify.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
                         <img src="assets/logos/ears360.png" class="h-4 md:h-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
                     </div>
-                    <div class="flex animate-scroll whitespace-nowrap items-center gap-12 pr-12">
+                    <!-- Duplicate set -->
+                    <div class="flex animate-scroll whitespace-nowrap items-center gap-20 pr-20 shrink-0">
                         <img src="assets/logos/dada.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
                         <img src="assets/logos/shure.png" class="h-4 md:h-6 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
                         <img src="assets/logos/vsm.png" class="h-6 md:h-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="VSM">
@@ -310,7 +298,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 2. SOCIAL PROOF (STACK & LOGOS) -->
+    <!-- 2. SOCIAL PROOF -->
     <div class="relative">
         <section id="social-proof" class="sticky top-0 min-h-screen flex items-center bg-white text-black overflow-hidden z-0">
             <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-32 pointer-events-none"></div>
@@ -327,7 +315,6 @@
                 </div>
 
                 <div class="w-full md:w-1/2 relative h-[300px] md:h-[450px] flex justify-center items-center perspective-[1000px]">
-                    <!-- Modified for Mobile: Visible & Centered -->
                     <div class="card-stack transform scale-90 md:scale-100">
                         <div class="stat-card card-back bg-[#131644] text-white border border-white/10 p-6 md:p-8 rounded-[2rem] flex flex-col justify-between shadow-2xl">
                             <div class="flex justify-between items-start">
@@ -348,7 +335,6 @@
                                 <div class="text-5xl md:text-6xl font-bold mb-2">+1 Md</div>
                                 <div class="text-gray-800 font-medium text-base md:text-lg font-mono">Vues Cumulées</div>
                             </div>
-                            <!-- Hidden on mobile as hover is not possible -->
                             <div class="absolute bottom-4 right-4 text-xs text-gray-400 flex items-center gap-1 hidden md:flex">
                                 <i class="fa-solid fa-mouse-pointer"></i> Survoler
                             </div>
@@ -358,7 +344,7 @@
             </div>
         </section>
 
-        <!-- 2.bis PRODUCTION MAISON (LISTE PROPRE) -->
+        <!-- 2.bis PRODUCTION MAISON -->
         <section class="relative z-10 py-16 md:py-32 bg-white text-black border-t border-gray-100 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh]">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-50 opacity-30 select-none pointer-events-none z-0 tracking-tighter leading-none">
@@ -414,18 +400,16 @@
     <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
 
-    <!-- 3. DÉCOR (Mobile Optimized) -->
+    <!-- 3. DÉCOR -->
     <section class="relative z-10 py-16 md:py-24 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="px-6 mb-12 max-w-7xl mx-auto text-center md:text-left">
             <h2 class="text-3xl md:text-4xl font-bold">Nos Décors</h2>
             <p class="text-gray-400 mt-2 font-mono">[ CHOOSE YOUR VIBE ]</p>
         </div>
         <div class="decor-container flex flex-col md:flex-row w-full h-auto md:h-[600px] gap-4 px-4 md:px-2">
-            
-            <!-- Gotham / Dark Room -->
+            <!-- Gotham -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10 w-full">
                 <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Gotham">
-                <!-- Overlay always visible on mobile, hover on desktop -->
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap decor-info transition duration-500">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg md:group-hover:scale-110 transition origin-left">Le Gotham</h3>
@@ -434,8 +418,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Santorini / Talk Show -->
+            <!-- Santorini -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10 w-full">
                 <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Santorini">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
@@ -446,8 +429,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Library / Lounge -->
+            <!-- Library -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-white/10 w-full">
                 <img src="library-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="La Bibliothèque">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
@@ -477,9 +459,8 @@
                     <span class="text-4xl md:text-6xl font-bold text-[#131644]">50€<span class="text-xl md:text-2xl text-gray-400">/h</span></span>
                 </div>
             </div>
-
+            <!-- Bento grid remains the same content -->
             <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-4 gap-4 h-auto md:h-[800px]">
-                 <!-- Audio -->
                 <div class="md:col-span-2 md:row-span-2 bg-[#050505] rounded-3xl p-6 md:p-8 border border-gray-200 relative overflow-hidden group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card text-white min-h-[300px]">
                     <div class="flex justify-between items-start z-10 relative">
                         <span class="bento-tag text-white/70">AUDIO_SYS</span>
@@ -491,8 +472,7 @@
                     </div>
                     <img src="bento_audio.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen group-hover:opacity-40 transition duration-700">
                 </div>
-                
-                 <!-- Video -->
+                <!-- ... other bento items same as before ... -->
                 <div class="md:col-span-1 md:row-span-2 bg-gray-100 rounded-3xl p-6 border border-gray-200 flex flex-col items-center justify-between text-center group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card min-h-[250px]">
                     <div class="w-full aspect-square rounded-2xl overflow-hidden mb-4 relative bg-black">
                         <img src="bento_video.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
@@ -502,20 +482,14 @@
                         <p class="text-xs text-gray-500 font-mono uppercase">Sony A7S III + G-Master</p>
                     </div>
                 </div>
-
-                <!-- Access -->
                 <div class="md:col-span-1 md:row-span-1 bg-[#131644] rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-black transition cursor-pointer border border-transparent hover:scale-[1.01] z-0 hover:z-10 bento-card group min-h-[150px]">
                     <h4 class="text-4xl md:text-5xl font-black text-white tracking-tighter group-hover:text-brand-acid transition">24<span class="text-white/50">/</span>7</h4>
                     <span class="bento-tag text-white/50 mt-2 border-white/20">ACCESS</span>
                 </div>
-
-                <!-- Vertical -->
                 <div class="md:col-span-1 md:row-span-1 bg-white rounded-3xl p-6 flex flex-col justify-center items-center hover:border-[#131644] border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card group min-h-[150px]">
                     <i class="fa-brands fa-tiktok text-3xl md:text-4xl mb-2 text-black group-hover:rotate-12 transition"></i>
                     <p class="text-xs text-gray-500 uppercase font-bold">9:16 Native</p>
                 </div>
-
-                 <!-- Livestream -->
                 <div class="md:col-span-2 md:row-span-1 bg-black text-white rounded-3xl p-8 border border-gray-800 flex items-center justify-between relative overflow-hidden group hover:scale-[1.01] transition z-0 hover:z-10 bento-card min-h-[150px]">
                     <div class="z-10">
                         <div class="flex items-center gap-2 mb-1">
@@ -528,8 +502,6 @@
                     <i class="fa-brands fa-twitch text-4xl md:text-5xl text-gray-800 group-hover:text-white transition duration-500 z-10"></i>
                     <div class="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-green-900/20 to-transparent"></div>
                 </div>
-
-                <!-- Full Prod -->
                 <div class="md:col-span-2 md:row-span-2 bg-gradient-to-br from-white to-gray-100 text-black rounded-3xl p-8 flex flex-col justify-between group border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card min-h-[300px]">
                     <div class="flex justify-between items-start">
                         <span class="bg-[#131644] text-white text-xs px-3 py-1 rounded-full uppercase tracking-wider font-bold">Premium</span>
@@ -547,7 +519,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
 
-    <!-- 5. TARIFS (REORDERED: VIDEO FIRST) -->
+    <!-- 5. TARIFS -->
     <section id="tarifs" class="relative z-10 py-16 md:py-24 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 text-center md:text-left">
@@ -562,9 +534,8 @@
             </div>
             
             <div class="pricing-scroll-container hide-scroll py-10 md:py-20" id="pricing-slider">
-
-                <!-- 1. VODCAST (Video) - Popular -->
-                <div class="pricing-card bg-[#131644] border border-[#131644] p-8 rounded-3xl relative shadow-2xl flex flex-col justify-between h-[450px] md:h-[500px]">
+                <!-- Cards (Vodcast, Full Prod, etc.) - same content as previous -->
+                 <div class="pricing-card bg-[#131644] border border-[#131644] p-8 rounded-3xl relative shadow-2xl flex flex-col justify-between h-[450px] md:h-[500px]">
                     <div class="absolute top-4 right-4 bg-white text-black text-[10px] font-black px-3 py-1 rounded-full uppercase">Hot</div>
                     <div>
                         <span class="text-blue-200 font-mono text-xs uppercase">Creator</span>
@@ -580,9 +551,7 @@
                     </div>
                     <button class="w-full py-4 bg-white text-black rounded-xl hover:bg-gray-200 transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
                 </div>
-
-                <!-- 2. FULL PROD (Video) -->
-                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
+                 <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
                     <div>
                         <span class="text-purple-400 font-mono text-xs uppercase">All Inclusive</span>
                         <h3 class="text-2xl md:text-3xl font-black mt-4 mb-4">Full Prod</h3>
@@ -597,9 +566,7 @@
                     </div>
                     <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Choisir</button>
                 </div>
-
-                <!-- 3. LIVESTREAM (Video) -->
-                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
+                 <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
                     <div>
                         <span class="text-green-400 font-mono text-xs uppercase">Broadcaster</span>
                         <h3 class="text-2xl md:text-3xl font-black mt-4 mb-4">Livestream</h3>
@@ -614,9 +581,7 @@
                     </div>
                     <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Choisir</button>
                 </div>
-
-                <!-- 4. MASTERCLASS (Event) -->
-                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
+                 <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
                     <div>
                         <span class="text-yellow-500 font-mono text-xs uppercase">Event</span>
                         <h3 class="text-2xl md:text-3xl font-black mt-4 mb-4">Masterclass</h3>
@@ -631,9 +596,7 @@
                     </div>
                     <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Contacter</button>
                 </div>
-
-                <!-- 5. AUDIO ONLY (Relégué à la fin) -->
-                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
+                 <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
                     <div>
                         <span class="text-gray-500 font-mono text-xs uppercase">Starter</span>
                         <h3 class="text-2xl md:text-3xl font-black mt-4 mb-4">Audio Only</h3>
@@ -648,9 +611,7 @@
                     </div>
                     <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
                 </div>
-
-                <!-- 6. STUDENT (Less Prio) -->
-                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
+                 <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[450px] md:h-[500px]">
                     <div>
                         <span class="text-gray-500 font-mono text-xs uppercase border border-gray-600 px-2 py-1 rounded">Student</span>
                         <h3 class="text-2xl md:text-3xl font-black mt-4 mb-4">Young Creator</h3>
@@ -665,23 +626,22 @@
                     </div>
                     <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- TRANSITION -->
-    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
+    <div class="w-full h-16 md:h-24 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 6. FAQ (CORRIGÉE & ROBUSTE) -->
+    <!-- 6. FAQ -->
     <section id="faq" class="relative z-10 py-16 md:py-24 bg-white text-black bg-grid-light">
+        <!-- Content same as previous -->
         <div class="max-w-5xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 border-b border-gray-200 pb-8 text-center md:text-left">
+             <div class="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-16 border-b border-gray-200 pb-8 text-center md:text-left">
                 <div class="w-full md:w-auto"><h2 class="text-3xl md:text-6xl font-black uppercase">FAQ<span class="text-[#131644]">.</span></h2></div>
             </div>
-
             <div class="flex flex-col gap-2">
-                <div class="faq-item group" onclick="toggleFaq(this)">
+                 <div class="faq-item group" onclick="toggleFaq(this)">
                     <div class="faq-trigger">
                         <div class="flex items-baseline gap-4 md:gap-8 text-left">
                             <span class="text-xs md:text-sm font-mono text-gray-400 group-hover:text-black transition">01</span>
@@ -697,8 +657,7 @@
                         </p>
                     </div>
                 </div>
-                
-                <div class="faq-item group" onclick="toggleFaq(this)">
+                 <div class="faq-item group" onclick="toggleFaq(this)">
                     <div class="faq-trigger">
                         <div class="flex items-baseline gap-4 md:gap-8 text-left">
                             <span class="text-xs md:text-sm font-mono text-gray-400 group-hover:text-black transition">02</span>
@@ -714,8 +673,7 @@
                         </p>
                     </div>
                 </div>
-
-                <div class="faq-item group" onclick="toggleFaq(this)">
+                 <div class="faq-item group" onclick="toggleFaq(this)">
                     <div class="faq-trigger">
                         <div class="flex items-baseline gap-4 md:gap-8 text-left">
                             <span class="text-xs md:text-sm font-mono text-gray-400 group-hover:text-black transition">03</span>
@@ -734,13 +692,11 @@
             </div>
         </div>
     </section>
-    
-    <!-- TRANSITION -->
-    <div class="w-full h-16 md:h-24 bg-gradient-to-b from-white to-[#020202] relative z-10"></div>
 
     <!-- FOOTER -->
+    <!-- Same footer -->
     <footer class="relative z-10 py-16 bg-[#020202] text-white">
-        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
+         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
             <div>
                  <a href="#" class="block w-24 md:w-32 mb-6 hover:opacity-80 transition cursor-pointer mx-auto md:mx-0">
                     <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
@@ -759,13 +715,13 @@
         </div>
     </footer>
 
+    <!-- Scripts same as before -->
     <script>
         function toggleFaq(element) {
             const content = element.querySelector('.faq-content');
             const icon = element.querySelector('.fa-plus');
             const isActive = element.classList.contains('active');
             
-            // Close others
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.classList.remove('active');
                 item.querySelector('.faq-content').style.maxHeight = '0';
@@ -773,7 +729,6 @@
                 if(i) i.style.transform = 'rotate(0deg)';
             });
             
-            // Toggle current
             if (!isActive) {
                 element.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + 'px';
@@ -791,7 +746,6 @@
             }
         }
         
-        // --- HERO TYPEWRITER EFFECT ---
         const heroTextElement = document.getElementById('typewriter-text');
         const phrases = [
             "Vous avez déjà vu des vidéos comme celles-ci.",
@@ -808,26 +762,25 @@
             if (isDeleting) {
                 heroTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
                 charIndex--;
-                typeSpeed = 30; // Faster deleting
+                typeSpeed = 30; 
             } else {
                 heroTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
                 charIndex++;
-                typeSpeed = 60; // Normal typing
+                typeSpeed = 60; 
             }
 
             if (!isDeleting && charIndex === currentPhrase.length) {
                 isDeleting = true;
-                typeSpeed = 3000; // Wait before deleting
+                typeSpeed = 3000; 
             } else if (isDeleting && charIndex === 0) {
                 isDeleting = false;
                 phraseIndex = (phraseIndex + 1) % phrases.length;
-                typeSpeed = 500; // Wait before typing next
+                typeSpeed = 500; 
             }
 
             setTimeout(type, typeSpeed);
         }
         
-        // Start typewriter when DOM loads
         if(heroTextElement) {
             setTimeout(type, 1000);
         }
