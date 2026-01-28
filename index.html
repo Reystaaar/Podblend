@@ -122,7 +122,7 @@
         }
         .reveal-text { transition: color 0.3s ease; }
         
-        /* --- FAQ FIXED & ROBUST --- */
+        /* --- FAQ CLEAN & ROBUST --- */
         .faq-item {
             border-bottom: 1px solid #e5e7eb; 
             transition: background-color 0.3s ease;
@@ -161,11 +161,8 @@
         .stat-card { position: absolute; inset: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
         .card-front { z-index: 20; transform: rotate(3deg) translateX(10px); }
         .card-back { z-index: 10; transform: rotate(-6deg) translateX(-10px) scale(0.95); opacity: 1; }
-        
-        @media (min-width: 768px) {
-            .card-stack:hover .card-front { transform: rotate(-6deg) translateX(-20px) scale(0.95); z-index: 10; filter: brightness(0.95); }
-            .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
-        }
+        .card-stack:hover .card-front { transform: rotate(-6deg) translateX(-20px) scale(0.95); z-index: 10; filter: brightness(0.95); }
+        .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
 
         /* --- DECOR --- */
         .decor-item { flex: 1; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(100%); min-height: 200px; }
@@ -194,6 +191,7 @@
             cursor: pointer;
             will-change: transform;
         }
+        /* Desktop: Super Zoom */
         @media (min-width: 768px) {
             .pricing-card:hover {
                 transform: scale(1.15) translateY(-15px) !important;
@@ -202,9 +200,11 @@
                 border-color: #131644;
             }
         }
+        /* Mobile: Responsive sizing */
         @media (max-width: 768px) {
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
+            
             h1 { font-size: 3rem !important; }
             h2 { font-size: 2.5rem !important; }
             .reveal-item span { font-size: 1.5rem !important; }
@@ -244,6 +244,7 @@
     <!-- 1. HERO SECTION -->
     <section id="hero" class="relative h-[100dvh] w-full overflow-hidden bg-[#050505] text-white bg-grid-dark flex flex-col">
         <div class="absolute inset-0 z-0">
+            <!-- BACKGROUND VIDEO -->
             <video autoplay muted loop playsinline class="object-cover w-full h-full opacity-80">
                 <source src="hero-video.mp4" type="video/mp4">
             </video>
@@ -258,6 +259,7 @@
                         <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
                     </span>
                 </h1>
+                
                 <div class="mt-4 flex justify-center md:justify-start animate-fade-in-up">
                     <a href="#tarifs" class="bg-white text-black px-10 py-5 rounded-full font-bold text-lg md:text-xl hover:bg-[#131644] hover:text-white hover:scale-105 transition duration-300 shadow-xl inline-block border-4 border-transparent hover:border-white">
                         Réserver une session
@@ -276,16 +278,17 @@
                     <!-- Added gap-16 between sets via parent class -->
                     <div class="flex gap-16 overflow-hidden w-full">
                         <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around">
-                            <!-- All Logos from screenshot -->
+                            <!-- All Logos from screenshot - EXACT NAMES -->
                             <img src="DADA_contours_blanc.webp" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
                             <img src="LOGO GENNEVILLIERS HABITAT (1).png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers">
                             <img src="Logo-syla-banniere-23.webp" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
                             <img src="Rizqi..png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                             <img src="Spotify_logo_with_text.svg.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
                             <img src="logo-qonto-nouveau-1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Qonto">
-                            <!-- Long filename placeholders based on list -->
-                            <img src="687fac24e423c78e7168edc0_Group 48149.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner">
-                            <img src="png-clipart-microphone-shure-sm58-audio.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
+                            <img src="687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner">
+                            <img src="png-clipart-microphone-shure-sm58-audio-logo-microphone-electronics-microphone.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
+                            <img src="image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner 2">
+                            <img src="logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner 3">
                         </div>
                         <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around" aria-hidden="true">
                             <!-- Duplicate for loop -->
@@ -295,8 +298,10 @@
                             <img src="Rizqi..png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                             <img src="Spotify_logo_with_text.svg.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
                             <img src="logo-qonto-nouveau-1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Qonto">
-                            <img src="687fac24e423c78e7168edc0_Group 48149.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner">
-                            <img src="png-clipart-microphone-shure-sm58-audio.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
+                            <img src="687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner">
+                            <img src="png-clipart-microphone-shure-sm58-audio-logo-microphone-electronics-microphone.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
+                            <img src="image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner 2">
+                            <img src="logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner 3">
                         </div>
                     </div>
                 </div>
@@ -312,7 +317,7 @@
     </section>
 
     <!-- TRANSITION -->
-    <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
+    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
     <!-- 2. SOCIAL PROOF (STACK) -->
     <div class="relative">
@@ -326,6 +331,16 @@
                     <p class="text-gray-600 text-lg mb-8 leading-relaxed">
                         Une infrastructure technique conçue pour la viralité. Rejoignez une communauté de créateurs exigeants qui ne laissent rien au hasard.
                     </p>
+                    
+                    <div class="border-t border-gray-200 pt-8 hidden md:block">
+                        <p class="text-xs text-gray-400 uppercase tracking-widest mb-4">Ils nous font confiance</p>
+                        <div class="flex gap-6 opacity-50 grayscale">
+                            <i class="fa-brands fa-spotify text-2xl"></i>
+                            <i class="fa-brands fa-youtube text-2xl"></i>
+                            <i class="fa-brands fa-tiktok text-2xl"></i>
+                            <i class="fa-brands fa-soundcloud text-2xl"></i>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="md:w-1/2 relative h-[350px] md:h-[450px] w-full flex justify-center items-center perspective-[1000px]">
@@ -358,7 +373,7 @@
             </div>
         </section>
 
-        <!-- 2.bis PRODUCTION MAISON (TEXT ONLY) -->
+        <!-- 2.bis PRODUCTION MAISON (TEXT REVEAL) -->
         <section class="relative z-10 py-20 md:py-32 bg-white text-black border-t border-gray-100 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-light">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[5rem] md:text-[15rem] font-bold text-gray-50 opacity-50 select-none pointer-events-none z-0 tracking-tighter leading-none">
@@ -430,7 +445,7 @@
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">Talk Show</h3>
                     <div class="opacity-0 group-hover:opacity-100 transition duration-500 delay-200 mt-2">
-                        <span class="text-xs font-mono border border-white px-2 py-1 bg-black/50 backdrop-blur-md">MULTI-CAM</span>
+                        <span class="text-xs font-mono border border-white px-2 py-1">MULTI-CAM</span>
                     </div>
                 </div>
             </div>
@@ -441,7 +456,7 @@
                 <div class="absolute bottom-8 left-8 whitespace-nowrap">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg group-hover:scale-110 transition origin-left">The Lounge</h3>
                     <div class="opacity-0 group-hover:opacity-100 transition duration-500 delay-200 mt-2">
-                        <span class="text-xs font-mono border border-white px-2 py-1 bg-black/50 backdrop-blur-md">CHILL ZONE</span>
+                        <span class="text-xs font-mono border border-white px-2 py-1">CHILL ZONE</span>
                     </div>
                 </div>
             </div>
@@ -464,24 +479,69 @@
                     <span class="text-5xl md:text-6xl font-bold text-[#131644]">50€<span class="text-xl md:text-2xl text-gray-400">/h</span></span>
                 </div>
             </div>
-             <!-- ... Bento Content (Keeping same as provided structure for brevity, but assuming all content is there) ... -->
-             <!-- Re-inserting the Bento grid as provided in previous context -->
-             <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-4 gap-4 h-auto md:h-[800px]">
-                <div class="md:col-span-2 md:row-span-2 bg-[#131644] rounded-3xl p-8 border border-gray-200 relative overflow-hidden group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card text-white">
+
+            <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-4 gap-4 h-auto md:h-[800px]">
+                
+                <div class="md:col-span-2 md:row-span-2 bg-[#050505] rounded-3xl p-8 border border-gray-200 relative overflow-hidden group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card text-white">
+                    <div class="flex justify-between items-start z-10 relative">
+                        <span class="bento-tag text-white/70">AUDIO_SYS</span>
+                        <i class="fa-solid fa-waveform-lines text-2xl text-[#3b82f6]"></i>
+                    </div>
                     <div class="relative z-10 h-full flex flex-col justify-end">
-                        <div class="bg-white text-[#131644] text-xs font-bold px-3 py-1 inline-block w-max mb-4 uppercase tracking-wider rounded-full">Must Have</div>
-                        <h3 class="text-3xl md:text-4xl font-bold mb-2 text-white">Pack Audio Only</h3>
-                        <p class="text-gray-300 border-l-2 border-white/50 pl-3">Micros Shure SM7B x4 + Rodecaster Pro.</p>
+                        <h3 class="text-3xl md:text-5xl font-black mb-2 leading-none uppercase">Pure<br>Sound</h3>
+                        <p class="text-gray-400 font-mono text-xs border-l-2 border-[#131644] pl-3 mt-4">SHURE SM7B X4 <br>+ RODECASTER PRO II</p>
+                    </div>
+                    <!-- Generic placeholder as no file specified for this -->
+                     <div class="absolute inset-0 bg-gradient-to-t from-black to-gray-800 opacity-50"></div>
+                </div>
+
+                <div class="md:col-span-1 md:row-span-2 bg-gray-100 rounded-3xl p-6 border border-gray-200 flex flex-col items-center justify-between text-center group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card">
+                    <div class="w-full aspect-square rounded-2xl overflow-hidden mb-4 relative bg-black">
+                         <!-- Generic placeholder -->
+                         <div class="w-full h-full bg-gray-800"></div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-2xl mb-1 text-black uppercase">Cinema 4K</h4>
+                        <p class="text-xs text-gray-500 font-mono uppercase">Sony A7S III + G-Master</p>
+                    </div>
+                    <div class="w-full h-1 bg-gray-300 mt-4 rounded overflow-hidden">
+                        <div class="h-full bg-[#131644] w-0 group-hover:w-full transition-all duration-700"></div>
                     </div>
                 </div>
-                <div class="md:col-span-1 md:row-span-2 bg-gradient-to-b from-gray-50 to-white rounded-3xl p-6 border border-gray-200 flex flex-col items-center justify-between text-center group hover:scale-[1.01] transition duration-500 cursor-pointer z-0 hover:z-10 bento-card">
-                    <div class="w-14 h-14 rounded-full bg-[#131644] flex items-center justify-center text-2xl mb-4 text-white group-hover:scale-110 transition shadow-lg"><i class="fa-solid fa-video"></i></div>
-                    <div><h4 class="font-bold text-2xl mb-2 text-black">Vidéo 4K</h4><p class="text-sm text-gray-500">Sony A7S III</p></div>
+
+                <div class="md:col-span-1 md:row-span-1 bg-[#131644] rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-black transition cursor-pointer border border-transparent hover:scale-[1.01] z-0 hover:z-10 bento-card group">
+                    <h4 class="text-5xl font-black text-white tracking-tighter group-hover:text-brand-acid transition">24<span class="text-white/50">/</span>7</h4>
+                    <span class="bento-tag text-white/50 mt-2 border-white/20">ACCESS</span>
                 </div>
-                <div class="md:col-span-1 md:row-span-1 glass-dark rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-white hover:border-[#131644] border border-gray-200 hover:scale-[1.02] hover:shadow-xl transition z-0 hover:z-10 bento-card"><h4 class="text-4xl font-bold text-[#131644]">24/7</h4></div>
-                <div class="md:col-span-1 md:row-span-1 glass-dark rounded-3xl p-6 flex flex-col justify-center items-center hover:bg-white hover:border-[#131644] border border-gray-200 hover:scale-[1.02] hover:shadow-xl transition z-0 hover:z-10 bento-card"><i class="fa-brands fa-tiktok text-3xl mb-2 text-black"></i><p class="text-xs text-gray-500 uppercase">Vertical</p></div>
-                <div class="md:col-span-2 md:row-span-1 bg-black text-white rounded-3xl p-8 border border-gray-800 flex items-center justify-between relative overflow-hidden group hover:scale-[1.02] hover:shadow-2xl transition z-0 hover:z-10 bento-card"><h3 class="text-xl font-bold text-green-400">Livestream Ready</h3><i class="fa-solid fa-signal text-3xl text-green-500"></i></div>
-                <div class="md:col-span-2 md:row-span-2 bg-white text-black rounded-3xl p-8 flex flex-col justify-between group hover:border-[#131644] border border-gray-200 hover:scale-[1.02] hover:shadow-2xl transition z-0 hover:z-10 bento-card"><h3 class="text-3xl font-bold mt-4">Full Production</h3><span class="font-bold text-2xl text-[#131644]">450€<span class="text-sm font-normal text-gray-500">/ep</span></span></div>
+
+                <div class="md:col-span-1 md:row-span-1 bg-white rounded-3xl p-6 flex flex-col justify-center items-center hover:border-[#131644] border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card group">
+                    <i class="fa-brands fa-tiktok text-4xl mb-2 text-black group-hover:rotate-12 transition"></i>
+                    <p class="text-xs text-gray-500 uppercase font-bold">9:16 Native</p>
+                </div>
+
+                <div class="md:col-span-2 md:row-span-1 bg-black text-white rounded-3xl p-8 border border-gray-800 flex items-center justify-between relative overflow-hidden group hover:scale-[1.01] transition z-0 hover:z-10 bento-card">
+                    <div class="z-10">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            <span class="text-xs font-mono text-green-500 uppercase">Live Signal</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1">BROADCAST</h3>
+                        <p class="text-xs font-mono text-gray-500">FIBRE 1GB/S DÉDIÉE</p>
+                    </div>
+                    <i class="fa-brands fa-twitch text-5xl text-gray-800 group-hover:text-white transition duration-500 z-10"></i>
+                    <div class="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-green-900/20 to-transparent"></div>
+                </div>
+
+                <div class="md:col-span-2 md:row-span-2 bg-gradient-to-br from-white to-gray-100 text-black rounded-3xl p-8 flex flex-col justify-between group border border-gray-200 hover:scale-[1.01] transition z-0 hover:z-10 bento-card">
+                    <div class="flex justify-between items-start">
+                        <span class="bg-[#131644] text-white text-xs px-3 py-1 rounded-full uppercase tracking-wider font-bold">Premium</span>
+                        <i class="fa-solid fa-arrow-right -rotate-45 group-hover:rotate-0 transition duration-300 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-4xl font-black mt-4 uppercase leading-none">Full<br>Prod.</h3>
+                        <p class="font-mono text-xs text-gray-500 mt-4 max-w-xs">ENREGISTREMENT • MONTAGE • MIXAGE • MINIATURES • PUBLICATION</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -489,13 +549,13 @@
     <!-- TRANSITION -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
 
-    <!-- 5. TARIFS (SUPER ZOOM) -->
+    <!-- 5. TARIFS (SUPER ZOOM 1.15) -->
     <section id="tarifs" class="relative z-10 py-24 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16">
                 <div>
                     <h2 class="text-4xl md:text-5xl font-bold">Nos Tarifs</h2>
-                    <p class="text-gray-400 mt-2">5 Formules pour tous les budgets.</p>
+                    <p class="text-gray-400 mt-2 font-mono text-sm">/// 7 Formules pour tous les budgets</p>
                 </div>
                 <div class="flex gap-4 mt-6 md:mt-0">
                     <button onclick="scrollPrices('left')" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-left"></i></button>
@@ -591,6 +651,23 @@
                     <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Choisir</button>
                 </div>
 
+                <!-- Card Day Pass -->
+                <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[500px]">
+                    <div>
+                        <span class="text-blue-400 font-mono text-xs uppercase">Intensive</span>
+                        <h3 class="text-3xl font-black mt-4 mb-4">Day Pass</h3>
+                        <div class="text-5xl font-black text-white mb-2">800€</div>
+                        <span class="text-xs text-gray-500 font-mono">10H - 18H</span>
+                        <div class="w-full h-px bg-white/10 my-6"></div>
+                        <ul class="space-y-3 text-sm font-medium text-gray-300">
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-400"></i> Studio Privatisé</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-400"></i> Équipe Technique</li>
+                            <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-400"></i> Lunch Inclus</li>
+                        </ul>
+                    </div>
+                    <button class="w-full py-4 border border-white/20 rounded-xl hover:bg-white hover:text-black transition font-bold uppercase text-xs tracking-widest mt-4">Réserver</button>
+                </div>
+
                  <!-- Card 5 -->
                  <div class="pricing-card bg-[#121212] border border-white/10 p-8 rounded-3xl flex flex-col justify-between h-[500px]">
                     <div>
@@ -613,7 +690,7 @@
     </section>
 
     <!-- TRANSITION -->
-    <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
+    <div class="w-full h-24 md:h-32 bg-gradient-to-b from-white to-[#020202] relative z-10"></div>
 
     <!-- 6. FAQ (CORRIGÉE & ROBUSTE) -->
     <section id="faq" class="relative z-10 py-24 bg-white text-black bg-grid-light">
@@ -732,7 +809,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const items = document.querySelectorAll('.reveal-word-hidden');
+            const items = document.querySelectorAll('.reveal-img-container');
             window.addEventListener('scroll', () => {
                 const centerScreen = window.innerHeight / 2;
                 items.forEach(item => {
@@ -743,10 +820,10 @@
                     let newWidth = 0;
                     if (distance < activationRange) {
                         const ratio = 1 - (distance / activationRange);
-                        newWidth = ratio * 100; // max width of hidden word
+                        newWidth = ratio * 140; 
                     }
                     item.style.width = `${newWidth}px`;
-                    item.style.margin = newWidth > 5 ? '0 0.5rem' : '0';
+                    item.style.margin = newWidth > 5 ? '0 1.5rem' : '0';
                     item.style.opacity = newWidth > 5 ? '1' : '0';
                 });
             });
