@@ -30,7 +30,6 @@
                         'scroll': 'scroll 40s linear infinite',
                         'spin-slow': 'spin 10s linear infinite',
                         'cursor': 'cursor .75s step-end infinite',
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                     },
                     keyframes: {
                         scroll: {
@@ -38,12 +37,8 @@
                             '100%': { transform: 'translateX(calc(-100% - 4rem))' },
                         },
                         cursor: {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                            '0%, 100%': { borderColor: 'transparent' },
+                            '50%': { borderColor: 'white' },
                         }
                     }
                 }
@@ -82,11 +77,6 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        .hover-glow:hover {
-            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-            color: #3b82f6;
-        }
-        
         /* --- BENTO STYLES --- */
         .bento-card {
             position: relative;
@@ -110,13 +100,14 @@
             border-radius: 4px;
         }
 
-        /* --- SCROLL REVEAL --- */
+        /* --- SCROLL REVEAL (TEXT) --- */
         .reveal-item {
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
         }
         .reveal-item:hover { background-color: rgba(19, 22, 68, 0.05); }
+        
         .reveal-word-hidden {
             width: 0;
             overflow: hidden;
@@ -128,11 +119,11 @@
         .reveal-item:hover .reveal-word-hidden {
             width: auto;
             opacity: 1;
-            margin: 0 0.5rem;
+            margin: 0 1rem;
         }
         .reveal-text { transition: color 0.3s ease; }
         
-        /* --- FAQ FIXED & ROBUST --- */
+        /* --- FAQ --- */
         .faq-item {
             border-bottom: 1px solid #e5e7eb; 
             transition: background-color 0.3s ease;
@@ -160,18 +151,11 @@
         .faq-item.active .faq-content {
             max-height: 800px;
             opacity: 1;
-            padding-bottom: 2rem;
+            padding-bottom: 1.5rem;
         }
         .faq-item.active .faq-trigger { color: #131644; }
-        .faq-line {
-            position: absolute;
-            background-color: currentColor;
-            transition: transform 0.3s ease;
-        }
-        .faq-line-h { width: 100%; height: 2px; top: 50%; left: 0; transform: translateY(-50%); }
-        .faq-line-v { width: 2px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
-        .faq-item.active .faq-line-v { transform: translateX(-50%) rotate(90deg); }
-        .faq-item.active .faq-line-h { opacity: 0; }
+        .faq-icon { transition: transform 0.3s ease; }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
 
         /* --- CARD STACK --- */
         .card-stack { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1/1; cursor: default; margin: 0 auto; }
@@ -183,8 +167,14 @@
 
         /* --- DECOR --- */
         .decor-item { flex: 1; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(100%); min-height: 200px; }
-        .decor-container:hover .decor-item { filter: grayscale(100%); }
-        .decor-container:hover .decor-item:hover { flex: 4; filter: grayscale(0%); }
+        @media (max-width: 768px) {
+            .decor-item { filter: grayscale(0%); min-height: 250px; }
+            .decor-info { opacity: 1 !important; transform: translateY(0) !important; }
+        }
+        @media (min-width: 769px) {
+            .decor-container:hover .decor-item { filter: grayscale(100%); }
+            .decor-container:hover .decor-item:hover { flex: 4; filter: grayscale(0%); }
+        }
 
         /* --- PRICING SUPER ZOOM --- */
         .pricing-scroll-container {
@@ -192,8 +182,8 @@
             overflow-x: auto;
             display: flex;
             gap: 2rem;
-            padding-bottom: 6rem;
-            padding-top: 4rem;
+            padding-bottom: 5rem;
+            padding-top: 3rem;
         }
         .pricing-card {
             scroll-snap-align: center;
@@ -202,16 +192,14 @@
             cursor: pointer;
             will-change: transform;
         }
-        /* Desktop: Super Zoom */
         @media (min-width: 768px) {
             .pricing-card:hover {
-                transform: scale(1.15) translateY(-20px) !important;
+                transform: scale(1.15) translateY(-15px) !important;
                 z-index: 50;
-                box-shadow: 0 60px 100px -20px rgba(0,0,0,0.9);
+                box-shadow: 0 50px 100px -20px rgba(0,0,0,0.9);
                 border-color: #131644;
             }
         }
-        /* Mobile: Responsive sizing */
         @media (max-width: 768px) {
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
@@ -219,7 +207,6 @@
             h1 { font-size: 2.5rem !important; }
             h2 { font-size: 2rem !important; }
             .reveal-item span { font-size: 1.2rem !important; }
-            .decor-item { min-height: 150px; }
         }
         
         .typewriter-cursor {
@@ -249,7 +236,7 @@
                 <a href="#tarifs" class="hover:text-brand-accent transition duration-300">Tarifs</a>
                 <a href="#faq" class="hover:text-brand-accent transition duration-300">FAQ</a>
             </div>
-            <a href="#tarifs" class="bg-white text-black px-5 py-2 md:px-6 md:py-2 text-sm md:text-base rounded-full font-bold hover:bg-[#131644] hover:text-white transition duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)]">Réserver</a>
+            <a href="#tarifs" class="bg-white text-black px-4 py-2 md:px-6 md:py-2 text-xs md:text-sm md:text-base rounded-full font-bold hover:bg-[#131644] hover:text-white transition duration-300 shadow-[0_0_15px_rgba(255,255,255,0.3)]">Réserver</a>
         </div>
     </nav>
 
@@ -267,14 +254,14 @@
         <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full h-full flex flex-col justify-center items-center md:items-start text-center md:text-left pb-20 md:pb-0">
             <div class="max-w-4xl pt-0 w-full">
                 <!-- Typewriter Container -->
-                <h1 class="text-4xl md:text-7xl font-bold leading-tight tracking-tight mb-8 min-h-[4em] md:min-h-[3em] flex items-center justify-center md:justify-start">
+                <h1 class="text-3xl md:text-7xl font-bold leading-tight tracking-tight mb-8 min-h-[4em] md:min-h-[3em] flex items-center justify-center md:justify-start">
                     <span>
                         <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
                     </span>
                 </h1>
                 
                 <div class="mt-4 flex justify-center md:justify-start animate-fade-in-up">
-                    <a href="#tarifs" class="bg-white text-black px-10 py-5 rounded-full font-bold text-lg md:text-xl hover:bg-[#131644] hover:text-white hover:scale-105 transition duration-300 shadow-xl inline-block border-4 border-transparent hover:border-white">
+                    <a href="#tarifs" class="bg-white text-black px-8 py-4 md:px-10 md:py-5 rounded-full font-bold text-base md:text-xl hover:bg-[#131644] hover:text-white hover:scale-105 transition duration-300 shadow-xl inline-block border-4 border-transparent hover:border-white">
                         Réserver une session
                     </a>
                 </div>
@@ -282,36 +269,38 @@
         </div>
 
         <!-- Marquee Overlay (Infinite & Fixed Spacing) -->
-        <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/90 backdrop-blur-sm py-6">
+        <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/90 backdrop-blur-sm py-4 md:py-6">
              <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
                 
                 <!-- Logos Défilants -->
                 <div class="flex overflow-hidden relative w-full md:w-2/3 mask-image-gradient">
                     <div class="flex gap-16 overflow-hidden w-full">
-                        <!-- Updated List with exact filenames & consistent height -->
                         <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around">
+                            <!-- LISTE COMPLETE DES LOGOS AVEC NOMS EXACTS -->
+                            <img src="687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Group">
                             <img src="DADA_contours_blanc.webp" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
                             <img src="LOGO GENNEVILLIERS HABITAT (1).png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers">
                             <img src="Logo-syla-banniere-23.webp" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
                             <img src="Rizqi..png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                             <img src="Spotify_logo_with_text.svg.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
+                            <img src="image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Aroma">
+                            <img src="images.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Total">
                             <img src="logo-qonto-nouveau-1.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Qonto">
-                            <img src="687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Group">
-                            <img src="image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner">
-                            <img src="logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gradient">
+                            <img src="logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
                             <img src="png-clipart-microphone-shure-sm58-audio-logo-microphone-electronics-microphone.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
                         </div>
                         <!-- Duplicate -->
                         <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around" aria-hidden="true">
+                            <img src="687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Group">
                             <img src="DADA_contours_blanc.webp" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
                             <img src="LOGO GENNEVILLIERS HABITAT (1).png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers">
                             <img src="Logo-syla-banniere-23.webp" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
                             <img src="Rizqi..png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                             <img src="Spotify_logo_with_text.svg.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
+                            <img src="image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Aroma">
+                            <img src="images.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Total">
                             <img src="logo-qonto-nouveau-1.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Qonto">
-                            <img src="687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Group">
-                            <img src="image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Partner">
-                            <img src="logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gradient">
+                            <img src="logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
                             <img src="png-clipart-microphone-shure-sm58-audio-logo-microphone-electronics-microphone.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
                         </div>
                     </div>
@@ -332,7 +321,7 @@
 
     <!-- 2. SOCIAL PROOF (STACK & LOGOS) -->
     <div class="relative">
-        <section id="social-proof" class="sticky top-0 min-h-screen flex items-center bg-white text-black overflow-hidden z-0">
+        <section id="social-proof" class="sticky top-0 min-h-screen flex items-center bg-white text-black overflow-hidden z-0 bg-dots-light">
             <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-32 pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between relative z-10 py-10 md:py-0">
@@ -376,8 +365,8 @@
             </div>
         </section>
 
-        <!-- 2.bis PRODUCTION MAISON (TEXT REVEAL) -->
-        <section class="relative z-10 py-16 md:py-32 bg-white text-black border-t border-gray-100 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh]">
+        <!-- 2.bis PRODUCTION MAISON (TEXT REVEAL - NO IMAGES) -->
+        <section class="relative z-10 py-16 md:py-32 bg-white text-black border-t border-gray-100 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-light">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-50 opacity-30 select-none pointer-events-none z-0 tracking-tighter leading-none">
                     ON AIR
@@ -389,29 +378,29 @@
                         
                         <!-- 1 -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-3">
-                            <span class="reveal-text group-hover:text-[#131644]">PODCASTS</span>
+                            <span class="reveal-text group-hover:text-[#131644]">TECH</span>
                             <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
                                 Talk
                             </div>
-                            <span class="reveal-text group-hover:text-[#131644]">VIDÉOS BUSINESS</span>
+                            <span class="reveal-text group-hover:text-[#131644]">& CULTURE</span>
                         </div>
 
                         <!-- 2 -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-3">
-                            <span class="reveal-text group-hover:text-[#131644]">ADS</span>
+                            <span class="reveal-text group-hover:text-[#131644]">BUSINESS</span>
                             <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
                                 Brand
                             </div>
-                            <span class="reveal-text group-hover:text-[#131644]">INTERVIEWS</span>
+                            <span class="reveal-text group-hover:text-[#131644]">MAKERS</span>
                         </div>
 
                         <!-- 3 -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-3">
-                            <span class="reveal-text group-hover:text-[#131644]">INSTITUTIONS</span>
+                            <span class="reveal-text group-hover:text-[#131644]">LA</span>
                             <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
                                 Public
                             </div>
-                            <span class="reveal-text group-hover:text-[#131644]">MARQUES</span>
+                            <span class="reveal-text group-hover:text-[#131644]">MATINALE</span>
                         </div>
 
                     </div>
@@ -506,7 +495,7 @@
                         <img src="bento_video.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
                     </div>
                     <div>
-                        <h4 class="font-bold text-2xl mb-1 text-black uppercase leading-none">Cinema 4K</h4>
+                        <h4 class="font-bold text-xl md:text-2xl mb-1 text-black uppercase leading-none">Cinema 4K</h4>
                         <p class="text-xs text-gray-500 font-mono uppercase mt-2">Sony A7S III + G-Master</p>
                     </div>
                 </div>
@@ -553,7 +542,7 @@
     </section>
 
     <!-- TRANSITION -->
-    <div class="w-full h-16 md:h-24 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
+    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
 
     <!-- 5. TARIFS (REORDERED & MEGA ZOOM - WITH GRADIENT CUT) -->
     <section id="tarifs" class="relative z-10 py-16 md:py-32 bg-[#050505] text-white overflow-hidden bg-grid-dark">
@@ -731,4 +720,115 @@
     <footer class="relative z-10 py-16 bg-[#020202] text-white border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
             <div>
-                 <a href="#" class="block w-24 md:w-32 mb-6
+                 <a href="#" class="block w-24 md:w-32 mb-6 hover:opacity-80 transition cursor-pointer mx-auto md:mx-0">
+                    <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
+                </a>
+                <p class="text-gray-400 text-sm max-w-sm mb-4 mx-auto md:mx-0">L'espace de création premium à Paris.</p>
+                <div class="text-gray-600 text-xs">&copy; 2024 Studio Creation.</div>
+            </div>
+            <div class="flex flex-col gap-2 text-sm text-gray-400 items-center md:items-start font-bold">
+                <a href="#" class="hover:text-white transition">Mentions Légales</a>
+                <a href="#" class="hover:text-white transition">CGV</a>
+                <a href="#" class="hover:text-white transition">Contact</a>
+            </div>
+            <div class="w-full md:w-48 h-32 rounded-xl overflow-hidden border border-white/10 grayscale hover:grayscale-0 transition duration-500 justify-self-center md:justify-self-end">
+                <iframe src="https://www.google.com/maps?q=12+Place+Indira+Gandhi+92230+Gennevilliers&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFaq(element) {
+            const content = element.querySelector('.faq-content');
+            const icon = element.querySelector('.fa-plus');
+            const isActive = element.classList.contains('active');
+            
+            // Close others
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-content').style.maxHeight = '0';
+                const i = item.querySelector('.fa-plus');
+                if(i) i.style.transform = 'rotate(0deg)';
+            });
+            
+            // Toggle current
+            if (!isActive) {
+                element.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px'; // Dynamic height calculation
+                icon.style.transform = 'rotate(45deg)';
+            }
+        }
+
+        function scrollPrices(direction) {
+            const container = document.getElementById('pricing-slider');
+            const cardWidth = 350 + 32; 
+            if (direction === 'left') {
+                container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+            }
+        }
+        
+        // --- HERO TYPEWRITER EFFECT ---
+        const heroTextElement = document.getElementById('typewriter-text');
+        const phrases = [
+            "Vous avez déjà vu des vidéos comme celles-ci.",
+            "Maintenant, créez les vôtres."
+        ];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 50;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                heroTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 30; 
+            } else {
+                heroTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 60; 
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typeSpeed = 3000; 
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500; 
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+        
+        if(heroTextElement) {
+            setTimeout(type, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('.reveal-text-wrapper');
+            window.addEventListener('scroll', () => {
+                const centerScreen = window.innerHeight / 2;
+                items.forEach(item => {
+                    const rect = item.parentElement.getBoundingClientRect();
+                    const itemCenter = rect.top + rect.height / 2;
+                    const distance = Math.abs(centerScreen - itemCenter);
+                    const activationRange = 150; 
+                    let newWidth = 0;
+                    if (distance < activationRange) {
+                        const ratio = 1 - (distance / activationRange);
+                        newWidth = ratio * 120; // Width of the text reveal
+                    }
+                    item.style.width = `${newWidth}px`;
+                    item.style.margin = newWidth > 5 ? '0 0.5rem' : '0';
+                    item.style.opacity = newWidth > 5 ? '1' : '0';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
