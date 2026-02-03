@@ -27,23 +27,18 @@
                         }
                     },
                     animation: {
-                        'scroll': 'scroll 40s linear infinite',
+                        'scroll': 'scroll 60s linear infinite',
                         'spin-slow': 'spin 10s linear infinite',
                         'cursor': 'cursor .75s step-end infinite',
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                     },
                     keyframes: {
                         scroll: {
                             '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(calc(-100% - 4rem))' },
+                            '100%': { transform: 'translateX(-50%)' }, /* Move half the width for seamless loop */
                         },
                         cursor: {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                            '0%, 100%': { borderColor: 'transparent' },
+                            '50%': { borderColor: 'white' },
                         }
                     }
                 }
@@ -105,7 +100,7 @@
             border-radius: 4px;
         }
 
-        /* --- SCROLL REVEAL --- */
+        /* --- SCROLL REVEAL (TEXT) --- */
         .reveal-item {
             cursor: pointer;
             transition: all 0.3s ease;
@@ -127,7 +122,7 @@
         }
         .reveal-text { transition: color 0.3s ease; }
         
-        /* --- FAQ CLEAN & ROBUST --- */
+        /* --- FAQ --- */
         .faq-item {
             border-bottom: 1px solid #e5e7eb; 
             transition: background-color 0.3s ease;
@@ -166,8 +161,8 @@
         .stat-card { position: absolute; inset: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
         .card-front { z-index: 20; transform: rotate(3deg) translateX(10px); }
         .card-back { z-index: 10; transform: rotate(-6deg) translateX(-10px) scale(0.95); opacity: 1; }
-        .card-stack:hover .card-front { transform: rotate(-6deg) translateX(-20px) scale(0.95); z-index: 10; filter: brightness(0.9); }
-        .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .card-stack:hover .card-front { transform: rotate(-6deg) translateX(-20px) scale(0.95); z-index: 10; filter: brightness(0.95); }
+        .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
 
         /* --- DECOR --- */
         .decor-item { flex: 1; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(100%); min-height: 200px; }
@@ -196,7 +191,6 @@
             cursor: pointer;
             will-change: transform;
         }
-        /* Desktop: Super Zoom */
         @media (min-width: 768px) {
             .pricing-card:hover {
                 transform: scale(1.15) translateY(-15px) !important;
@@ -205,15 +199,13 @@
                 border-color: #131644;
             }
         }
-        /* Mobile: Responsive sizing */
         @media (max-width: 768px) {
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
             
-            h1 { font-size: 3rem !important; }
-            h2 { font-size: 2.5rem !important; }
-            .reveal-item span { font-size: 1.5rem !important; }
-            .decor-item { min-height: 150px; }
+            h1 { font-size: 2.5rem !important; }
+            h2 { font-size: 2rem !important; }
+            .reveal-item span { font-size: 1.2rem !important; }
         }
         
         .typewriter-cursor {
@@ -250,8 +242,8 @@
     <!-- 1. HERO SECTION -->
     <section id="hero" class="relative h-[100dvh] w-full overflow-hidden bg-[#050505] text-white bg-grid-dark flex flex-col">
         <div class="absolute inset-0 z-0">
-            <!-- BACKGROUND VIDEO -->
-            <video autoplay muted loop playsinline class="object-cover w-full h-full opacity-80">
+            <!-- BACKGROUND VIDEO (Added playsinline webkit-playsinline for mobile autoplay) -->
+            <video autoplay muted loop playsinline webkit-playsinline class="object-cover w-full h-full opacity-80">
                 <source src="hero-video.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-black/40"></div>
@@ -275,46 +267,43 @@
             </div>
         </div>
 
-        <!-- Marquee Overlay (Infinite & Fixed Spacing) -->
-        <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/90 backdrop-blur-sm py-6">
+        <!-- Marquee Overlay (Seamless Loop Logic: 50% translation) -->
+        <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/90 backdrop-blur-sm py-4 md:py-6">
              <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
                 
                 <!-- Logos Défilants -->
                 <div class="flex overflow-hidden relative w-full md:w-2/3 mask-image-gradient">
-                    <div class="flex gap-16 overflow-hidden w-full">
-                        <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around">
-                            <!-- LISTE COMPLETE DES LOGOS -->
+                    <!-- The key is flex-nowrap and translate -50% on the wrapper containing 2 sets -->
+                    <div class="flex w-max animate-scroll gap-16">
+                        <!-- SET 1 -->
+                        <div class="flex items-center gap-16 shrink-0">
                             <img src="687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Group">
                             <img src="DADA_contours_blanc.webp" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
                             <img src="LOGO GENNEVILLIERS HABITAT (1).png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers">
                             <img src="Logo-syla-banniere-23.webp" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
                             <img src="Rizqi..png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                             <img src="Spotify_logo_with_text.svg.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
-                            <!-- Aroma Zone agrandi -->
+                            <img src="logo-qonto-nouveau-1.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Qonto">
                             <img src="image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-14 md:h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Aroma">
                             <img src="images.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Total">
-                            <!-- Qonto blanc -->
-                            <img src="logo-qonto-nouveau-1.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Qonto">
                             <img src="logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
                             <img src="png-clipart-microphone-shure-sm58-audio-logo-microphone-electronics-microphone.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
-                             <img src="rizqi.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi 2">
+                            <img src="rizqi.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                         </div>
-                        <!-- Duplicate -->
-                        <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around" aria-hidden="true">
+                        <!-- SET 2 (Duplicate) -->
+                        <div class="flex items-center gap-16 shrink-0">
                             <img src="687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Group">
                             <img src="DADA_contours_blanc.webp" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
                             <img src="LOGO GENNEVILLIERS HABITAT (1).png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers">
                             <img src="Logo-syla-banniere-23.webp" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
                             <img src="Rizqi..png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                             <img src="Spotify_logo_with_text.svg.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
-                            <!-- Aroma Zone agrandi -->
+                            <img src="logo-qonto-nouveau-1.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Qonto">
                             <img src="image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-14 md:h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Aroma">
                             <img src="images.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Total">
-                             <!-- Qonto blanc -->
-                            <img src="logo-qonto-nouveau-1.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Qonto">
                             <img src="logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
                             <img src="png-clipart-microphone-shure-sm58-audio-logo-microphone-electronics-microphone.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
-                             <img src="rizqi.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi 2">
+                            <img src="rizqi.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
                         </div>
                     </div>
                 </div>
@@ -378,7 +367,7 @@
             </div>
         </section>
 
-        <!-- 2.bis PRODUCTION MAISON (TEXT REVEAL) -->
+        <!-- 2.bis PRODUCTION MAISON (TEXT REVEAL - NO IMAGES) -->
         <section class="relative z-10 py-16 md:py-32 bg-white text-black border-t border-gray-100 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-light">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-50 opacity-30 select-none pointer-events-none z-0 tracking-tighter leading-none">
@@ -392,6 +381,7 @@
                         <!-- 1 -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-black py-4 md:py-6 border-b border-gray-200 w-full hover:bg-gray-50 transition gap-2 md:gap-3">
                             <span class="reveal-text group-hover:text-[#131644]">PODCASTS</span>
+                            <!-- TEXT ONLY REVEAL -->
                             <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
                                 Talk
                             </div>
@@ -496,10 +486,10 @@
                         <i class="fa-solid fa-waveform-lines text-3xl text-[#3b82f6]"></i>
                     </div>
                     <div class="relative z-10 h-full flex flex-col justify-end">
-                        <h3 class="text-2xl md:text-5xl font-black mb-2 leading-none uppercase">Pure<br>Sound</h3>
-                        <p class="text-gray-400 font-mono text-xs border-l border-[#3b82f6] pl-3 mt-4">SHURE SM7B X4 <br>+ RODECASTER PRO II</p>
+                        <h3 class="text-3xl md:text-6xl font-bold mb-4 leading-[0.9]">Pure<br>Sound.</h3>
+                        <p class="text-gray-400 font-mono text-xs border-l border-[#3b82f6] pl-3">SHURE SM7B X4 <br>+ RODECASTER PRO II</p>
                     </div>
-                    <img src="bento_audio.jpg" class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-screen group-hover:opacity-40 transition duration-700">
+                    <img src="bento_audio.jpg" class="absolute inset-0 w-full h-full object-cover opacity-30 mix-blend-screen group-hover:opacity-50 transition duration-700">
                 </div>
                 
                  <!-- Video -->
@@ -508,7 +498,7 @@
                         <img src="bento_video.jpg" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 transition duration-500">
                     </div>
                     <div>
-                        <h4 class="font-bold text-xl md:text-2xl mb-1 text-black uppercase">Cinema 4K</h4>
+                        <h4 class="font-bold text-xl md:text-2xl mb-1 text-black uppercase leading-none">Cinema 4K</h4>
                         <p class="text-xs text-gray-500 font-mono uppercase mt-2">Sony A7S III + G-Master</p>
                     </div>
                 </div>
@@ -555,9 +545,9 @@
     </section>
 
     <!-- TRANSITION GRADIENT -->
-    <div class="w-full h-32 bg-gradient-to-b from-[#050505] to-white z-10"></div>
+     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
 
-    <!-- 5. TARIFS (REORDERED & MEGA ZOOM) -->
+    <!-- 5. TARIFS (REORDERED & MEGA ZOOM - WITH GRADIENT CUT) -->
     <section id="tarifs" class="relative z-10 py-16 md:py-32 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 text-center md:text-left">
@@ -643,7 +633,7 @@
                 </div>
 
                 <!-- 5. AUDIO ONLY -->
-                <div class="pricing-card bg-[#121212] border border-white/10 p-10 rounded-[2.5rem] flex flex-col justify-between h-[450px] md:h-[500px]">
+                <div class="pricing-card bg-[#121212] border border-white/10 p-10 rounded-[2.5rem] flex flex-col justify-between h-[550px]">
                     <div>
                         <span class="text-gray-500 font-mono text-xs uppercase tracking-widest">Starter</span>
                         <h3 class="text-3xl md:text-4xl font-bold mt-4 mb-2">Audio Only</h3>
@@ -662,11 +652,11 @@
             </div>
         </div>
     </section>
-    
+
     <!-- GRADIENT TRANSITION TO WHITE FAQ -->
     <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 6. FAQ (CLEAN & ROBUSTE) -->
+    <!-- 6. FAQ (CLEAN) -->
     <section id="faq" class="relative z-10 py-16 md:py-32 bg-white text-black bg-grid-light">
         <div class="max-w-4xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-200 pb-8 text-center md:text-left">
