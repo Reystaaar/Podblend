@@ -104,7 +104,7 @@
         }
         .reveal-text { transition: color 0.3s ease; }
         
-        /* --- FAQ --- */
+        /* --- FAQ FIXED & ROBUST --- */
         .faq-item {
             border-bottom: 1px solid #e5e7eb; 
             transition: background-color 0.3s ease;
@@ -144,7 +144,7 @@
         .card-front { z-index: 20; transform: rotate(3deg) translateX(10px); }
         .card-back { z-index: 10; transform: rotate(-6deg) translateX(-10px) scale(0.95); opacity: 1; }
         .card-stack:hover .card-front { transform: rotate(-6deg) translateX(-20px) scale(0.95); z-index: 10; filter: brightness(0.95); }
-        .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+        .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
 
         /* --- DECOR --- */
         .decor-item { flex: 1; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(100%); min-height: 200px; }
@@ -187,7 +187,7 @@
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
             
-            h1 { font-size: 2.25rem !important; }
+            h1 { font-size: 2.5rem !important; }
             h2 { font-size: 2rem !important; }
             .reveal-item span { font-size: 1.2rem !important; }
             .decor-item { min-height: 150px; }
@@ -222,7 +222,7 @@
     <div class="noise-overlay"></div>
 
     <!-- NAV -->
-    <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
+    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-6 mix-blend-difference text-white">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
             <a href="#" class="block w-24 md:w-32 hover:opacity-80 transition cursor-pointer">
                 <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/votre-logo.webp" alt="Podblend" class="w-full h-auto">
@@ -280,33 +280,27 @@
                     <div class="flex gap-16 overflow-hidden w-full">
                         <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around">
                              <!-- All Logos from uploaded files -->
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Group">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/DADA_contours_blanc.webp" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/LOGO GENNEVILLIERS HABITAT (1).png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/Logo-syla-banniere-23.webp" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/Rizqi..png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/Spotify_logo_with_text.svg.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/logo-qonto-nouveau-1.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Qonto">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-14 md:h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Aroma">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/images.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Total">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/png-clipart-microphone-shure-sm58-audio-logo-microphone-electronics-microphone.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/rizqi.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi 2">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 1">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/2.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 2">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/3.png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 3">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/4.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 4">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/5.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 5">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/6.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 6">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/7.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Logo 7">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/8.png" class="h-14 md:h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 8">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/9.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Logo 9">
                         </div>
                         <!-- Duplicate -->
                         <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around" aria-hidden="true">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/687fac24e423c78e7168edc0_Group 481495 (2).svg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Group">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/DADA_contours_blanc.webp" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Dada">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/LOGO GENNEVILLIERS HABITAT (1).png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Gennevilliers">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/Logo-syla-banniere-23.webp" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Syla">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/Rizqi..png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/Spotify_logo_with_text.svg.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Spotify">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/logo-qonto-nouveau-1.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Qonto">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/image-partner-logo-0-58d5b0ec-1bc3-4100-99ea-6a11e66952bf.png" class="h-14 md:h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Aroma">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/images.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Total">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/logo_gradient_029e86f9-f868-4c08-ad31-115a1c521f34.avif" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Ears360">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/png-clipart-microphone-shure-sm58-audio-logo-microphone-electronics-microphone.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Shure">
-                             <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/rizqi.jpg" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Rizqi 2">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 1">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/2.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 2">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/3.png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 3">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/4.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 4">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/5.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 5">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/6.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 6">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/7.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Logo 7">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/8.png" class="h-14 md:h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 8">
+                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/9.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Logo 9">
                         </div>
                     </div>
                 </div>
@@ -369,53 +363,50 @@
                 </div>
             </div>
         </section>
-    </div>
 
-    <!-- TRANSITION -->
-    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
-
-    <!-- 3. PRODUCTION MAISON (NOIR - TEXT REVEAL) -->
-    <section class="relative z-10 py-16 md:py-32 bg-[#050505] text-white border-t border-white/10 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-dark">
-        <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-800 opacity-20 select-none pointer-events-none z-0 tracking-tighter leading-none">
-                ON AIR
-            </div>
-            <div class="relative z-10">
-                <span class="text-[#3b82f6] font-bold tracking-widest uppercase text-xs mb-8 md:mb-12 block font-mono border-b border-gray-700 pb-2 inline-block">Entreprises & Créateurs</span>
-                
-                <div class="flex flex-col items-center justify-center space-y-1" id="scroll-reveal-container">
+        <!-- 3. PRODUCTION MAISON (NOIR - TEXT REVEAL) -->
+        <section class="relative z-10 py-16 md:py-32 bg-[#050505] text-white border-t border-white/10 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-dark">
+            <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-800 opacity-20 select-none pointer-events-none z-0 tracking-tighter leading-none">
+                    ON AIR
+                </div>
+                <div class="relative z-10">
+                    <span class="text-[#3b82f6] font-bold tracking-widest uppercase text-xs mb-8 md:mb-12 block font-mono border-b border-gray-700 pb-2 inline-block">Entreprises & Créateurs</span>
                     
-                    <!-- 1 -->
-                    <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                        <span class="reveal-text group-hover:text-[#3b82f6]">PODCASTS</span>
-                        <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
-                            Talk
+                    <div class="flex flex-col items-center justify-center space-y-1" id="scroll-reveal-container">
+                        
+                        <!-- 1 -->
+                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
+                            <span class="reveal-text group-hover:text-[#3b82f6]">PODCASTS</span>
+                            <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
+                                Talk
+                            </div>
+                            <span class="reveal-text group-hover:text-[#3b82f6]">VIDÉOS BUSINESS</span>
                         </div>
-                        <span class="reveal-text group-hover:text-[#3b82f6]">VIDÉOS BUSINESS</span>
-                    </div>
 
-                    <!-- 2 -->
-                    <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                        <span class="reveal-text group-hover:text-[#3b82f6]">ADS</span>
-                        <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
-                            Brand
+                        <!-- 2 -->
+                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
+                            <span class="reveal-text group-hover:text-[#3b82f6]">ADS</span>
+                            <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
+                                Brand
+                            </div>
+                            <span class="reveal-text group-hover:text-[#3b82f6]">INTERVIEWS</span>
                         </div>
-                        <span class="reveal-text group-hover:text-[#3b82f6]">INTERVIEWS</span>
-                    </div>
 
-                    <!-- 3 -->
-                    <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                        <span class="reveal-text group-hover:text-[#3b82f6]">INSTITUTIONS</span>
-                        <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
-                            Public
+                        <!-- 3 -->
+                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
+                            <span class="reveal-text group-hover:text-[#3b82f6]">INSTITUTIONS</span>
+                            <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
+                                Public
+                            </div>
+                            <span class="reveal-text group-hover:text-[#3b82f6]">MARQUES</span>
                         </div>
-                        <span class="reveal-text group-hover:text-[#3b82f6]">MARQUES</span>
-                    </div>
 
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
     <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
@@ -557,7 +548,7 @@
                         <ul class="space-y-3 text-sm font-medium text-gray-700">
                              <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Opérateur sur place</li>
                             <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> 4 micros Shure MV7+</li>
-                            <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Table Rodecaster Pro</li>
+                            <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Table de mixage Rodecaster Pro</li>
                              <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Fichiers jour même</li>
                         </ul>
                     </div>
@@ -585,8 +576,8 @@
         </div>
     </section>
 
-    <!-- GRADIENT TRANSITION TO WHITE FAQ -->
-    <div class="w-full h-24 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
+    <!-- TRANSITION -->
+    <div class="w-full h-16 md:h-24 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
     <!-- 6. FAQ (BLANC) -->
     <section id="faq" class="relative z-10 py-16 md:py-32 bg-white text-black bg-grid-light">
@@ -672,13 +663,14 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts same as before -->
     <script>
         function toggleFaq(element) {
             const content = element.querySelector('.faq-content');
             const icon = element.querySelector('.fa-plus');
             const isActive = element.classList.contains('active');
             
+            // Close others
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.classList.remove('active');
                 item.querySelector('.faq-content').style.maxHeight = '0';
@@ -686,6 +678,7 @@
                 if(i) i.style.transform = 'rotate(0deg)';
             });
             
+            // Toggle current
             if (!isActive) {
                 element.classList.add('active');
                 content.style.maxHeight = content.scrollHeight + 'px'; // Dynamic height calculation
@@ -722,27 +715,6 @@
                 container.scrollBy({ left: cardWidth, behavior: 'smooth' });
             }
         }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const items = document.querySelectorAll('.reveal-text-wrapper');
-            window.addEventListener('scroll', () => {
-                const centerScreen = window.innerHeight / 2;
-                items.forEach(item => {
-                    const rect = item.parentElement.getBoundingClientRect();
-                    const itemCenter = rect.top + rect.height / 2;
-                    const distance = Math.abs(centerScreen - itemCenter);
-                    const activationRange = 150; 
-                    let newWidth = 0;
-                    if (distance < activationRange) {
-                        const ratio = 1 - (distance / activationRange);
-                        newWidth = ratio * 120; 
-                    }
-                    item.style.width = `${newWidth}px`;
-                    item.style.margin = newWidth > 5 ? '0 0.5rem' : '0';
-                    item.style.opacity = newWidth > 5 ? '1' : '0';
-                });
-            });
-        });
     </script>
 </body>
 </html>
