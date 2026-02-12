@@ -6,7 +6,7 @@
     <title>Podblend - Vos studios d'enregistrement</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -28,18 +28,12 @@
                     },
                     animation: {
                         'scroll': 'scroll 40s linear infinite',
-                        'spin-slow': 'spin 10s linear infinite',
-                        'cursor': 'cursor .75s step-end infinite',
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                     },
                     keyframes: {
                         scroll: {
                             '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(calc(-100% - 4rem))' },
-                        },
-                        cursor: {
-                            '0%, 100%': { borderColor: 'transparent' },
-                            '50%': { borderColor: 'white' },
                         },
                         fadeInUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
@@ -59,7 +53,7 @@
 
         /* --- GLOBAL NOISE --- */
         .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; opacity: 0.05;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; opacity: 0.04;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
@@ -82,29 +76,29 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* --- SCROLL REVEAL --- */
+        /* --- SCROLL REVEAL (TEXT ONLY) --- */
         .reveal-item {
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
         }
-        .reveal-item:hover { background-color: rgba(19, 22, 68, 0.05); }
-        .reveal-word-hidden {
+        .reveal-item:hover { background-color: rgba(255, 255, 255, 0.05); }
+        
+        .reveal-text-wrapper {
             width: 0;
             overflow: hidden;
-            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+            transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s ease;
             opacity: 0;
             white-space: nowrap;
-            color: #9CA3AF; /* Gray-400 */
         }
-        .reveal-item:hover .reveal-word-hidden {
+        .reveal-item:hover .reveal-text-wrapper {
             width: auto;
             opacity: 1;
-            margin: 0 0.5rem;
+            margin: 0 1rem;
         }
         .reveal-text { transition: color 0.3s ease; }
         
-        /* --- FAQ FIXED & ROBUST --- */
+        /* --- FAQ --- */
         .faq-item {
             border-bottom: 1px solid #e5e7eb; 
             transition: background-color 0.3s ease;
@@ -144,7 +138,7 @@
         .card-front { z-index: 20; transform: rotate(3deg) translateX(10px); }
         .card-back { z-index: 10; transform: rotate(-6deg) translateX(-10px) scale(0.95); opacity: 1; }
         .card-stack:hover .card-front { transform: rotate(-6deg) translateX(-20px) scale(0.95); z-index: 10; filter: brightness(0.95); }
-        .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
 
         /* --- DECOR --- */
         .decor-item { flex: 1; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(100%); min-height: 200px; }
@@ -159,30 +153,27 @@
 
         /* --- PRICING SUPER ZOOM --- */
         .pricing-scroll-container {
-            scroll-snap-type: x mandatory;
-            overflow-x: auto;
             display: flex;
             gap: 2rem;
-            padding-bottom: 5rem;
-            padding-top: 3rem;
+            padding: 4rem 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
         }
         .pricing-card {
-            scroll-snap-align: center;
             flex: 0 0 350px;
+            scroll-snap-align: center;
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease;
             cursor: pointer;
-            will-change: transform;
+            border-radius: 24px;
         }
-        /* Desktop: Super Zoom */
         @media (min-width: 768px) {
             .pricing-card:hover {
                 transform: scale(1.15) translateY(-15px) !important;
                 z-index: 50;
                 box-shadow: 0 50px 100px -20px rgba(0,0,0,0.9);
-                border-color: #131644;
             }
         }
-        /* Mobile: Responsive sizing */
         @media (max-width: 768px) {
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
@@ -222,10 +213,10 @@
     <div class="noise-overlay"></div>
 
     <!-- NAV -->
-    <nav class="fixed w-full z-50 top-0 left-0 px-6 py-6 mix-blend-difference text-white">
+    <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
             <a href="#" class="block w-24 md:w-32 hover:opacity-80 transition cursor-pointer">
-                <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/votre-logo.webp" alt="Podblend" class="w-full h-auto">
+                <img src="votre-logo.webp" alt="Podblend" class="w-full h-auto">
             </a>
             
             <div class="hidden md:flex gap-8 font-medium text-sm">
@@ -244,7 +235,6 @@
             <video autoplay muted loop playsinline webkit-playsinline class="object-cover w-full h-full opacity-80">
                 <source src="hero-video.mp4" type="video/mp4">
             </video>
-            <!-- Overlay plus léger -->
             <div class="absolute inset-0 bg-black/30"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_100%)]"></div>
         </div>
@@ -257,7 +247,7 @@
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#131644] drop-shadow-lg">Maintenant, créez les vôtres.</span>
                 </h1>
                 
-                <!-- Sous-titre -->
+                <!-- Sous-titre ajouté -->
                 <p class="text-gray-300 text-sm md:text-xl font-medium max-w-2xl mx-auto md:mx-0 mb-8">
                     Un studio clé en main pour podcasts, vidéos d’entreprise, ads et contenus professionnels.
                 </p>
@@ -279,28 +269,28 @@
                 <div class="flex overflow-hidden relative w-full md:w-2/3 mask-image-gradient">
                     <div class="flex gap-16 overflow-hidden w-full">
                         <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around">
-                             <!-- All Logos from uploaded files -->
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 1">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/2.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 2">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/3.png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 3">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/4.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 4">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/5.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 5">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/6.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 6">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/7.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Logo 7">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/8.png" class="h-14 md:h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 8">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/9.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Logo 9">
+                            <!-- Nouveaux noms de fichiers logos -->
+                            <img src="1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 1">
+                            <img src="2.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 2">
+                            <img src="3.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 3">
+                            <img src="4.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 4">
+                            <img src="5.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 5">
+                            <img src="6.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 6">
+                            <img src="7.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 7">
+                            <img src="8.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 8">
+                            <img src="9.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 9">
                         </div>
                         <!-- Duplicate -->
                         <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around" aria-hidden="true">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 1">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/2.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 2">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/3.png" class="h-12 md:h-14 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 3">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/4.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 4">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/5.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 5">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/6.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 6">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/7.png" class="h-8 md:h-10 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 brightness-0 invert" alt="Logo 7">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/8.png" class="h-14 md:h-16 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 8">
-                            <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/9.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300 mix-blend-screen" alt="Logo 9">
+                            <img src="1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 1">
+                            <img src="2.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 2">
+                            <img src="3.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 3">
+                            <img src="4.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 4">
+                            <img src="5.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 5">
+                            <img src="6.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 6">
+                            <img src="7.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 7">
+                            <img src="8.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 8">
+                            <img src="9.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 9">
                         </div>
                     </div>
                 </div>
@@ -364,7 +354,7 @@
             </div>
         </section>
 
-        <!-- 3. PRODUCTION MAISON (NOIR - TEXT REVEAL) -->
+        <!-- 3. PRODUCTION MAISON (NOIR) - TEXT REVEAL -->
         <section class="relative z-10 py-16 md:py-32 bg-[#050505] text-white border-t border-white/10 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-dark">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-800 opacity-20 select-none pointer-events-none z-0 tracking-tighter leading-none">
@@ -421,7 +411,7 @@
             
             <!-- Gotham / Dark Room -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
-                <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Gotham">
+                <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Gotham">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap decor-info transition duration-500">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg md:group-hover:scale-110 transition origin-left">Le Gotham</h3>
@@ -433,7 +423,7 @@
 
             <!-- Santorini / Talk Show -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
-                <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Santorini">
+                <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Santorini">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap decor-info transition duration-500">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg md:group-hover:scale-110 transition origin-left">Le Santorini</h3>
@@ -445,7 +435,7 @@
 
             <!-- Library / Lounge -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
-                <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/library-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="La Bibliothèque">
+                <img src="library-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="La Bibliothèque">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap decor-info transition duration-500">
                     <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg md:group-hover:scale-110 transition origin-left">La Bibliothèque</h3>
@@ -460,7 +450,7 @@
     <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
 
-    <!-- 5. TARIFS (NOIR - SWITCH AUDIO/VIDEO & UPDATED CARDS & HORIZONTAL SCROLL) -->
+    <!-- 5. TARIFS (NOIR) -->
     <section id="tarifs" class="relative z-10 py-16 md:py-32 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 text-center md:text-left">
@@ -468,7 +458,6 @@
                     <h2 class="text-4xl md:text-6xl font-bold">Nos Tarifs</h2>
                     <p class="text-gray-400 mt-2 font-mono text-sm">/// Formules adaptées</p>
                 </div>
-                
                 <!-- TOGGLE SWITCH & ARROWS -->
                 <div class="mt-8 md:mt-0 flex flex-col md:flex-row items-center gap-6 w-full md:w-auto">
                     <div class="switch-container">
@@ -521,7 +510,7 @@
                     <button class="w-full py-4 bg-white text-black rounded-xl hover:bg-gray-200 transition font-bold uppercase text-xs tracking-widest mt-6">Réserver</button>
                 </div>
 
-                <div class="pricing-card video-card bg-white text-black p-8 rounded-[2rem] w-full md:w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px]">
+                <div class="pricing-card video-card bg-white text-black p-8 rounded-[2rem] w-full md:min-w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px]">
                     <div>
                         <h3 class="text-3xl font-bold mb-2">Complète</h3>
                         <div class="text-5xl font-black text-[#131644] mb-2 tracking-tighter">320€</div>
@@ -577,7 +566,7 @@
     </section>
 
     <!-- TRANSITION -->
-    <div class="w-full h-16 md:h-24 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
+    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
     <!-- 6. FAQ (BLANC) -->
     <section id="faq" class="relative z-10 py-16 md:py-32 bg-white text-black bg-grid-light">
@@ -642,12 +631,12 @@
     <!-- TRANSITION -->
     <div class="w-full h-16 md:h-24 bg-gradient-to-b from-white to-[#020202] relative z-10"></div>
 
-    <!-- FOOTER -->
+    <!-- FOOTER (NOIR) -->
     <footer class="relative z-10 py-16 bg-[#020202] text-white border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
             <div>
                  <a href="#" class="block w-24 md:w-32 mb-6 hover:opacity-80 transition cursor-pointer mx-auto md:mx-0">
-                    <img src="reystaaar/podblend/Podblend-2f15c2fc8262e87a902b7b25f9f0bdada54afdc5/votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
+                    <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
                 </a>
                 <p class="text-gray-400 text-sm max-w-sm mb-4 mx-auto md:mx-0">L'espace de création premium à Paris.</p>
                 <div class="text-gray-600 text-xs">&copy; 2024 Studio Creation.</div>
@@ -663,7 +652,7 @@
         </div>
     </footer>
 
-    <!-- Scripts same as before -->
+    <!-- Scripts -->
     <script>
         function toggleFaq(element) {
             const content = element.querySelector('.faq-content');
