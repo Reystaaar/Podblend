@@ -22,8 +22,6 @@
                             card: '#121212',
                             deep: '#131644',
                             accent: '#3b82f6',
-                            electric: '#4F46E5',
-                            acid: '#D1FA31'
                         }
                     },
                     animation: {
@@ -76,27 +74,34 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* --- SCROLL REVEAL (TEXT ONLY) --- */
+        /* --- SCROLL REVEAL (TEXT ONLY) - MODIFIED FOR AUTO SCROLL --- */
         .reveal-item {
-            cursor: pointer;
-            transition: all 0.3s ease;
+            cursor: default;
+            transition: all 0.5s ease;
             position: relative;
         }
-        .reveal-item:hover { background-color: rgba(255, 255, 255, 0.05); }
         
         .reveal-text-wrapper {
             width: 0;
             overflow: hidden;
-            transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s ease;
+            transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease, margin 0.5s ease;
             opacity: 0;
             white-space: nowrap;
+            margin: 0;
         }
+
+        /* L'effet se déclenche quand la classe .is-visible est ajoutée par JS */
+        .reveal-item.is-visible .reveal-text-wrapper,
         .reveal-item:hover .reveal-text-wrapper {
             width: auto;
             opacity: 1;
             margin: 0 1rem;
         }
-        .reveal-text { transition: color 0.3s ease; }
+        
+        .reveal-item.is-visible .reveal-text,
+        .reveal-item:hover .reveal-text {
+             color: #3b82f6; /* Change color on reveal */
+        }
         
         /* --- FAQ --- */
         .faq-item {
@@ -178,10 +183,8 @@
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
             
-            h1 { font-size: 2.5rem !important; }
-            h2 { font-size: 2rem !important; }
-            .reveal-item span { font-size: 1.2rem !important; }
-            .decor-item { min-height: 150px; }
+            /* Mobile Adjustments per client */
+            h1 { line-height: 1.2 !important; }
         }
         
         /* Switch Toggle Style */
@@ -212,10 +215,9 @@
 
     <div class="noise-overlay"></div>
 
-    <!-- NAV -->
     <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
-            <a href="#" class="block w-24 md:w-32 hover:opacity-80 transition cursor-pointer">
+            <a href="#" class="block w-20 md:w-28 hover:opacity-80 transition cursor-pointer">
                 <img src="votre-logo.webp" alt="Podblend" class="w-full h-auto">
             </a>
             
@@ -224,91 +226,81 @@
                 <a href="#tarifs" class="hover:text-brand-accent transition duration-300">Tarifs</a>
                 <a href="#faq" class="hover:text-brand-accent transition duration-300">FAQ</a>
             </div>
-            <a href="#tarifs" class="bg-white text-black px-4 py-2 md:px-5 md:py-2 text-xs md:text-sm md:text-base rounded-full font-bold hover:bg-[#131644] hover:text-white transition duration-300 shadow-lg">Réserver</a>
+            <a href="#tarifs" class="bg-white text-black px-4 py-2 text-xs md:text-sm rounded-full font-bold hover:bg-[#131644] hover:text-white transition duration-300 shadow-lg">Réserver</a>
         </div>
     </nav>
 
-    <!-- 1. HERO SECTION (NOIR) -->
     <section id="hero" class="relative h-[100dvh] w-full overflow-hidden bg-[#050505] text-white bg-grid-dark flex flex-col">
         <div class="absolute inset-0 z-0">
-            <!-- BACKGROUND VIDEO -->
             <video autoplay muted loop playsinline webkit-playsinline class="object-cover w-full h-full opacity-80">
                 <source src="hero-video.mp4" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-black/30"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_100%)]"></div>
+            <div class="absolute inset-0 bg-black/40"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_90%)]"></div>
         </div>
 
-        <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full h-full flex flex-col justify-center items-center md:items-start text-center md:text-left pb-20 md:pb-0">
-            <div class="max-w-4xl pt-0 w-full animate-fade-in-up">
-                <!-- Titre Statique -->
-                <h1 class="text-3xl md:text-7xl font-bold leading-tight tracking-tight mb-4">
-                    Vous avez déjà vu des vidéos comme celles-ci.<br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-[#131644] drop-shadow-lg">Maintenant, créez les vôtres.</span>
+        <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full h-full flex flex-col justify-center items-center md:items-start text-center md:text-left pb-16">
+            <div class="max-w-5xl pt-0 w-full animate-fade-in-up">
+                <h1 class="font-bold leading-tight tracking-tight mb-6">
+                    <span class="block text-4xl md:text-6xl lg:text-7xl mb-2 md:mb-4">
+                        Vous avez déjà vu des vidéos comme celles-ci.
+                    </span>
+                    <span class="block text-2xl md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400 font-medium">
+                        Maintenant, créez les vôtres.
+                    </span>
                 </h1>
                 
-                <!-- Sous-titre ajouté -->
-                <p class="text-gray-300 text-sm md:text-xl font-medium max-w-2xl mx-auto md:mx-0 mb-8">
+                <p class="text-gray-300 text-sm md:text-lg font-medium max-w-2xl mx-auto md:mx-0 mb-8 md:mb-10">
                     Un studio clé en main pour podcasts, vidéos d’entreprise, ads et contenus professionnels.
                 </p>
 
-                <div class="flex justify-center md:justify-start">
-                    <!-- Bouton plus petit -->
-                    <a href="#tarifs" class="bg-white text-black px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-[#131644] hover:text-white hover:scale-105 transition duration-300 shadow-xl inline-block border-2 border-transparent hover:border-white">
+                <div class="flex justify-center md:justify-start mb-12"> <a href="#tarifs" class="bg-white text-black px-5 py-2 rounded-full font-bold text-sm hover:bg-[#131644] hover:text-white hover:scale-105 transition duration-300 shadow-xl inline-block border-2 border-transparent hover:border-white">
                         Réserver une session
                     </a>
                 </div>
             </div>
         </div>
 
-        <!-- Marquee Overlay (Seamless Loop) -->
-        <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/90 backdrop-blur-sm py-4">
-             <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/95 backdrop-blur-sm py-2">
+             <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
                 
-                <!-- Logos Défilants -->
                 <div class="flex overflow-hidden relative w-full md:w-2/3 mask-image-gradient">
-                    <div class="flex gap-16 overflow-hidden w-full">
-                        <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around">
-                            <!-- Nouveaux noms de fichiers logos -->
-                            <img src="1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 1">
-                            <img src="2.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 2">
-                            <img src="3.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 3">
-                            <img src="4.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 4">
-                            <img src="5.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 5">
-                            <img src="6.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 6">
-                            <img src="7.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 7">
-                            <img src="8.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 8">
-                            <img src="9.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 9">
+                    <div class="flex gap-12 overflow-hidden w-full">
+                        <div class="flex animate-scroll whitespace-nowrap items-center gap-12 shrink-0 min-w-full justify-around">
+                            <img src="1.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="2.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="3.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="4.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="5.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="6.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="7.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="8.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
                         </div>
-                        <!-- Duplicate -->
-                        <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around" aria-hidden="true">
-                            <img src="1.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 1">
-                            <img src="2.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 2">
-                            <img src="3.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 3">
-                            <img src="4.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 4">
-                            <img src="5.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 5">
-                            <img src="6.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 6">
-                            <img src="7.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 7">
-                            <img src="8.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 8">
-                            <img src="9.png" class="h-10 md:h-12 w-auto object-contain opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo 9">
+                        <div class="flex animate-scroll whitespace-nowrap items-center gap-12 shrink-0 min-w-full justify-around" aria-hidden="true">
+                            <img src="1.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="2.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="3.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="4.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="5.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="6.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="7.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                            <img src="8.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
                         </div>
                     </div>
                 </div>
 
                 <div class="md:w-1/3 text-right border-l border-white/20 pl-6 hidden md:block">
-                    <p class="text-sm font-medium text-gray-400 leading-tight">
-                        <span class="text-white font-bold block mb-1">Plus de 100 entreprises accompagnées</span>
-                        dans l'enregistrement de leur contenu vidéo.
+                    <p class="text-xs font-medium text-gray-400 leading-tight">
+                        <span class="text-white font-bold block mb-0.5">Plus de 100 entreprises</span>
+                        ont enregistré ici.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 2. SOCIAL PROOF (BLANC) -->
     <div class="relative">
         <section id="social-proof" class="sticky top-0 min-h-screen flex items-center bg-white text-black overflow-hidden z-0 bg-dots-light">
             <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-32 pointer-events-none"></div>
@@ -354,7 +346,6 @@
             </div>
         </section>
 
-        <!-- 3. PRODUCTION MAISON (NOIR) - TEXT REVEAL -->
         <section class="relative z-10 py-16 md:py-32 bg-[#050505] text-white border-t border-white/10 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-dark">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
                 <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-800 opacity-20 select-none pointer-events-none z-0 tracking-tighter leading-none">
@@ -365,31 +356,34 @@
                     
                     <div class="flex flex-col items-center justify-center space-y-1" id="scroll-reveal-container">
                         
-                        <!-- 1 -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                            <span class="reveal-text group-hover:text-[#3b82f6]">PODCASTS</span>
-                            <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
-                                Talk
+                            <span class="reveal-text">PODCASTS</span>
+                            <div class="reveal-text-wrapper">
+                                <div class="text-xl md:text-3xl font-normal text-white bg-[#3b82f6] px-4 py-1 rounded-full shadow-lg shadow-blue-500/50">
+                                    Talk
+                                </div>
                             </div>
-                            <span class="reveal-text group-hover:text-[#3b82f6]">VIDÉOS BUSINESS</span>
+                            <span class="reveal-text">VIDÉOS BUSINESS</span>
                         </div>
 
-                        <!-- 2 -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                            <span class="reveal-text group-hover:text-[#3b82f6]">ADS</span>
-                            <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
-                                Brand
+                            <span class="reveal-text">ADS</span>
+                            <div class="reveal-text-wrapper">
+                                <div class="text-xl md:text-3xl font-normal text-white bg-[#3b82f6] px-4 py-1 rounded-full shadow-lg shadow-blue-500/50">
+                                    Brand
+                                </div>
                             </div>
-                            <span class="reveal-text group-hover:text-[#3b82f6]">INTERVIEWS</span>
+                            <span class="reveal-text">INTERVIEWS</span>
                         </div>
 
-                        <!-- 3 -->
                         <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                            <span class="reveal-text group-hover:text-[#3b82f6]">INSTITUTIONS</span>
-                            <div class="reveal-word-hidden text-xl md:text-3xl font-normal text-gray-400 bg-gray-900 px-3 py-1 rounded-full">
-                                Public
+                            <span class="reveal-text">INSTITUTIONS</span>
+                            <div class="reveal-text-wrapper">
+                                <div class="text-xl md:text-3xl font-normal text-white bg-[#3b82f6] px-4 py-1 rounded-full shadow-lg shadow-blue-500/50">
+                                    Public
+                                </div>
                             </div>
-                            <span class="reveal-text group-hover:text-[#3b82f6]">MARQUES</span>
+                            <span class="reveal-text">MARQUES</span>
                         </div>
 
                     </div>
@@ -398,10 +392,8 @@
         </section>
     </div>
 
-    <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 4. DÉCOR (BLANC) -->
     <section class="relative z-10 py-16 md:py-24 bg-white text-black overflow-hidden bg-grid-light">
         <div class="px-6 mb-12 max-w-7xl mx-auto text-center md:text-left">
             <h2 class="text-3xl md:text-4xl font-bold">Nos Décors</h2>
@@ -409,7 +401,6 @@
         </div>
         <div class="decor-container flex flex-col md:flex-row w-full h-auto md:h-[600px] gap-4 px-4 md:px-2">
             
-            <!-- Gotham / Dark Room -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
                 <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Gotham">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
@@ -421,7 +412,6 @@
                 </div>
             </div>
 
-            <!-- Santorini / Talk Show -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
                 <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Santorini">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
@@ -433,7 +423,6 @@
                 </div>
             </div>
 
-            <!-- Library / Lounge -->
             <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
                 <img src="library-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="La Bibliothèque">
                 <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
@@ -447,10 +436,8 @@
         </div>
     </section>
 
-    <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
 
-    <!-- 5. TARIFS (NOIR) -->
     <section id="tarifs" class="relative z-10 py-16 md:py-32 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 text-center md:text-left">
@@ -458,14 +445,12 @@
                     <h2 class="text-4xl md:text-6xl font-bold">Nos Tarifs</h2>
                     <p class="text-gray-400 mt-2 font-mono text-sm">/// Formules adaptées</p>
                 </div>
-                <!-- TOGGLE SWITCH & ARROWS -->
                 <div class="mt-8 md:mt-0 flex flex-col md:flex-row items-center gap-6 w-full md:w-auto">
                     <div class="switch-container">
                         <button class="switch-btn active" id="btn-video" onclick="switchPricing('video')">VIDÉO</button>
                         <button class="switch-btn" id="btn-audio" onclick="switchPricing('audio')">AUDIO</button>
                     </div>
-                     <!-- Navigation Arrows -->
-                    <div class="flex gap-4">
+                     <div class="flex gap-4">
                         <button onclick="scrollPrices('left')" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-left"></i></button>
                         <button onclick="scrollPrices('right')" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-right"></i></button>
                     </div>
@@ -474,7 +459,6 @@
             
             <div class="pricing-scroll-container hide-scroll" id="pricing-slider">
                 
-                <!-- VIDEO CARDS -->
                 <div class="pricing-card video-card bg-white text-black p-8 rounded-[2rem] w-full md:min-w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px]">
                     <div class="absolute top-4 right-4 bg-[#131644] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Initial</div>
                     <div>
@@ -527,7 +511,6 @@
                     <button class="w-full py-4 border border-black rounded-xl hover:bg-black hover:text-white transition font-bold uppercase text-xs tracking-widest mt-6">Choisir</button>
                 </div>
 
-                <!-- AUDIO CARDS (Hidden by default) -->
                 <div class="pricing-card audio-card bg-white text-black p-8 rounded-[2rem] w-full md:min-w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px] hidden">
                     <div>
                         <h3 class="text-3xl font-bold mb-2">Audio Simple</h3>
@@ -565,10 +548,8 @@
         </div>
     </section>
 
-    <!-- TRANSITION -->
     <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
 
-    <!-- 6. FAQ (BLANC) -->
     <section id="faq" class="relative z-10 py-16 md:py-32 bg-white text-black bg-grid-light">
         <div class="max-w-4xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-200 pb-8 text-center md:text-left">
@@ -628,10 +609,8 @@
         </div>
     </section>
     
-    <!-- TRANSITION -->
     <div class="w-full h-16 md:h-24 bg-gradient-to-b from-white to-[#020202] relative z-10"></div>
 
-    <!-- FOOTER (NOIR) -->
     <footer class="relative z-10 py-16 bg-[#020202] text-white border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
             <div>
@@ -639,7 +618,7 @@
                     <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
                 </a>
                 <p class="text-gray-400 text-sm max-w-sm mb-4 mx-auto md:mx-0">L'espace de création premium à Paris.</p>
-                <div class="text-gray-600 text-xs">&copy; 2024 Studio Creation.</div>
+                <div class="text-gray-600 text-xs">© 2024 Studio Creation.</div>
             </div>
             <div class="flex flex-col gap-2 text-sm text-gray-400 items-center md:items-start font-bold">
                 <a href="#" class="hover:text-white transition">Mentions Légales</a>
@@ -652,7 +631,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
         function toggleFaq(element) {
             const content = element.querySelector('.faq-content');
@@ -704,6 +682,30 @@
                 container.scrollBy({ left: cardWidth, behavior: 'smooth' });
             }
         }
+
+        // --- NEW SCRIPT FOR AUTOMATIC SCROLL REVEAL ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.6 // Trigger when 60% of the item is visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                    } else {
+                        // Optional: remove class if you want it to close when scrolling away
+                        entry.target.classList.remove('is-visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-item').forEach(item => {
+                observer.observe(item);
+            });
+        });
     </script>
 </body>
 </html>
