@@ -26,15 +26,15 @@
                     },
                     animation: {
                         'scroll': 'scroll 40s linear infinite',
-                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                     },
                     keyframes: {
                         scroll: {
                             '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(calc(-100% - 4rem))' },
+                            '100%': { transform: 'translateX(calc(-100% - 3rem))' },
                         },
                         fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
@@ -51,7 +51,7 @@
 
         /* --- GLOBAL NOISE --- */
         .noise-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; opacity: 0.04;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
@@ -74,33 +74,38 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* --- SCROLL REVEAL (TEXT ONLY) - MODIFIED FOR AUTO SCROLL --- */
+        /* --- SCROLL REVEAL (OPTIMIZED) --- */
         .reveal-item {
             cursor: default;
-            transition: all 0.5s ease;
+            transition: background-color 0.3s ease;
             position: relative;
         }
         
         .reveal-text-wrapper {
-            width: 0;
-            overflow: hidden;
-            transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.5s ease, margin 0.5s ease;
+            max-width: 0;
             opacity: 0;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: max-width 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
+                        opacity 0.6s ease, 
+                        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
             white-space: nowrap;
             margin: 0;
         }
 
-        /* L'effet se déclenche quand la classe .is-visible est ajoutée par JS */
         .reveal-item.is-visible .reveal-text-wrapper,
         .reveal-item:hover .reveal-text-wrapper {
-            width: auto;
+            max-width: 300px;
             opacity: 1;
-            margin: 0 1rem;
+            transform: scale(1);
+            /* Margin removed to fix gap issue */
+            margin: 0; 
         }
         
         .reveal-item.is-visible .reveal-text,
         .reveal-item:hover .reveal-text {
-             color: #3b82f6; /* Change color on reveal */
+             color: white; 
+             text-shadow: 0 0 20px rgba(255,255,255,0.1);
         }
         
         /* --- FAQ --- */
@@ -126,29 +131,29 @@
             max-height: 0;
             opacity: 0;
             overflow: hidden;
-            transition: max-height 0.4s ease-out, opacity 0.4s ease-out, padding 0.4s ease;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-out, padding 0.5s ease;
         }
         .faq-item.active .faq-content {
             max-height: 500px;
             opacity: 1;
-            padding-bottom: 1.5rem;
+            padding-bottom: 2rem;
         }
         .faq-item.active .faq-trigger { color: #131644; }
-        .faq-icon { transition: transform 0.3s ease; }
+        .faq-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .faq-item.active .faq-icon { transform: rotate(45deg); }
 
         /* --- CARD STACK --- */
         .card-stack { position: relative; width: 100%; max-width: 320px; aspect-ratio: 1/1; cursor: default; margin: 0 auto; }
-        .stat-card { position: absolute; inset: 0; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+        .stat-card { position: absolute; inset: 0; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
         .card-front { z-index: 20; transform: rotate(3deg) translateX(10px); }
         .card-back { z-index: 10; transform: rotate(-6deg) translateX(-10px) scale(0.95); opacity: 1; }
         .card-stack:hover .card-front { transform: rotate(-6deg) translateX(-20px) scale(0.95); z-index: 10; filter: brightness(0.95); }
         .card-stack:hover .card-back { transform: rotate(3deg) translateX(10px) scale(1); z-index: 20; filter: brightness(1); box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
 
         /* --- DECOR --- */
-        .decor-item { flex: 1; transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(100%); min-height: 200px; }
+        .decor-item { flex: 1; transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1); filter: grayscale(100%); min-height: 250px; }
         @media (max-width: 768px) {
-            .decor-item { filter: grayscale(0%); min-height: 250px; }
+            .decor-item { filter: grayscale(0%); min-height: 250px; margin-bottom: 1rem; }
             .decor-info { opacity: 1 !important; transform: translateY(0) !important; }
         }
         @media (min-width: 769px) {
@@ -168,22 +173,20 @@
         .pricing-card {
             flex: 0 0 350px;
             scroll-snap-align: center;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
             cursor: pointer;
             border-radius: 24px;
         }
         @media (min-width: 768px) {
             .pricing-card:hover {
-                transform: scale(1.15) translateY(-15px) !important;
+                transform: scale(1.1) translateY(-10px) !important;
                 z-index: 50;
-                box-shadow: 0 50px 100px -20px rgba(0,0,0,0.9);
+                box-shadow: 0 40px 80px -15px rgba(0,0,0,0.8);
             }
         }
         @media (max-width: 768px) {
             .pricing-card { flex: 0 0 85vw; }
             .pricing-card:hover { transform: scale(1.02); }
-            
-            /* Mobile Adjustments per client */
             h1 { line-height: 1.2 !important; }
         }
         
@@ -201,96 +204,101 @@
             font-weight: bold;
             font-family: 'Space Grotesk', monospace;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             color: #6b7280;
         }
         .switch-btn.active {
             background: white;
             color: black;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.1);
         }
+        
+        .fade-enter { opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-enter.visible { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body class="antialiased selection:bg-[#131644] selection:text-white font-sans">
 
     <div class="noise-overlay"></div>
 
-    <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-4 md:py-6 mix-blend-difference text-white">
+    <nav class="fixed w-full z-50 top-0 left-0 px-4 md:px-6 py-6 mix-blend-difference text-white transition-all duration-300">
         <div class="flex justify-between items-center max-w-7xl mx-auto">
             <a href="#" class="block w-20 md:w-28 hover:opacity-80 transition cursor-pointer">
                 <img src="votre-logo.webp" alt="Podblend" class="w-full h-auto">
             </a>
             
-            <div class="hidden md:flex gap-8 font-medium text-sm">
+            <div class="hidden md:flex gap-8 font-medium text-sm tracking-wide">
                 <a href="#hero" class="hover:text-brand-accent transition duration-300">Accueil</a>
                 <a href="#tarifs" class="hover:text-brand-accent transition duration-300">Tarifs</a>
                 <a href="#faq" class="hover:text-brand-accent transition duration-300">FAQ</a>
             </div>
-            <a href="#tarifs" class="bg-white text-black px-4 py-2 text-xs md:text-sm rounded-full font-bold hover:bg-[#131644] hover:text-white transition duration-300 shadow-lg">Réserver</a>
+            <a href="#tarifs" class="bg-white text-black px-6 py-2.5 text-xs md:text-sm rounded-full font-bold hover:bg-[#131644] hover:text-white transition-all duration-300 shadow-lg hover:shadow-xl">Réserver</a>
         </div>
     </nav>
 
     <section id="hero" class="relative h-[100dvh] w-full overflow-hidden bg-[#050505] text-white bg-grid-dark flex flex-col">
         <div class="absolute inset-0 z-0">
-            <video autoplay muted loop playsinline webkit-playsinline class="object-cover w-full h-full opacity-80">
+            <video autoplay muted loop playsinline webkit-playsinline class="object-cover w-full h-full opacity-80 scale-105">
                 <source src="hero-video.mp4" type="video/mp4">
             </video>
             <div class="absolute inset-0 bg-black/40"></div>
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_90%)]"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_95%)]"></div>
         </div>
 
-        <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full h-full flex flex-col justify-center items-center md:items-start text-center md:text-left pb-16">
+        <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full h-full flex flex-col justify-end items-center md:items-start text-center md:text-left pb-32 md:pb-48">
             <div class="max-w-5xl pt-0 w-full animate-fade-in-up">
-                <h1 class="font-bold leading-tight tracking-tight mb-6">
-                    <span class="block text-4xl md:text-6xl lg:text-7xl mb-2 md:mb-4">
+                <h1 class="font-bold leading-tight tracking-tight mb-8">
+                    <span class="block text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-5 drop-shadow-xl">
                         Vous avez déjà vu des vidéos comme celles-ci.
                     </span>
-                    <span class="block text-2xl md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400 font-medium">
+                    <span class="block text-2xl md:text-4xl text-white/90 font-medium">
                         Maintenant, créez les vôtres.
                     </span>
                 </h1>
                 
-                <p class="text-gray-300 text-sm md:text-lg font-medium max-w-2xl mx-auto md:mx-0 mb-8 md:mb-10">
+                <p class="text-gray-300 text-sm md:text-lg font-medium max-w-2xl mx-auto md:mx-0 mb-10 md:mb-12 leading-relaxed">
                     Un studio clé en main pour podcasts, vidéos d’entreprise, ads et contenus professionnels.
                 </p>
 
-                <div class="flex justify-center md:justify-start mb-12"> <a href="#tarifs" class="bg-white text-black px-5 py-2 rounded-full font-bold text-sm hover:bg-[#131644] hover:text-white hover:scale-105 transition duration-300 shadow-xl inline-block border-2 border-transparent hover:border-white">
-                        Réserver une session
+                <div class="flex justify-center md:justify-start mb-12"> 
+                    <a href="#tarifs" class="group bg-white text-black px-6 py-3 rounded-full font-bold text-sm hover:bg-[#131644] hover:text-white transition-all duration-300 shadow-xl inline-flex items-center gap-2 border-2 border-transparent hover:border-white/20">
+                        <span>Réserver une session</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/95 backdrop-blur-sm py-2">
+        <div class="absolute bottom-0 w-full z-20 border-t border-white/5 bg-black/95 backdrop-blur-md py-4">
              <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8">
                 
                 <div class="flex overflow-hidden relative w-full md:w-2/3 mask-image-gradient">
-                    <div class="flex gap-12 overflow-hidden w-full">
-                        <div class="flex animate-scroll whitespace-nowrap items-center gap-12 shrink-0 min-w-full justify-around">
-                            <img src="1.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="2.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="3.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="4.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="5.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="6.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="7.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="8.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                    <div class="flex gap-16 overflow-hidden w-full">
+                        <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around">
+                            <img src="1.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="2.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="3.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="4.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="5.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="6.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="7.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="8.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
                         </div>
-                        <div class="flex animate-scroll whitespace-nowrap items-center gap-12 shrink-0 min-w-full justify-around" aria-hidden="true">
-                            <img src="1.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="2.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="3.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="4.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="5.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="6.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="7.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
-                            <img src="8.png" class="h-8 md:h-9 w-auto object-contain opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition duration-300" alt="Logo">
+                        <div class="flex animate-scroll whitespace-nowrap items-center gap-16 shrink-0 min-w-full justify-around" aria-hidden="true">
+                            <img src="1.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="2.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="3.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="4.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="5.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="6.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="7.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
+                            <img src="8.png" class="h-7 md:h-8 w-auto object-contain opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition duration-500" alt="Logo">
                         </div>
                     </div>
                 </div>
 
-                <div class="md:w-1/3 text-right border-l border-white/20 pl-6 hidden md:block">
-                    <p class="text-xs font-medium text-gray-400 leading-tight">
+                <div class="md:w-1/3 text-right border-l border-white/10 pl-6 hidden md:block">
+                    <p class="text-xs font-medium text-gray-500 leading-tight">
                         <span class="text-white font-bold block mb-0.5">Plus de 100 entreprises</span>
                         ont enregistré ici.
                     </p>
@@ -299,46 +307,46 @@
         </div>
     </section>
 
-    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
+    <div class="w-full h-24 md:h-40 bg-gradient-to-b from-[#050505] to-white relative z-10 pointer-events-none"></div>
 
     <div class="relative">
         <section id="social-proof" class="sticky top-0 min-h-screen flex items-center bg-white text-black overflow-hidden z-0 bg-dots-light">
-            <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-32 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-transparent h-40 pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between relative z-10 py-10 md:py-0">
                 <div class="md:w-5/12 mb-12 md:mb-0 text-center md:text-left">
-                    <span class="inline-block text-[#131644] font-mono text-xs md:text-sm uppercase tracking-wide mb-6 border-b border-[#131644] pb-1">
-                        Sur tous les contenus publiés, toutes plateformes confondues.
+                    <span class="inline-block text-[#131644] font-mono text-xs md:text-sm uppercase tracking-wide mb-6 border-b border-[#131644] pb-1 font-bold">
+                        Impact & Viralité
                     </span>
-                    <h2 class="text-3xl md:text-6xl font-bold mb-6 leading-tight">On cumule plus d'un<br><span class="text-[#131644]">milliard de vues.</span></h2>
-                    <p class="text-gray-600 text-base md:text-lg mb-8 leading-relaxed">
-                        Des contenus créés aux côtés de plus de 100 clients. Une infrastructure technique conçue pour la viralité.
+                    <h2 class="text-3xl md:text-6xl font-bold mb-6 leading-tight tracking-tight">On cumule plus d'un<br><span class="text-[#131644]">milliard de vues.</span></h2>
+                    <p class="text-gray-600 text-base md:text-lg mb-8 leading-relaxed font-medium">
+                        Des contenus créés aux côtés de plus de 100 clients. Une infrastructure technique conçue pour la performance.
                     </p>
                 </div>
 
-                <div class="w-full md:w-1/2 relative h-[300px] md:h-[450px] flex justify-center items-center perspective-[1000px]">
+                <div class="w-full md:w-1/2 relative h-[350px] md:h-[500px] flex justify-center items-center perspective-[1200px]">
                     <div class="card-stack transform scale-90 md:scale-100">
-                        <div class="stat-card card-back bg-[#131644] text-white border border-white/10 p-6 md:p-8 rounded-[2rem] flex flex-col justify-between shadow-2xl">
+                        <div class="stat-card card-back bg-[#131644] text-white border border-white/10 p-8 md:p-10 rounded-[2.5rem] flex flex-col justify-between shadow-2xl">
                             <div class="flex justify-between items-start">
                                 <i class="fa-solid fa-users text-3xl opacity-80"></i>
-                                <span class="text-xs bg-white/20 text-white px-3 py-1 rounded-full font-mono uppercase">Clients</span>
+                                <span class="text-xs bg-white/20 text-white px-3 py-1 rounded-full font-mono uppercase tracking-wider">Clients</span>
                             </div>
                             <div>
-                                <div class="text-5xl md:text-6xl font-bold mb-2">100+</div>
+                                <div class="text-5xl md:text-7xl font-bold mb-2 tracking-tighter">100+</div>
                                 <div class="text-gray-300 font-medium text-base md:text-lg font-mono">Entreprises Accompagnées</div>
                             </div>
                         </div>
-                        <div class="stat-card card-front bg-gray-50 text-black p-6 md:p-8 rounded-[2rem] flex flex-col justify-between shadow-xl border border-gray-200">
+                        <div class="stat-card card-front bg-gray-50 text-black p-8 md:p-10 rounded-[2.5rem] flex flex-col justify-between shadow-xl border border-gray-200">
                             <div class="flex justify-between items-start">
                                 <i class="fa-solid fa-eye text-3xl text-black"></i>
-                                <span class="text-xs bg-black/10 px-3 py-1 rounded text-black/60 font-mono">Impact</span>
+                                <span class="text-xs bg-black/10 px-3 py-1 rounded text-black/60 font-mono tracking-wider">Impact</span>
                             </div>
                             <div>
-                                <div class="text-5xl md:text-6xl font-bold mb-2">+1 Md</div>
+                                <div class="text-5xl md:text-7xl font-bold mb-2 tracking-tighter">+1 Md</div>
                                 <div class="text-gray-800 font-medium text-base md:text-lg font-mono">Vues Cumulées</div>
                             </div>
-                            <div class="absolute bottom-4 right-4 text-xs text-gray-400 flex items-center gap-1 hidden md:flex">
-                                <i class="fa-solid fa-mouse-pointer"></i> Survoler
+                            <div class="absolute bottom-6 right-6 text-xs text-gray-400 flex items-center gap-2 hidden md:flex font-bold uppercase tracking-widest">
+                                <i class="fa-solid fa-mouse-pointer animate-pulse"></i> Survoler
                             </div>
                         </div>
                     </div>
@@ -346,44 +354,44 @@
             </div>
         </section>
 
-        <section class="relative z-10 py-16 md:py-32 bg-[#050505] text-white border-t border-white/10 shadow-[0_-50px_100px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center min-h-[60vh] bg-grid-dark">
+        <section class="relative z-10 py-24 md:py-40 bg-[#050505] text-white border-t border-white/10 shadow-[0_-50px_100px_rgba(0,0,0,0.1)] flex flex-col items-center justify-center min-h-[70vh] bg-grid-dark">
             <div class="max-w-6xl mx-auto px-6 w-full text-center relative">
-                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[3rem] md:text-[15rem] font-bold text-gray-800 opacity-20 select-none pointer-events-none z-0 tracking-tighter leading-none">
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[4rem] md:text-[18rem] font-bold text-gray-800 opacity-[0.03] select-none pointer-events-none z-0 tracking-tighter leading-none">
                     ON AIR
                 </div>
                 <div class="relative z-10">
-                    <span class="text-[#3b82f6] font-bold tracking-widest uppercase text-xs mb-8 md:mb-12 block font-mono border-b border-gray-700 pb-2 inline-block">Entreprises & Créateurs</span>
+                    <span class="text-white/80 font-bold tracking-[0.2em] uppercase text-xs mb-12 md:mb-16 block font-mono border-b border-white/10 pb-4 inline-block">Entreprises & Créateurs</span>
                     
-                    <div class="flex flex-col items-center justify-center space-y-1" id="scroll-reveal-container">
+                    <div class="flex flex-col items-center justify-center space-y-2" id="scroll-reveal-container">
                         
-                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                            <span class="reveal-text">PODCASTS</span>
+                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-6 md:py-8 border-b border-white/5 w-full hover:bg-white/[0.02] transition gap-4">
+                            <span class="reveal-text transition-colors duration-500">PODCASTS</span>
                             <div class="reveal-text-wrapper">
-                                <div class="text-xl md:text-3xl font-normal text-white bg-[#3b82f6] px-4 py-1 rounded-full shadow-lg shadow-blue-500/50">
+                                <div class="text-lg md:text-2xl font-bold text-white bg-[#131644] px-6 py-1.5 rounded-full shadow-[0_0_30px_rgba(19,22,68,0.6)] border border-white/10">
                                     Talk
                                 </div>
                             </div>
-                            <span class="reveal-text">VIDÉOS BUSINESS</span>
+                            <span class="reveal-text transition-colors duration-500">VIDÉOS BUSINESS</span>
                         </div>
 
-                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                            <span class="reveal-text">ADS</span>
+                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-6 md:py-8 border-b border-white/5 w-full hover:bg-white/[0.02] transition gap-4">
+                            <span class="reveal-text transition-colors duration-500">ADS</span>
                             <div class="reveal-text-wrapper">
-                                <div class="text-xl md:text-3xl font-normal text-white bg-[#3b82f6] px-4 py-1 rounded-full shadow-lg shadow-blue-500/50">
+                                <div class="text-lg md:text-2xl font-bold text-white bg-[#131644] px-6 py-1.5 rounded-full shadow-[0_0_30px_rgba(19,22,68,0.6)] border border-white/10">
                                     Brand
                                 </div>
                             </div>
-                            <span class="reveal-text">INTERVIEWS</span>
+                            <span class="reveal-text transition-colors duration-500">INTERVIEWS</span>
                         </div>
 
-                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-4 md:py-6 border-b border-gray-800 w-full hover:bg-white/5 transition gap-2 md:gap-3">
-                            <span class="reveal-text">INSTITUTIONS</span>
+                        <div class="reveal-item flex flex-col md:flex-row items-center justify-center text-xl md:text-5xl font-bold text-white py-6 md:py-8 border-b border-white/5 w-full hover:bg-white/[0.02] transition gap-4">
+                            <span class="reveal-text transition-colors duration-500">INSTITUTIONS</span>
                             <div class="reveal-text-wrapper">
-                                <div class="text-xl md:text-3xl font-normal text-white bg-[#3b82f6] px-4 py-1 rounded-full shadow-lg shadow-blue-500/50">
+                                <div class="text-lg md:text-2xl font-bold text-white bg-[#131644] px-6 py-1.5 rounded-full shadow-[0_0_30px_rgba(19,22,68,0.6)] border border-white/10">
                                     Public
                                 </div>
                             </div>
-                            <span class="reveal-text">MARQUES</span>
+                            <span class="reveal-text transition-colors duration-500">MARQUES</span>
                         </div>
 
                     </div>
@@ -392,215 +400,217 @@
         </section>
     </div>
 
-    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
+    <div class="w-full h-24 md:h-40 bg-gradient-to-b from-[#050505] to-white relative z-10 pointer-events-none"></div>
 
-    <section class="relative z-10 py-16 md:py-24 bg-white text-black overflow-hidden bg-grid-light">
-        <div class="px-6 mb-12 max-w-7xl mx-auto text-center md:text-left">
-            <h2 class="text-3xl md:text-4xl font-bold">Nos Décors</h2>
-            <p class="text-gray-400 mt-2 font-mono">[ CHOOSE YOUR VIBE ]</p>
+    <section class="relative z-10 py-24 md:py-32 bg-white text-black overflow-hidden bg-grid-light">
+        <div class="px-6 mb-16 max-w-7xl mx-auto text-center md:text-left">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Nos Décors</h2>
+            <p class="text-gray-400 mt-3 font-mono text-sm tracking-widest uppercase">[ CHOOSE YOUR VIBE ]</p>
         </div>
-        <div class="decor-container flex flex-col md:flex-row w-full h-auto md:h-[600px] gap-4 px-4 md:px-2">
+        <div class="decor-container flex flex-col md:flex-row w-full h-auto md:h-[600px] gap-6 px-4 md:px-2">
             
-            <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
-                <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Gotham">
-                <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
+            <div class="decor-item relative rounded-[2rem] overflow-hidden cursor-pointer group border border-gray-100 w-full shadow-lg hover:shadow-2xl">
+                <img src="gotham-_1_.webp" class="absolute inset-0 w-full h-full object-cover transform transition-transform duration-700 md:group-hover:scale-105" alt="Le Gotham">
+                <div class="absolute inset-0 bg-black/30 md:bg-black/50 md:group-hover:bg-black/10 transition duration-700"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap decor-info transition duration-500">
-                    <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg md:group-hover:scale-110 transition origin-left">Le Gotham</h3>
-                    <div class="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-500 delay-200 mt-2">
-                        <span class="text-xs font-mono border border-white px-2 py-1 bg-black/50 text-white backdrop-blur-md">Néons Bleus • Gaming • Tech</span>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white drop-shadow-lg md:group-hover:translate-y-[-5px] transition-transform duration-500 origin-left">Le Gotham</h3>
+                    <div class="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-500 delay-100 mt-3">
+                        <span class="text-xs font-mono border border-white/30 px-3 py-1.5 bg-black/60 text-white backdrop-blur-md rounded-full">Néons Bleus • Gaming • Tech</span>
                     </div>
                 </div>
             </div>
 
-            <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
-                <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="Le Santorini">
-                <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
+            <div class="decor-item relative rounded-[2rem] overflow-hidden cursor-pointer group border border-gray-100 w-full shadow-lg hover:shadow-2xl">
+                <img src="santorini-_1_.webp" class="absolute inset-0 w-full h-full object-cover transform transition-transform duration-700 md:group-hover:scale-105" alt="Le Santorini">
+                <div class="absolute inset-0 bg-black/30 md:bg-black/50 md:group-hover:bg-black/10 transition duration-700"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap decor-info transition duration-500">
-                    <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg md:group-hover:scale-110 transition origin-left">Le Santorini</h3>
-                    <div class="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-500 delay-200 mt-2">
-                        <span class="text-xs font-mono border border-white px-2 py-1 bg-black/50 text-white backdrop-blur-md">Méditerranéen • Lumineux • Épuré</span>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white drop-shadow-lg md:group-hover:translate-y-[-5px] transition-transform duration-500 origin-left">Le Santorini</h3>
+                    <div class="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-500 delay-100 mt-3">
+                        <span class="text-xs font-mono border border-white/30 px-3 py-1.5 bg-black/60 text-white backdrop-blur-md rounded-full">Méditerranéen • Lumineux • Épuré</span>
                     </div>
                 </div>
             </div>
 
-            <div class="decor-item relative rounded-3xl overflow-hidden cursor-pointer group border border-gray-200 w-full">
-                <img src="library-_1_.webp" class="absolute inset-0 w-full h-full object-cover" alt="La Bibliothèque">
-                <div class="absolute inset-0 bg-black/40 md:bg-black/60 md:group-hover:bg-black/20 transition duration-500"></div>
+            <div class="decor-item relative rounded-[2rem] overflow-hidden cursor-pointer group border border-gray-100 w-full shadow-lg hover:shadow-2xl">
+                <img src="library-_1_.webp" class="absolute inset-0 w-full h-full object-cover transform transition-transform duration-700 md:group-hover:scale-105" alt="La Bibliothèque">
+                <div class="absolute inset-0 bg-black/30 md:bg-black/50 md:group-hover:bg-black/10 transition duration-700"></div>
                 <div class="absolute bottom-8 left-8 whitespace-nowrap decor-info transition duration-500">
-                    <h3 class="text-2xl md:text-3xl font-bold text-white drop-shadow-lg md:group-hover:scale-110 transition origin-left">La Bibliothèque</h3>
-                    <div class="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-500 delay-200 mt-2">
-                        <span class="text-xs font-mono border border-white px-2 py-1 bg-black/50 text-white backdrop-blur-md">Vintage • Bibliothèque • Chaleureux</span>
+                    <h3 class="text-2xl md:text-4xl font-bold text-white drop-shadow-lg md:group-hover:translate-y-[-5px] transition-transform duration-500 origin-left">La Bibliothèque</h3>
+                    <div class="opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-500 delay-100 mt-3">
+                        <span class="text-xs font-mono border border-white/30 px-3 py-1.5 bg-black/60 text-white backdrop-blur-md rounded-full">Vintage • Bibliothèque • Chaleureux</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-white to-[#050505] relative z-10"></div>
+    <div class="w-full h-24 md:h-40 bg-gradient-to-b from-white to-[#050505] relative z-10 pointer-events-none"></div>
 
-    <section id="tarifs" class="relative z-10 py-16 md:py-32 bg-[#050505] text-white overflow-hidden bg-grid-dark">
+    <section id="tarifs" class="relative z-10 py-24 md:py-40 bg-[#050505] text-white overflow-hidden bg-grid-dark">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 text-center md:text-left">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 text-center md:text-left">
                 <div class="w-full md:w-auto">
-                    <h2 class="text-4xl md:text-6xl font-bold">Nos Tarifs</h2>
-                    <p class="text-gray-400 mt-2 font-mono text-sm">/// Formules adaptées</p>
+                    <h2 class="text-4xl md:text-6xl font-bold tracking-tight">Nos Tarifs</h2>
+                    <p class="text-gray-400 mt-3 font-mono text-sm tracking-widest uppercase">/// Formules adaptées</p>
                 </div>
-                <div class="mt-8 md:mt-0 flex flex-col md:flex-row items-center gap-6 w-full md:w-auto">
+                <div class="mt-10 md:mt-0 flex flex-col md:flex-row items-center gap-8 w-full md:w-auto">
                     <div class="switch-container">
                         <button class="switch-btn active" id="btn-video" onclick="switchPricing('video')">VIDÉO</button>
                         <button class="switch-btn" id="btn-audio" onclick="switchPricing('audio')">AUDIO</button>
                     </div>
                      <div class="flex gap-4">
-                        <button onclick="scrollPrices('left')" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-left"></i></button>
-                        <button onclick="scrollPrices('right')" class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-right"></i></button>
+                        <button onclick="scrollPrices('left')" class="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 active:scale-95"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="scrollPrices('right')" class="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 active:scale-95"><i class="fa-solid fa-arrow-right"></i></button>
                     </div>
                 </div>
             </div>
             
-            <div class="pricing-scroll-container hide-scroll" id="pricing-slider">
+            <div class="pricing-scroll-container hide-scroll pb-10" id="pricing-slider">
                 
-                <div class="pricing-card video-card bg-white text-black p-8 rounded-[2rem] w-full md:min-w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px]">
-                    <div class="absolute top-4 right-4 bg-[#131644] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Initial</div>
+                <div class="pricing-card video-card bg-white text-black p-8 md:p-10 rounded-[2.5rem] w-full md:min-w-[380px] relative shadow-2xl flex flex-col justify-between min-h-[580px]">
+                    <div class="absolute top-6 right-6 bg-[#131644] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Initial</div>
                     <div>
-                        <h3 class="text-3xl font-bold mb-2">Initiale</h3>
-                        <div class="text-5xl font-black text-[#131644] mb-2 tracking-tighter">100€</div>
-                        <span class="text-xs text-gray-400 font-mono uppercase">/ Heure</span>
-                        <div class="w-full h-px bg-gray-200 my-6"></div>
-                        <p class="text-sm font-bold text-gray-500 mb-4 uppercase">Inclus :</p>
-                        <ul class="space-y-3 text-sm font-medium text-gray-700">
-                             <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Opérateur sur place</li>
-                            <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> 3 caméras Sony A7IV</li>
-                            <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> 4 micros Shure MV7</li>
-                             <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Fichiers bruts (48h)</li>
+                        <h3 class="text-3xl font-bold mb-2 tracking-tight">Initiale</h3>
+                        <div class="text-6xl font-black text-[#131644] mb-3 tracking-tighter">100€</div>
+                        <span class="text-xs text-gray-400 font-mono uppercase tracking-widest font-bold">/ Heure</span>
+                        <div class="w-full h-px bg-gray-100 my-8"></div>
+                        <p class="text-xs font-bold text-gray-400 mb-6 uppercase tracking-widest">Inclus :</p>
+                        <ul class="space-y-4 text-sm font-semibold text-gray-700">
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Opérateur sur place</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> 3 caméras Sony A7IV</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> 4 micros Shure MV7</li>
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Fichiers bruts (48h)</li>
                         </ul>
                     </div>
-                    <button class="w-full py-4 bg-black text-white rounded-xl hover:bg-[#131644] transition font-bold uppercase text-xs tracking-widest mt-6">Réserver</button>
+                    <button class="w-full py-5 bg-black text-white rounded-2xl hover:bg-[#131644] transition-all duration-300 font-bold uppercase text-xs tracking-[0.2em] mt-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">Réserver</button>
                 </div>
 
-                <div class="pricing-card video-card bg-[#131644] text-white p-8 rounded-[2rem] w-full md:min-w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px] border border-blue-900 transform md:scale-105 z-10">
-                    <div class="absolute top-4 right-4 bg-white text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Best Seller</div>
+                <div class="pricing-card video-card bg-[#131644] text-white p-8 md:p-10 rounded-[2.5rem] w-full md:min-w-[380px] relative shadow-[0_20px_50px_rgba(19,22,68,0.5)] flex flex-col justify-between min-h-[580px] border border-white/10 transform md:scale-105 z-10">
+                    <div class="absolute top-6 right-6 bg-white text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Best Seller</div>
                     <div>
-                        <h3 class="text-3xl font-bold mb-2">Édition</h3>
-                        <div class="text-5xl font-black text-white mb-2 tracking-tighter">130€</div>
-                        <span class="text-xs text-blue-200 font-mono uppercase">/ Heure</span>
-                        <div class="w-full h-px bg-white/20 my-6"></div>
-                        <p class="text-sm font-bold text-blue-200 mb-4 uppercase">Tout Initial +</p>
-                        <ul class="space-y-3 text-sm font-medium text-white">
-                             <li class="flex items-start gap-3"><span class="text-white">•</span> Pré-montage horizontal</li>
-                            <li class="flex items-start gap-3"><span class="text-white">•</span> Synchro audio/vidéo</li>
-                            <li class="flex items-start gap-3"><span class="text-white">•</span> Prêt à publier</li>
+                        <h3 class="text-3xl font-bold mb-2 tracking-tight">Édition</h3>
+                        <div class="text-6xl font-black text-white mb-3 tracking-tighter">130€</div>
+                        <span class="text-xs text-blue-200 font-mono uppercase tracking-widest font-bold">/ Heure</span>
+                        <div class="w-full h-px bg-white/10 my-8"></div>
+                        <p class="text-xs font-bold text-blue-200 mb-6 uppercase tracking-widest">Tout Initial +</p>
+                        <ul class="space-y-4 text-sm font-semibold text-white">
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Pré-montage horizontal</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Synchro audio/vidéo</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Prêt à publier</li>
                         </ul>
                     </div>
-                    <button class="w-full py-4 bg-white text-black rounded-xl hover:bg-gray-200 transition font-bold uppercase text-xs tracking-widest mt-6">Réserver</button>
+                    <button class="w-full py-5 bg-white text-black rounded-2xl hover:bg-gray-100 transition-all duration-300 font-bold uppercase text-xs tracking-[0.2em] mt-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">Réserver</button>
                 </div>
 
-                <div class="pricing-card video-card bg-white text-black p-8 rounded-[2rem] w-full md:min-w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px]">
+                <div class="pricing-card video-card bg-white text-black p-8 md:p-10 rounded-[2.5rem] w-full md:min-w-[380px] relative shadow-2xl flex flex-col justify-between min-h-[580px]">
                     <div>
-                        <h3 class="text-3xl font-bold mb-2">Complète</h3>
-                        <div class="text-5xl font-black text-[#131644] mb-2 tracking-tighter">320€</div>
-                        <span class="text-xs text-gray-400 font-mono uppercase">/ Épisode</span>
-                        <div class="w-full h-px bg-gray-200 my-6"></div>
-                        <p class="text-sm font-bold text-gray-500 mb-4 uppercase">All Inclusive :</p>
-                        <ul class="space-y-3 text-sm font-medium text-gray-700">
-                             <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Tournage + Dérush</li>
-                            <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Montage & Mixage</li>
-                             <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Intro Dynamique</li>
-                             <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Colorimétrie</li>
+                        <h3 class="text-3xl font-bold mb-2 tracking-tight">Complète</h3>
+                        <div class="text-6xl font-black text-[#131644] mb-3 tracking-tighter">320€</div>
+                        <span class="text-xs text-gray-400 font-mono uppercase tracking-widest font-bold">/ Épisode</span>
+                        <div class="w-full h-px bg-gray-100 my-8"></div>
+                        <p class="text-xs font-bold text-gray-400 mb-6 uppercase tracking-widest">All Inclusive :</p>
+                        <ul class="space-y-4 text-sm font-semibold text-gray-700">
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Tournage + Dérush</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Montage & Mixage</li>
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Intro Dynamique</li>
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Colorimétrie</li>
                         </ul>
                     </div>
-                    <button class="w-full py-4 border border-black rounded-xl hover:bg-black hover:text-white transition font-bold uppercase text-xs tracking-widest mt-6">Choisir</button>
+                    <button class="w-full py-5 border-2 border-black rounded-2xl hover:bg-black hover:text-white transition-all duration-300 font-bold uppercase text-xs tracking-[0.2em] mt-8 hover:shadow-xl transform hover:-translate-y-1">Choisir</button>
                 </div>
 
-                <div class="pricing-card audio-card bg-white text-black p-8 rounded-[2rem] w-full md:min-w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px] hidden">
+                <div class="pricing-card audio-card bg-white text-black p-8 md:p-10 rounded-[2.5rem] w-full md:min-w-[380px] relative shadow-2xl flex flex-col justify-between min-h-[580px] hidden">
                     <div>
-                        <h3 class="text-3xl font-bold mb-2">Audio Simple</h3>
-                        <div class="text-5xl font-black text-[#131644] mb-2 tracking-tighter">50€</div>
-                        <span class="text-xs text-gray-400 font-mono uppercase">/ Heure</span>
-                        <div class="w-full h-px bg-gray-200 my-6"></div>
-                        <ul class="space-y-3 text-sm font-medium text-gray-700">
-                             <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Opérateur sur place</li>
-                            <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> 4 micros Shure MV7+</li>
-                            <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Table de mixage Rodecaster Pro</li>
-                             <li class="flex items-start gap-3"><span class="text-[#3b82f6]">•</span> Fichiers jour même</li>
+                        <h3 class="text-3xl font-bold mb-2 tracking-tight">Audio Simple</h3>
+                        <div class="text-6xl font-black text-[#131644] mb-3 tracking-tighter">50€</div>
+                        <span class="text-xs text-gray-400 font-mono uppercase tracking-widest font-bold">/ Heure</span>
+                        <div class="w-full h-px bg-gray-100 my-8"></div>
+                        <ul class="space-y-4 text-sm font-semibold text-gray-700">
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Opérateur sur place</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> 4 micros Shure MV7+</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Table de mixage Rodecaster Pro</li>
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-[#3b82f6]"></span> Fichiers jour même</li>
                         </ul>
                     </div>
-                    <button class="w-full py-4 bg-black text-white rounded-xl hover:bg-[#131644] transition font-bold uppercase text-xs tracking-widest mt-6">Réserver</button>
+                    <button class="w-full py-5 bg-black text-white rounded-2xl hover:bg-[#131644] transition-all duration-300 font-bold uppercase text-xs tracking-[0.2em] mt-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">Réserver</button>
                 </div>
 
-                <div class="pricing-card audio-card bg-[#131644] text-white p-8 rounded-[2rem] w-full md:min-w-[350px] relative shadow-2xl flex flex-col justify-between min-h-[550px] border border-blue-900 hidden">
-                    <div class="absolute top-4 right-4 bg-white text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Pro</div>
+                <div class="pricing-card audio-card bg-[#131644] text-white p-8 md:p-10 rounded-[2.5rem] w-full md:min-w-[380px] relative shadow-[0_20px_50px_rgba(19,22,68,0.5)] flex flex-col justify-between min-h-[580px] border border-white/10 hidden">
+                    <div class="absolute top-6 right-6 bg-white text-black text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest shadow-lg">Pro</div>
                     <div>
-                        <h3 class="text-3xl font-bold mb-2">Audio +</h3>
-                        <div class="text-5xl font-black text-white mb-2 tracking-tighter">100€</div>
-                        <span class="text-xs text-blue-200 font-mono uppercase">/ Heure</span>
-                        <div class="w-full h-px bg-white/20 my-6"></div>
-                        <ul class="space-y-3 text-sm font-medium text-white">
-                             <li class="flex items-start gap-3"><span class="text-white">•</span> Formule Audio Simple</li>
-                            <li class="flex items-start gap-3"><span class="text-white">•</span> Nettoyage bruits</li>
-                            <li class="flex items-start gap-3"><span class="text-white">•</span> Montage (Intro/Outro)</li>
-                             <li class="flex items-start gap-3"><span class="text-white">•</span> Mixage Pro</li>
+                        <h3 class="text-3xl font-bold mb-2 tracking-tight">Audio +</h3>
+                        <div class="text-6xl font-black text-white mb-3 tracking-tighter">100€</div>
+                        <span class="text-xs text-blue-200 font-mono uppercase tracking-widest font-bold">/ Heure</span>
+                        <div class="w-full h-px bg-white/10 my-8"></div>
+                        <ul class="space-y-4 text-sm font-semibold text-white">
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Formule Audio Simple</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Nettoyage bruits</li>
+                            <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Montage (Intro/Outro)</li>
+                             <li class="flex items-center gap-4"><span class="w-2 h-2 rounded-full bg-white"></span> Mixage Pro</li>
                         </ul>
                     </div>
-                    <button class="w-full py-4 bg-white text-black rounded-xl hover:bg-gray-200 transition font-bold uppercase text-xs tracking-widest mt-6">Réserver</button>
+                    <button class="w-full py-5 bg-white text-black rounded-2xl hover:bg-gray-100 transition-all duration-300 font-bold uppercase text-xs tracking-[0.2em] mt-8 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">Réserver</button>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <div class="w-full h-16 md:h-32 bg-gradient-to-b from-[#050505] to-white relative z-10"></div>
+    <!-- FIXED TRANSITION HERE: Black to White -->
+    <div class="w-full h-24 md:h-40 bg-gradient-to-b from-[#050505] to-white relative z-10 pointer-events-none"></div>
 
-    <section id="faq" class="relative z-10 py-16 md:py-32 bg-white text-black bg-grid-light">
+    <section id="faq" class="relative z-10 py-24 md:py-32 bg-white text-black bg-grid-light">
         <div class="max-w-4xl mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-200 pb-8 text-center md:text-left">
-                <div class="w-full md:w-auto"><h2 class="text-4xl md:text-7xl font-bold uppercase tracking-tight">FAQ<span class="text-[#131644]">.</span></h2></div>
+            <!-- Increased bottom margin to fix alignment visual -->
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-gray-200 pb-10 text-center md:text-left pt-12 md:pt-0">
+                <div class="w-full md:w-auto"><h2 class="text-5xl md:text-7xl font-bold uppercase tracking-tighter">FAQ<span class="text-[#131644]">.</span></h2></div>
             </div>
 
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-6">
                  <div class="faq-item group" onclick="toggleFaq(this)">
                     <div class="faq-trigger flex justify-between items-center group select-none">
-                        <div class="flex items-baseline gap-4 md:gap-8 text-left">
-                            <span class="text-xs md:text-sm font-mono text-gray-400 group-hover:text-black transition">01</span>
-                            <h3 class="text-xl md:text-3xl font-bold text-black">Matériel Inclus ?</h3>
+                        <div class="flex items-baseline gap-6 md:gap-10 text-left">
+                            <span class="text-sm font-mono text-gray-400 group-hover:text-black transition-colors duration-300">01</span>
+                            <h3 class="text-xl md:text-3xl font-bold text-black group-hover:translate-x-2 transition-transform duration-300">Matériel Inclus ?</h3>
                         </div>
-                        <div class="text-2xl text-gray-400 group-hover:text-[#131644] transition-transform duration-300 faq-icon">
+                        <div class="text-2xl text-gray-300 group-hover:text-[#131644] transition-all duration-300 faq-icon group-hover:scale-110">
                             <i class="fa-solid fa-plus"></i>
                         </div>
                     </div>
                     <div class="faq-content">
-                        <p class="text-gray-600 text-base md:text-lg leading-relaxed font-medium pl-8 md:pl-14 pr-4">
+                        <p class="text-gray-600 text-base md:text-lg leading-relaxed font-medium pl-10 md:pl-20 pr-4 max-w-3xl">
                             Tout est prêt à votre arrivée. Le studio comprend 4 micros Shure SM7B, la console Rodecaster Pro II, et l'éclairage cinéma. Pour l'option vidéo, 3 caméras Sony A7S III sont installées et calibrées.
                         </p>
                     </div>
                 </div>
                  <div class="faq-item group" onclick="toggleFaq(this)">
                     <div class="faq-trigger flex justify-between items-center group select-none">
-                        <div class="flex items-baseline gap-4 md:gap-8 text-left">
-                            <span class="text-xs md:text-sm font-mono text-gray-400 group-hover:text-black transition">02</span>
-                            <h3 class="text-xl md:text-3xl font-bold text-black">Livraison des Fichiers</h3>
+                        <div class="flex items-baseline gap-6 md:gap-10 text-left">
+                            <span class="text-sm font-mono text-gray-400 group-hover:text-black transition-colors duration-300">02</span>
+                            <h3 class="text-xl md:text-3xl font-bold text-black group-hover:translate-x-2 transition-transform duration-300">Livraison des Fichiers</h3>
                         </div>
-                        <div class="text-2xl text-gray-400 group-hover:text-[#131644] transition-transform duration-300 faq-icon">
+                        <div class="text-2xl text-gray-300 group-hover:text-[#131644] transition-all duration-300 faq-icon group-hover:scale-110">
                             <i class="fa-solid fa-plus"></i>
                         </div>
                     </div>
                     <div class="faq-content">
-                        <p class="text-gray-600 text-base md:text-lg leading-relaxed font-medium pl-8 md:pl-14 pr-4">
+                        <p class="text-gray-600 text-base md:text-lg leading-relaxed font-medium pl-10 md:pl-20 pr-4 max-w-3xl">
                             Vous pouvez repartir avec vos cartes SD immédiatement après la séance. Sinon, nous uploadons les rushes bruts (WAV/MP4) sur un serveur sécurisé sous 24h.
                         </p>
                     </div>
                 </div>
                  <div class="faq-item group" onclick="toggleFaq(this)">
                     <div class="faq-trigger flex justify-between items-center group select-none">
-                        <div class="flex items-baseline gap-4 md:gap-8 text-left">
-                            <span class="text-xs md:text-sm font-mono text-gray-400 group-hover:text-black transition">03</span>
-                            <h3 class="text-xl md:text-3xl font-bold text-black">Annulation & Retards</h3>
+                        <div class="flex items-baseline gap-6 md:gap-10 text-left">
+                            <span class="text-sm font-mono text-gray-400 group-hover:text-black transition-colors duration-300">03</span>
+                            <h3 class="text-xl md:text-3xl font-bold text-black group-hover:translate-x-2 transition-transform duration-300">Annulation & Retards</h3>
                         </div>
-                        <div class="text-2xl text-gray-400 group-hover:text-[#131644] transition-transform duration-300 faq-icon">
+                        <div class="text-2xl text-gray-300 group-hover:text-[#131644] transition-all duration-300 faq-icon group-hover:scale-110">
                             <i class="fa-solid fa-plus"></i>
                         </div>
                     </div>
                     <div class="faq-content">
-                        <p class="text-gray-600 text-base md:text-lg leading-relaxed font-medium pl-8 md:pl-14 pr-4">
+                        <p class="text-gray-600 text-base md:text-lg leading-relaxed font-medium pl-10 md:pl-20 pr-4 max-w-3xl">
                             Annulation gratuite jusqu'à 24h avant la session. En cas de retard, la session se termine à l'heure prévue si une autre réservation suit.
                         </p>
                     </div>
@@ -609,23 +619,23 @@
         </div>
     </section>
     
-    <div class="w-full h-16 md:h-24 bg-gradient-to-b from-white to-[#020202] relative z-10"></div>
+    <div class="w-full h-24 md:h-40 bg-gradient-to-b from-white to-[#020202] relative z-10 pointer-events-none"></div>
 
-    <footer class="relative z-10 py-16 bg-[#020202] text-white border-t border-white/5">
+    <footer class="relative z-10 py-20 bg-[#020202] text-white border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
             <div>
-                 <a href="#" class="block w-24 md:w-32 mb-6 hover:opacity-80 transition cursor-pointer mx-auto md:mx-0">
+                 <a href="#" class="block w-24 md:w-32 mb-6 hover:opacity-80 transition cursor-pointer mx-auto md:mx-0 grayscale hover:grayscale-0 duration-500">
                     <img src="votre-logo.webp" alt="Studio Logo" class="w-full h-auto">
                 </a>
-                <p class="text-gray-400 text-sm max-w-sm mb-4 mx-auto md:mx-0">L'espace de création premium à Paris.</p>
-                <div class="text-gray-600 text-xs">© 2024 Studio Creation.</div>
+                <p class="text-gray-500 text-sm max-w-sm mb-4 mx-auto md:mx-0 font-medium">L'espace de création premium à Paris.</p>
+                <div class="text-gray-600 text-xs tracking-wider">© 2024 Studio Creation.</div>
             </div>
-            <div class="flex flex-col gap-2 text-sm text-gray-400 items-center md:items-start font-bold">
-                <a href="#" class="hover:text-white transition">Mentions Légales</a>
-                <a href="#" class="hover:text-white transition">CGV</a>
-                <a href="#" class="hover:text-white transition">Contact</a>
+            <div class="flex flex-col gap-3 text-sm text-gray-400 items-center md:items-start font-bold tracking-wide">
+                <a href="#" class="hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block transform">Mentions Légales</a>
+                <a href="#" class="hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block transform">CGV</a>
+                <a href="#" class="hover:text-white transition-colors duration-300 hover:translate-x-1 inline-block transform">Contact</a>
             </div>
-            <div class="w-full md:w-48 h-32 rounded-xl overflow-hidden border border-white/10 grayscale hover:grayscale-0 transition duration-500 justify-self-center md:justify-self-end">
+            <div class="w-full md:w-56 h-32 rounded-2xl overflow-hidden border border-white/10 grayscale hover:grayscale-0 transition-all duration-700 justify-self-center md:justify-self-end shadow-2xl">
                 <iframe src="https://www.google.com/maps?q=12+Place+Indira+Gandhi+92230+Gennevilliers&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
@@ -688,7 +698,7 @@
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.6 // Trigger when 60% of the item is visible
+                threshold: 0.5 // Lower threshold for better mobile responsiveness
             };
 
             const observer = new IntersectionObserver((entries) => {
