@@ -98,7 +98,6 @@
             max-width: 300px;
             opacity: 1;
             transform: scale(1);
-            /* Margin removed to fix gap issue */
             margin: 0; 
         }
         
@@ -245,7 +244,8 @@
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#050505_95%)]"></div>
         </div>
 
-        <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full h-full flex flex-col justify-end items-center md:items-start text-center md:text-left pb-32 md:pb-48">
+        <!-- Correction du responsive : alignement centré pour tous les écrans, avec padding ajusté pour éviter le "trop haut" -->
+        <div class="relative z-10 px-6 md:px-20 max-w-7xl mx-auto w-full h-full flex flex-col justify-center items-center md:items-start text-center md:text-left pb-12 pt-20">
             <div class="max-w-5xl pt-0 w-full animate-fade-in-up">
                 <h1 class="font-bold leading-tight tracking-tight mb-8">
                     <span class="block text-3xl md:text-5xl lg:text-6xl mb-3 md:mb-5 drop-shadow-xl">
